@@ -4,8 +4,6 @@ public class Sistema {
 	private static int id_pedido;
 	private static int id_encomienda;
 	private static Empresa empresa;
-
-	// Matias, cuando cargues la empresa crea la instancia de empresa
 	
 	public static int GetPrecioPorKilo() {
 		return precioPorKilo;

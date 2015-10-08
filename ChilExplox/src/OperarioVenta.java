@@ -1,5 +1,10 @@
 
 public class OperarioVenta extends Empleado {
+
+	public OperarioVenta(){
+		
+	}
+	
   public int Crear_Pedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     Pedido p = new Pedido (cliente, origen, destino, urgencia);
     Sistema.AgregarPedido (p);
