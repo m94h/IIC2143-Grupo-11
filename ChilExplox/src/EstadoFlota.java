@@ -1,2 +1,2 @@
 
-public enum EstadoFlota {Viajando, EnSucursal}
+public enum Estado {Viajando, EnSucursalOrigen, EnSucursalDestino}

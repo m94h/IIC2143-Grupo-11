@@ -4,7 +4,7 @@ public abstract class MedioDeTransporte {
 	protected int enUso;
 	protected Sucursal origen;
 	protected Sucursal destino;
-	protected EstadoFlota estado;
+	protected Estado estado;
 	
 	public MedioDeTransporte (int capacidad)
 	{
