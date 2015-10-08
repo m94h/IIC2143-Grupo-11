@@ -1,8 +1,11 @@
 
 public class Sistema {
-	public static int precioPorKilo;
-	public static int id_pedido;
-	public static int id_encomienda;
+	private static int precioPorKilo;
+	private static int id_pedido;
+	private static int id_encomienda;
+	private static Empresa empresa;
+
+	// Matias, cuando cargues la empresa crea la instancia de empresa
 	
 	public static int GetPrecioPorKilo() {
 		return precioPorKilo;
@@ -18,5 +21,23 @@ public class Sistema {
 		int valor = id_encomienda;
 		id_encomienda++;
 		return valor;
+	}
+
+
+	// Metodos de Empresa
+	public static void AgregarPedido(Pedido pedido) {
+		empresa.AgregarPedido(pedido);
+	}
+
+	public static Pedido GetPedido (int id) {
+		return empresa.GetPedido(id);
+	}
+
+	public static void AgregarEncomienda(Encomienda encomienda) {
+		empresa.AgregarEncomienda(encomienda);
+	}
+
+	public static Encomienda GetEncomienda (int id) {
+		return empresa.GetEncomienda(id);
 	}
 }
