@@ -13,7 +13,7 @@ public class Pedido {
   	private List<Encomienda> encomiendas;
 
   	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-    	this.id = Empresa.Get_id_pedido();
+    	this.id = Sistema.Get_id_pedido();
     	this.cliente = cliente;
     	this.origen = origen;
     	this.destino = destino;
@@ -22,6 +22,8 @@ public class Pedido {
 
     	this.encomiendas = new List<Encomienda>();
   	}
+
+  	public int getId() {return id;}
 
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.add(encomienda);

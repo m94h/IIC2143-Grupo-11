@@ -1,16 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Empresa {
 	private String nombre;
 	private String RUT;
 	private List<Sucursal> sucursales;
 	private List<MedioDeTransporte> flota;
-	private Map<int, Pedido> pedidos;
-	private Map<int, Encomienda> encomiendas;
-	private int precioPorKilo;
-	private int id_pedido;
-	private int id_encomienda;
+	private Map<Integer, Pedido> pedidos;
+	private Map<Integer, Encomienda> encomiendas;
+
 	
 	
 	public Empresa (String nombre, String rut) {
@@ -18,43 +18,28 @@ public class Empresa {
 		this.RUT = rut;
 		this.sucursales = new ArrayList<Sucursal>();
 		this.flota = new ArrayList<MedioDeTransporte>();
-		this.pedidos = new HashMap<int, Pedido>();
-		this.encomiendas = new HashMap<int, Encomienda>();
+		this.pedidos = new HashMap<Integer, Pedido>();
+		this.encomiendas = new HashMap<Integer, Encomienda>();
 	}
 	
 	public void AgregarSucursal (Sucursal newSucursal) {
 		this.sucursales.add(newSucursal);
 	}
 
-	public int GetPrecioPorKilo() {
-		return precioPorKilo;
-	}
-
-	public int Get_id_pedido() {
-		valor = id_pedido;
-		id_pedido++;
-		return valor;
-	}
-
-	public int Get_id_encomienda() {
-		valor = id_encomienda;
-		id_encomienda++;
-		return valor;
-	}
 
 	public void AgregarPedido(Pedido pedido) {
-		pedidos.put(pedido.id, pedido);
+		pedidos.put(pedido.getId(), pedido);
 	}
 
 	public Pedido GetPedido (int id) {
-		pedidos.get(id);
+		return pedidos.get(id);
 	}
 
 	public void AgregarEncomienda(Encomienda encomienda) {
-		encomiendas.put(encomienda.id, encomienda);
+		encomiendas.put(encomienda.getId(), encomienda);
 	}
 
 	public Encomienda GetEncomienda (int id) {
-		encomiendas.get(id);
+		return encomiendas.get(id);
 	}
 }
