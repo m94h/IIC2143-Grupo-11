@@ -6,8 +6,7 @@ public abstract class MedioDeTransporte {
 	protected Sucursal destino;
 	protected Estado estado;
 	
-	public MedioDeTransporte (int capacidad)
-	{
+	public MedioDeTransporte (int capacidad) {
 		this.capacidad = capacidad;
 	}
 	
