@@ -10,11 +10,11 @@ public class Encomienda {
 		this.volumen = volumen;
 	}
 
-	public int getId() {return id;}
+	public int GetId() {return id;}
 
 	public int GenerarPresupuesto() {
 		int valor;
-		valor = Sistema.precioPorKilo * peso;
+		valor = Sistema.GetPrecioPorKilo() * peso;
 		return valor;
 	}
 }

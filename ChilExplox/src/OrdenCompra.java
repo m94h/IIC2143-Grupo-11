@@ -2,8 +2,7 @@ public class OrdenCompra {
 
   private int id;
   private int monto_neto;
-  private int impuesto;
-  private int monto_total;
+  private double monto_total;
   private boolean estado;
 
   public OrdenCompra(int monto_neto) {
@@ -12,11 +11,10 @@ public class OrdenCompra {
     this.monto_neto = monto_neto;
     this.estado = false;
   }
-
-  protected CalcularTotal() {
-    //calcular impuesto y monto total
-    this.impuesto = (int) this.monto_neto * 0.19;
-    this.monto_total = this.monto_neto + this.impuesto;
+  
+  protected void CalcularTotal() {
+    //calcular monto total aplicando impuesto
+    this.monto_total = (double)this.monto_neto * 1.19;
   }
 
 }

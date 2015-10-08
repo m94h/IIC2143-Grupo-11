@@ -1,4 +1,4 @@
-public class Efectivo implements IMedioPago {
+public class Efectivo implements IMedioDePago {
   public boolean Pagar (int monto) {
     return true;
   }

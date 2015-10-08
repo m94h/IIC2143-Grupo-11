@@ -26,9 +26,8 @@ public class Empresa {
 		this.sucursales.add(newSucursal);
 	}
 
-
 	public void AgregarPedido(Pedido pedido) {
-		pedidos.put(pedido.getId(), pedido);
+		pedidos.put(pedido.GetId(), pedido);
 	}
 
 	public Pedido GetPedido (int id) {
@@ -36,7 +35,7 @@ public class Empresa {
 	}
 
 	public void AgregarEncomienda(Encomienda encomienda) {
-		encomiendas.put(encomienda.getId(), encomienda);
+		encomiendas.put(encomienda.GetId(), encomienda);
 	}
 
 	public Encomienda GetEncomienda (int id) {

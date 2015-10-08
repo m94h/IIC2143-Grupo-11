@@ -18,19 +18,18 @@ public class Pedido {
     	this.origen = origen;
     	this.destino = destino;
     	this.urgencia = urgencia;
-    	this.estado = EnSucursalOrigen;
-
-    	this.encomiendas = new List<Encomienda>();
+    	this.estado = Estado.EnSucursalOrigen;
+    	this.encomiendas = new ArrayList<Encomienda>();
   	}
 
-  	public int getId() {return id;}
+  	public int GetId() {return id;}
 
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.add(encomienda);
   	}
 
   	public int CalcularMonto() {
-  		int monto;
+  		int monto = 0;
   		for (Encomienda e : encomiendas) {
   			monto += e.GenerarPresupuesto();
   		}
@@ -38,6 +37,6 @@ public class Pedido {
   	}
 
  	public void GenerarOrden() {
-    	this.orden_compra = new OrdenCompra();
+    	this.orden_compra = new OrdenCompra(CalcularMonto());
   	}
 }
