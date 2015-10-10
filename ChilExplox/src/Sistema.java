@@ -1,21 +1,34 @@
-
+//Fachada, Sistema
+//Será una clase Singleton
 public class Sistema {
-	private static int precioPorKilo;
-	private static int id_pedido;
-	private static int id_encomienda;
-	private static Empresa empresa;
+	private static Sistema INSTANCE;
+	private int precioPorKilo;
+	private int id_pedido;
+	private int id_encomienda;
+	private Empresa empresa;
+
+	//Constructor privado por singleton
+	private Sistema() {
+		//leer archivos
+
+	}
+
+	//Get instance para singleton
+	public Sistema GetInstance() {
+		return INSTANCE;
+	}
 	
-	public static int GetPrecioPorKilo() {
+	public int GetPrecioPorKilo() {
 		return precioPorKilo;
 	}
 
-	public static int Get_id_pedido() {
+	public int Get_id_pedido() {
 		int valor = id_pedido;
 		id_pedido++;
 		return valor;
 	}
 
-	public static int Get_id_encomienda() {
+	public  int Get_id_encomienda() {
 		int valor = id_encomienda;
 		id_encomienda++;
 		return valor;
@@ -23,19 +36,19 @@ public class Sistema {
 
 
 	// Metodos de Empresa
-	public static void AgregarPedido(Pedido pedido) {
+	public  void AgregarPedido(Pedido pedido) {
 		empresa.AgregarPedido(pedido);
 	}
 
-	public static Pedido GetPedido (int id) {
+	public  Pedido GetPedido (int id) {
 		return empresa.GetPedido(id);
 	}
 
-	public static void AgregarEncomienda(Encomienda encomienda) {
+	public  void AgregarEncomienda(Encomienda encomienda) {
 		empresa.AgregarEncomienda(encomienda);
 	}
 
-	public static Encomienda GetEncomienda (int id) {
+	public  Encomienda GetEncomienda (int id) {
 		return empresa.GetEncomienda(id);
 	}
 }
