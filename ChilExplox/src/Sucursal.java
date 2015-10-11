@@ -18,5 +18,13 @@ public class Sucursal {
   public void AgregarEmpleado(int id_empleado, Empleado empleado) {
     this.empleados.put(id_empleado, empleado);
   }
+  
+  public void CambiarDireccion(String nuevaDireccion){
+	  this.direccion = nuevaDireccion;
+  }
+  
+  public void AgrandarSucursal(int nueva_capacidad){
+	  this.capacidad += this.capacidad + nueva_capacidad;
+  }
 	
 }

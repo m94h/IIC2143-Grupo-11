@@ -8,6 +8,6 @@ public abstract class MedioDeTransporte {
 	
 	public MedioDeTransporte (int capacidad) {
 		this.capacidad = capacidad;
-	}
+	}	
 	
 }

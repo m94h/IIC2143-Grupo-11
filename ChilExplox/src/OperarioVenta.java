@@ -5,7 +5,7 @@ public class OperarioVenta extends Empleado {
 		super(nombre, rut, telefono, sueldo);
 	}
 	
-  public int Crear_Pedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+  public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     Pedido p = new Pedido (cliente, origen, destino, urgencia);
     Sistema.AgregarPedido (p);
     return p.GetId();

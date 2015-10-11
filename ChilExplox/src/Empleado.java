@@ -6,6 +6,7 @@ public abstract class Empleado extends Persona {
 	protected int sueldo;
 	protected List<Date> horarios_ingreso;
 	protected List<Date> horarios_salida;
+  // protected Sucursal pertenceA;   cada empleado deberia pertenecer a una sucursal no?
 
   public Empleado(String nombre, String rut, int telefono, int sueldo) {
     super(nombre, rut, telefono);
