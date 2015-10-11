@@ -40,13 +40,15 @@ public class Sistema {
 			parametros = sCurrentLine.split(",");
 
 			Empleado empleado;
+			int sucursal_id;
 
 			if (parametros[0] == "venta") {
-				empleado = new OperarioVenta();
+				sucursal_id = parametros[0];
+				empleado_id = parametros[1];
+				empleado = new OperarioVenta(parametros[1], parametros[2], parametros[3], parametros[4]);
 			}
 
-			sucursal = new Sucursal(parametros[0], parametros[1], parametros[2], parametros[3]); //id, sucursal, telefono, capacidad
-			this.empresa.AgregarSucursal(sucursal);
+			this.empresa.GetSucursal(sucursal_id).AgregarEmpleado(empleado_id, empleado);
 
 		}
 
