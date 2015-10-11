@@ -1,3 +1,5 @@
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sucursal {
   private int id;
@@ -7,7 +9,7 @@ public class Sucursal {
 	private Map<Integer, Empleado> empleados;
 
 	
-	public Sucursal(int id, String sucursal, int telefono, int capacidad) {
+	public Sucursal(int id, String direccion, int telefono, int capacidad) {
     this.id = id;
     this.direccion = direccion;
     this.telefono = telefono;

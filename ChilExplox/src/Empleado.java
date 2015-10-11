@@ -11,8 +11,8 @@ public abstract class Empleado extends Persona {
   public Empleado(String nombre, String rut, int telefono, int sueldo) {
     super(nombre, rut, telefono);
     this.sueldo = sueldo;
-    this.horarios_ingreso = new List<Date>();
-    this.horarios_salida = new List<Date>();
+    this.horarios_ingreso = new ArrayList<Date>();
+    this.horarios_salida = new ArrayList<Date>();
   }
 
   public void MarcarIngresoTrabajo (Date hora) {

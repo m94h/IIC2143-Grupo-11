@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 //Fachada, Sistema
 //Será una clase Singleton
 public class Sistema {
@@ -11,25 +14,39 @@ public class Sistema {
 	private Sistema() {
 
 		//leer archivo de empresa
-		br = new BufferedReader(new FileReader("archivos/empresa.data"));
+		BufferedReader br = new BufferedReader(new FileReader("archivos/empresa.data"));
 
-		sCurrentLine = br.readLine();
-		parametros = sCurrentLine.split(",");
+		String sCurrentLine = br.readLine();
+		String [] parametros = sCurrentLine.split(",");
 
 		//instanciar clase empresa
 		this.empresa = new Empresa(parametros[0], parametros[1]); //nombre, rut
-		this.precioPorKilo = parametros[2];
-		this.id_pedido = parametros[3];
-		this.id_encomienda = parametros[4];		
+		try {
+			this.precioPorKilo = Integer.parseInt(parametros[2]);
+			this.id_pedido = Integer.parseInt(parametros[3]);
+			this.id_encomienda = Integer.parseInt(parametros[4]);
+		}
+		catch(Exception e) {
+			// Error en los archivos	
+		}
 
 		//leer archivo de sucursales
 		br = new BufferedReader(new FileReader("archivos/sucursales.data"));
 		
 		while ((sCurrentLine = br.readLine()) != null) {
 			parametros = sCurrentLine.split(",");
-
-			sucursal = new Sucursal(parametros[0], parametros[1], parametros[2], parametros[3]); //id, sucursal, telefono, capacidad
-			this.empresa.AgregarSucursal(sucursal);
+			
+			try {
+				int id = Integer.parseInt(parametros[0]);
+				String direccion = parametros[1];
+				int telefono = Integer.parseInt(parametros[2]);
+				int capacidad = Integer.parseInt(parametros[3]);
+				Sucursal sucursal = new Sucursal(id, direccion, telefono, capacidad);
+				this.empresa.AgregarSucursal(id, sucursal);
+			}
+			catch(Exception e) {
+				// Error en los archivos
+			}
 
 		}
 
@@ -39,6 +56,8 @@ public class Sistema {
 		while ((sCurrentLine = br.readLine()) != null) {
 			parametros = sCurrentLine.split(",");
 
+
+			// Aqui hay que arreglar, no entiendo nada, el que hizo esto que me explique lo que trato de hacer
 			Empleado empleado;
 			int sucursal_id;
 
@@ -57,7 +76,7 @@ public class Sistema {
 	}
 
 	//Get instance para singleton
-	public Sistema GetInstance() {
+	public static Sistema GetInstance() {
 		return INSTANCE;
 	}
 	

@@ -29,7 +29,7 @@ public class Empresa {
 		pedidos.put(pedido.GetId(), pedido);
 	}
 
-	public void GetSucursal(int id) {
+	public Sucursal GetSucursal(int id) {
 		return sucursales.get(id);
 	}
 

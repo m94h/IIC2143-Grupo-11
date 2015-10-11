@@ -6,6 +6,6 @@ public class Camion extends MedioDeTransporte {
 	protected int km;
 
 	public Camion(int capacidad){
-		super(capacidad)
+		super(capacidad);
 	}
 }

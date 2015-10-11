@@ -13,7 +13,7 @@ public class Pedido {
   	private List<Encomienda> encomiendas;
 
   	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-    	this.id = Sistema.Get_id_pedido();
+    	this.id = Sistema.GetInstance().Get_id_pedido();
     	this.cliente = cliente;
     	this.origen = origen;
     	this.destino = destino;
