@@ -9,8 +9,49 @@ public class Sistema {
 
 	//Constructor privado por singleton
 	private Sistema() {
-		//leer archivos
 
+		//leer archivo de empresa
+		br = new BufferedReader(new FileReader("archivos/empresa.data"));
+
+		sCurrentLine = br.readLine();
+		parametros = sCurrentLine.split(",");
+
+		//instanciar clase empresa
+		this.empresa = new Empresa(parametros[0], parametros[1]); //nombre, rut
+		this.precioPorKilo = parametros[2];
+		this.id_pedido = parametros[3];
+		this.id_encomienda = parametros[4];		
+
+		//leer archivo de sucursales
+		br = new BufferedReader(new FileReader("archivos/sucursales.data"));
+		
+		while ((sCurrentLine = br.readLine()) != null) {
+			parametros = sCurrentLine.split(",");
+
+			sucursal = new Sucursal(parametros[0], parametros[1], parametros[2], parametros[3]); //id, sucursal, telefono, capacidad
+			this.empresa.AgregarSucursal(sucursal);
+
+		}
+
+		//leer archivo de empleados
+		br = new BufferedReader(new FileReader("archivos/empleados.data"));
+		
+		while ((sCurrentLine = br.readLine()) != null) {
+			parametros = sCurrentLine.split(",");
+
+			Empleado empleado;
+
+			if (parametros[0] == "venta") {
+				empleado = new OperarioVenta();
+			}
+
+			sucursal = new Sucursal(parametros[0], parametros[1], parametros[2], parametros[3]); //id, sucursal, telefono, capacidad
+			this.empresa.AgregarSucursal(sucursal);
+
+		}
+
+		
+		
 	}
 
 	//Get instance para singleton
