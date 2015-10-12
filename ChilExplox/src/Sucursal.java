@@ -36,7 +36,7 @@ public class Sucursal {
   }
   
   public void EnviarCamion(Camion cam){
-	  
+	  this.listaCamiones.remove(cam);
   }
 	
 }
