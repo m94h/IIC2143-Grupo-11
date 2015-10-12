@@ -22,7 +22,7 @@ public abstract class MedioDeTransporte {
 	}
 
 	public void CargarPedido(Pedido pedido){
-		if(this.capacidadActual <= this.capacidadMax){
+		if(this.capacidadActual < this.capacidadMax){
 			listaPedidos.add(pedido);
 			this.capacidadActual += 1;	
 		}

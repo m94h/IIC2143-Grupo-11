@@ -6,7 +6,7 @@ public class OperarioCamion extends Empleado {
 	}
 
 	public void DespacharCamion(Camion camion, Sucursal origen){
-
+		origen.EnviarCamion(camion);
 	}
 
 	public void AvisarArrivoCamion(Camion camion, Sucursal destino){

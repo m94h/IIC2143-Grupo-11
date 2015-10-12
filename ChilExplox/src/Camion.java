@@ -13,7 +13,7 @@ public class Camion extends MedioDeTransporte {
 		this.marca = marca;
 	}
 	
-	public String getPatente(){
+	public String GetPatente(){
 		return this.patente;
 	}
 	

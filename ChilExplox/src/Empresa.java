@@ -54,4 +54,12 @@ public class Empresa {
 	public Encomienda GetEncomienda (int id) {
 		return encomiendas.get(id);
 	}
+
+	public void AgregarTransporte(Camion camion){
+		flota.put(camion.getPatente(), camion);
+	}
+
+	public Camion GetTransporte(String patente){
+		flota.get(patente)
+	}
 }
