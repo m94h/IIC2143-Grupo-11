@@ -5,13 +5,7 @@ import java.util.Date;
 public abstract class Empleado extends Persona {
 	protected int sueldo;
 	protected List<Date> horarios_ingreso;
-<<<<<<< HEAD
 	protected List<Date> horarios_salida;	
-=======
-	protected List<Date> horarios_salida;
-  protected Sucursal sucursal;   
-	
->>>>>>> 4fef69519c3f8ebe7cfdc4067bb006b0e172689e
 
   public Empleado(String nombre, String rut, int telefono, int sueldo, Sucursal sucursal) {
     super(nombre, rut, telefono);
