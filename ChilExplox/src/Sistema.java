@@ -105,6 +105,11 @@ public class Sistema {
 	  	return vendedor.CrearEncomienda(pedido, peso, volumen);
 	}
 
+	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
+		Mensaje m = creador.CrearMensaje(texto, destino);
+		// Enviar mensaje
+	}
+
 	
 
 

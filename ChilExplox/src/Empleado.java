@@ -17,6 +17,10 @@ public abstract class Empleado extends Persona {
     this.sucursal = sucursal;
   }
 
+  public Sucursal GetSucursal() {
+    return this.sucursal;
+  }
+
   public void MarcarIngresoTrabajo (Date hora) {
     this.horarios_ingreso.add(hora);
   }
