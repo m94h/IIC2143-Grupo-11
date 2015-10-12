@@ -11,9 +11,17 @@ public class Sucursal {
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
 
-	
+	public Sucursal(String direccion, int telefono, int capacidad) {
+    this.id = Sistema.GetInstance().Get_id_sucursal();
+    this.Initialize(direccion, telefono, capacidad);
+  }
+
 	public Sucursal(int id, String direccion, int telefono, int capacidad) {
     this.id = id;
+    this.Initialize(direccion, telefono, capacidad);
+  }
+
+  private void Initialize (String direccion, int telefono, int capacidad) {
     this.direccion = direccion;
     this.telefono = telefono;
     this.capacidad = capacidad;

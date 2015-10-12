@@ -5,9 +5,13 @@ import java.io.FileReader;
 //Será una clase Singleton
 public class Sistema {
 	private static Sistema INSTANCE;
+
+	// Estos no se si los dejamos aca o en empresa
 	private int precioPorKilo;
 	private int id_pedido;
 	private int id_encomienda;
+	private int id_sucursal;
+
 	private Empresa empresa;
 
 	//Constructor privado por singleton
@@ -90,9 +94,15 @@ public class Sistema {
 		return valor;
 	}
 
-	public  int Get_id_encomienda() {
+	public int Get_id_encomienda() {
 		int valor = id_encomienda;
 		id_encomienda++;
+		return valor;
+	}
+
+	public int Get_id_sucursal() {
+		int valor = id_sucursal;
+		id_sucursal++;
 		return valor;
 	}
 
@@ -110,7 +120,7 @@ public class Sistema {
 		// Enviar mensaje
 	}
 
-	
+
 
 
 
