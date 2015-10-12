@@ -1,8 +1,8 @@
 
 public class OperarioVenta extends Empleado {
 
-	public OperarioVenta(String nombre, String rut, int telefono, int sueldo){
-		super(nombre, rut, telefono, sueldo);
+	public OperarioVenta(String nombre, String rut, int telefono, int sueldo, Sucursal sucursal){
+		super(nombre, rut, telefono, sueldo, sucursal);
 	}
 	
   public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {

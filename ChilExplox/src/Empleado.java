@@ -6,14 +6,15 @@ public abstract class Empleado extends Persona {
 	protected int sueldo;
 	protected List<Date> horarios_ingreso;
 	protected List<Date> horarios_salida;
-  // protected Sucursal pertenceA;   cada empleado deberia pertenecer a una sucursal no?
+  protected Sucursal sucursal;   
 	
 
-  public Empleado(String nombre, String rut, int telefono, int sueldo) {
+  public Empleado(String nombre, String rut, int telefono, int sueldo, Sucursal sucursal) {
     super(nombre, rut, telefono);
     this.sueldo = sueldo;
     this.horarios_ingreso = new ArrayList<Date>();
     this.horarios_salida = new ArrayList<Date>();
+    this.sucursal = sucursal;
   }
 
   public void MarcarIngresoTrabajo (Date hora) {
