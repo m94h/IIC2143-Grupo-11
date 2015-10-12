@@ -1,8 +1,8 @@
 
 public class OperarioBodega extends Empleado {
 
-	public OperarioBodega(String nombre, String rut, int telefono, int sueldo){
-		super(nombre, rut, telefono, sueldo);
+	public OperarioBodega(String nombre, String rut, int telefono, int sueldo, Sucursal sucursal){
+		super(nombre, rut, telefono, sueldo, sucursal);
 	}
 
 	public void CargarCamion(Camion camion){
@@ -10,11 +10,11 @@ public class OperarioBodega extends Empleado {
 	}
 
 	public void DescargarCamion(Camion camion){
-		camion.estado = Estado.EnSucursalDestino;
 		for(Pedido item:camion.listaPedidos)
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
+		this.sucursal.AgregarCamionListo(camion);
 	}
 
 	public void EnviarMensaje(String mensaje){
