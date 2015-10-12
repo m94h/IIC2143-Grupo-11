@@ -5,8 +5,8 @@ public class OperarioBodega extends Empleado {
 		super(nombre, rut, telefono, sueldo, sucursal);
 	}
 
-	public void CargarCamion(Camion camion){
-		// deberíamos verificar la cap del camion en algun punto y ver si se puede cargar
+	public void CargarCamion(Camion camion, Pedido pedido){
+		camion.CargarPedido(pedido);
 	}
 
 	public void DescargarCamion(Camion camion){

@@ -43,8 +43,8 @@ public class Sucursal {
     this.camionesListos.add(camion);
   }
   
-  public void EnviarCamion(Camion cam){
-	  this.camionesListos.remove(cam);
+  public void EnviarCamion(Camion camion){
+	  this.camionesListos.remove(camion);
   }
 	
 }

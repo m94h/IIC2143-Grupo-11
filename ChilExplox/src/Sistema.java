@@ -130,4 +130,12 @@ public class Sistema {
 	public  Encomienda GetEncomienda (int id) {
 		return empresa.GetEncomienda(id);
 	}
+
+	public void AgregarTransporte(Camion camion){
+		empresa.AgregarTransporte(camion);
+	}
+
+	public Camion (String patente){
+		return empresa.GetTransporte(patente);
+	}
 }
