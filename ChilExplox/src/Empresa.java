@@ -8,7 +8,7 @@ public class Empresa {
 	private String RUT;
 	private Map<Integer, Sucursal> sucursales;
 	private Map<Integer, Cliente> clientes;
-	private List<MedioDeTransporte> flota;
+	private Map<String, MedioDeTransporte> flota;
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
 
@@ -18,7 +18,7 @@ public class Empresa {
 		this.RUT = rut;
 		this.sucursales = new HashMap<Integer, Sucursal>();
 		this.clientes = new HashMap<Integer, Cliente>();
-		this.flota = new ArrayList<MedioDeTransporte>();
+		this.flota = new HashMap<String, MedioDeTransporte>();
 		this.pedidos = new HashMap<Integer, Pedido>();
 		this.encomiendas = new HashMap<Integer, Encomienda>();
 	}
@@ -29,10 +29,6 @@ public class Empresa {
 
 	public void AgregarCliente (int id, Cliente newCliente) {
 		this.clientes.put(id, newCliente);
-	}
-
-	public void AgregarVehiculo (MedioDeTransporte vehiculo) {
-		this.flota.add(vehiculo);
 	}
 
 	public void AgregarPedido(Pedido pedido) {
@@ -55,11 +51,11 @@ public class Empresa {
 		return encomiendas.get(id);
 	}
 
-	public void AgregarTransporte(Camion camion){
-		flota.put(camion.getPatente(), camion);
+	public void AgregarTransporte(MedioDeTransporte vehiculo){
+		flota.put(vehiculo.getPatente(), camion);
 	}
 
-	public Camion GetTransporte(String patente){
+	public MedioDeTransporte GetTransporte(String patente){
 		flota.get(patente)
 	}
 }

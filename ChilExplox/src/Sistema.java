@@ -141,11 +141,11 @@ public class Sistema {
 		return empresa.GetEncomienda(id);
 	}
 
-	public void AgregarTransporte(Camion camion){
-		empresa.AgregarTransporte(camion);
+	public void AgregarTransporte(MedioDeTransporte vehiculo){
+		empresa.AgregarTransporte(vehiculo);
 	}
 
-	public Camion (String patente){
+	public MedioDeTransporte GetVehiculo (String patente){
 		return empresa.GetTransporte(patente);
 	}
 }

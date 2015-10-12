@@ -1,20 +1,13 @@
 
 public class Camion extends MedioDeTransporte {
-
 	protected String marca;
 	protected String modelo;
 	protected int km;
-	protected String patente;
 
 	public Camion(int capacidadMax, String patente, String marca, String modelo){
-		super(capacidadMax);
-		this.patente = patente;
+		super(patente, capacidadMax);
 		this.modelo = modelo;
 		this.marca = marca;
-	}
-	
-	public String GetPatente(){
-		return this.patente;
 	}
 	
 }
