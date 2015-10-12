@@ -14,17 +14,17 @@ public abstract class MedioDeTransporte {
 	}	
 	
 	public void Viajar(){
-		this.estado = Viajando;
+		this.estado = Estado.Viajando;
 	}
 
 	public int GetCapacidadDisponible(){
-		return this.capacidad;
+		return (this.capacidadMax - this.capacidadActual);
 	}
 
 	public void CargarPedido(Pedido pedido){
-		if(this.capacidad <= this.capacidadMax){
+		if(this.capacidadActual <= this.capacidadMax){
 			listaPedidos.add(pedido);
-			this.capacidad += 1;	
+			this.capacidadActual += 1;	
 		}
 		else{
 			// Mensaje que ya esta lleno

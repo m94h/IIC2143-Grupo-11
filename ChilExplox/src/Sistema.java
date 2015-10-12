@@ -96,6 +96,18 @@ public class Sistema {
 		return valor;
 	}
 
+	// Interaccion con usuario
+	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+	    return vendedor.CrearPedido(cliente, origen, destino, urgencia);
+	}
+
+	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, int peso, int volumen) {
+	  	return vendedor.CrearEncomienda(pedido, peso, volumen);
+	}
+
+	
+
+
 
 	// Metodos de Empresa
 	public  void AgregarPedido(Pedido pedido) {

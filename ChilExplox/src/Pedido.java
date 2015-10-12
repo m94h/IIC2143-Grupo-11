@@ -6,7 +6,7 @@ public class Pedido {
 	private Cliente cliente;
 	private Sucursal origen;
   	private Sucursal destino;
-  	private Estado estado;
+  	public Estado estado;
   	private int urgencia;
 
   	private OrdenCompra orden_compra;
