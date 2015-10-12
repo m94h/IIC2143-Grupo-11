@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Sucursal {
   private int id;
@@ -7,6 +8,7 @@ public class Sucursal {
 	private int telefono;
 	private int capacidad;
 	private Map<Integer, Empleado> empleados;
+	private ArrayList<Camion> listaCamiones = new ArrayList<Camion>();
 
 	
 	public Sucursal(int id, String direccion, int telefono, int capacidad) {
@@ -26,7 +28,15 @@ public class Sucursal {
   }
   
   public void AgrandarSucursal(int nueva_capacidad){
-	  this.capacidad += this.capacidad + nueva_capacidad;
+	  this.capacidad = this.capacidad + nueva_capacidad;
+  }
+  
+  public void AgregarCamion(Camion cam){
+	  this.listaCamiones.add(cam);
+  }
+  
+  public void EnviarCamion(Camion cam){
+	  
   }
 	
 }

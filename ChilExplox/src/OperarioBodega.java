@@ -10,7 +10,11 @@ public class OperarioBodega extends Empleado {
 	}
 
 	public void DescargarCamion(Camion camion){
-
+		camion.estado = EnSucursalDestino;
+		for(Pedido item:camion.listaPedidos)
+		{
+			item.estado = EnSucursalDestino;
+		}
 	}
 
 	public void EnviarMensaje(String mensaje){
