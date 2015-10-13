@@ -10,6 +10,8 @@ public class Sucursal {
 	private Map<String, Empleado> empleados;
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
+  private ArrayList<>
+
 
 	public Sucursal(String direccion, int telefono, int capacidad) {
     this.id = Sistema.GetInstance().Get_id_sucursal();
@@ -21,6 +23,10 @@ public class Sucursal {
     this.Initialize(direccion, telefono, capacidad);
   }
 
+  public int GetId() {
+    return this.id;
+  }
+
   private void Initialize (String direccion, int telefono, int capacidad) {
     this.direccion = direccion;
     this.telefono = telefono;
@@ -30,8 +36,8 @@ public class Sucursal {
     this.camionesListos = new ArrayList<Camion>();
   }
 
-  public void AgregarEmpleado(String id_empleado, Empleado empleado) {
-    this.empleados.put(id_empleado, empleado);
+  public void AgregarEmpleado(Empleado empleado) {
+    this.empleados.put(empleado.GetRut(), empleado);
   }
   
   public void CambiarDireccion(String nuevaDireccion){
@@ -53,6 +59,10 @@ public class Sucursal {
   
   public void EnviarCamion(Camion camion){
 	  this.camionesListos.remove(camion);
+  }
+
+  public void AgregarPedido(Pedido pedido){
+
   }
 	
 }

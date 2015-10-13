@@ -62,6 +62,7 @@ public class Sistema {
 		int capacidad;
 		Sucursal sucursal;
 		
+<<<<<<< HEAD
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				parametros = sCurrentLine.split(";");
@@ -77,7 +78,6 @@ public class Sistema {
 				catch(Exception e) {
 					// Error en los archivos
 				}
-
 			}
 		} catch (IOException e2) {
 			// Error en la lectura
@@ -123,10 +123,6 @@ public class Sistema {
 					sucursal.AgregarEmpleado(empleado_id, empleado);
 
 				}
-				catch(Exception e) {
-					// Error en los archivos
-				}
-
 			}
 		} catch (IOException e1) {
 			// Error en lectura
@@ -158,12 +154,10 @@ public class Sistema {
 				catch(Exception e) {
 					// Error en los archivos
 				}
-
 			}
 		} catch (IOException e) {
 			// Error en la lectura
 		}
-		
 	}
 
 	//Get instance para singleton
