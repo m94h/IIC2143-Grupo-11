@@ -6,6 +6,7 @@ import java.io.IOException;
 //Fachada, Sistema
 //Será una clase Singleton
 public class Sistema {
+	//Se define la instancia para que sea singleton
 	private static Sistema INSTANCE = new Sistema();
 
 	// Estos no se si los dejamos aca o en empresa
@@ -23,6 +24,7 @@ public class Sistema {
 		String sCurrentLine = "";
 		BufferedReader br = null;
 		String [] parametros;
+		//A continuacion se leen los archivos de datos para cargarlos
 
 		//leer archivo de empresa
 		try {
@@ -62,7 +64,6 @@ public class Sistema {
 		int capacidad;
 		Sucursal sucursal;
 		
-<<<<<<< HEAD
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				parametros = sCurrentLine.split(";");
