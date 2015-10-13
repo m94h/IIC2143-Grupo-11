@@ -253,7 +253,7 @@ public class Sistema {
 		}
 
 	}
-	*/
+	/*
 
 	//Get instance para singleton
 	public static Sistema GetInstance() {

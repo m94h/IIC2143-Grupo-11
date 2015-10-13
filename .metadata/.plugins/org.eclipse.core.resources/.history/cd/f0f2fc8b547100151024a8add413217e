@@ -47,7 +47,7 @@ public class Empresa {
 		return this.clientes;
 	}
 
-	public Map<Integer, Sucursal> GetSucursales() {
+	public Map<Integer, Sucursal> GetScursales() {
 		return this.sucursales;
 	}
 

@@ -2,9 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 //Fachada, Sistema
 //Será una clase Singleton
@@ -171,7 +168,6 @@ public class Sistema {
 
 	}
 
-	/*
 	public void Guardar() {
 
 		//Definir escritor
@@ -183,7 +179,7 @@ public class Sistema {
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
 
-			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorKilo) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda));
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  this.precioPorKilo.toString() + ";" + this.id_pedido.toString() + ";" + this.id_encomienda.toString());
 
 		} catch (FileNotFoundException e) {
 			// Archivo no encontrado
@@ -206,7 +202,7 @@ public class Sistema {
 
 				try {
 
-					writer.println(Integer.toString(sucursal.GetId()) + ";" + sucursal.GetDireccion() + ";" + sucursal.GetTelefono.toString() + ";" + sucursal.GetCapacidad().toString());
+					writer.println(sucursal.GetId().toString() + ";" + sucursal.GetDireccion() + ";" + sucursal.GetTelefono.toString() + ";" + sucursal.GetCapacidad().toString());
 
 					//recorrer listado de empleados
 					Iterator it_empleado = sucursal.GetEmpleados().entrySet().iterator();
@@ -253,7 +249,6 @@ public class Sistema {
 		}
 
 	}
-	*/
 
 	//Get instance para singleton
 	public static Sistema GetInstance() {
