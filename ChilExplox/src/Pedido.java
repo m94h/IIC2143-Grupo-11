@@ -14,13 +14,22 @@ public class Pedido {
 
   	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     	this.id = Sistema.GetInstance().Get_id_pedido();
-    	this.cliente = cliente;
-    	this.origen = origen;
-    	this.destino = destino;
-    	this.urgencia = urgencia;
-    	this.estado = Estado.EnSucursalOrigen;
-    	this.encomiendas = new ArrayList<Encomienda>();
+      Initialize(cliente, origen, destino, urgencia);
   	}
+
+    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+      this.id = id;
+      Initialize(cliente, origen, destino, urgencia);
+    }
+
+    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+      this.cliente = cliente;
+      this.origen = origen;
+      this.destino = destino;
+      this.urgencia = urgencia;
+      this.estado = Estado.EnSucursalOrigen;
+      this.encomiendas = new ArrayList<Encomienda>();
+    }
 
   	public int GetId() {return id;}
 
