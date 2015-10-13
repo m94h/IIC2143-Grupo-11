@@ -190,16 +190,21 @@ public class Sistema {
 
 	// Interaccion con usuario
 	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-	    return vendedor.CrearPedido(cliente, origen, destino, urgencia);
+	    return vendedor.CrearPedido(cliente, origen, destino, urgencia); // Retorna el id del pedido
 	}
 
 	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, int peso, int volumen) {
-	  	return vendedor.CrearEncomienda(pedido, peso, volumen);
+	  	return vendedor.CrearEncomienda(pedido, peso, volumen); // Retorna el id de la encomienda
 	}
 
 	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
 		Mensaje m = creador.CrearMensaje(texto, destino);
 		// Enviar mensaje
+	}
+
+	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
+		Cliente c = new Cliente (rut, nombre, telefono, direccion);
+		empresa.AgregarCliente(c);
 	}
 
 
