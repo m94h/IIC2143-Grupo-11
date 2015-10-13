@@ -7,13 +7,23 @@ public class Pedido {
 	private Sucursal origen;
   	private Sucursal destino;
   	public Estado estado;
-  	private int urgencia;
+  	private PrioridadPedido prioridad;
+    private int urgencia;
 
   	private OrdenCompra orden_compra;
   	private List<Encomienda> encomiendas;
 
   	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     	this.id = Sistema.GetInstance().Get_id_pedido();
+    	this.cliente = cliente;
+    	this.origen = origen;
+    	this.destino = destino;
+    	this.urgencia = urgencia;
+    	this.estado = Estado.EnSucursalOrigen;
+    	this.encomiendas = new ArrayList<Encomienda>();
+      if(this.urgencia == 1) {this.prioridad = PrioridadPedido.Baja;}
+      else if(this.urgencia == 2) {this.prioridad = PrioridadPedido.Media;}
+      else{this.prioridad = PrioridadPedido.Alta}
       Initialize(cliente, origen, destino, urgencia);
   	}
 
