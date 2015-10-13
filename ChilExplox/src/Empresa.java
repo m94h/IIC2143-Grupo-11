@@ -7,7 +7,7 @@ public class Empresa {
 	private String nombre;
 	private String RUT;
 	private Map<Integer, Sucursal> sucursales;
-	private Map<Integer, Cliente> clientes;
+	private Map<String, Cliente> clientes;
 	private Map<String, MedioDeTransporte> flota;
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
@@ -17,7 +17,7 @@ public class Empresa {
 		this.nombre = nombre;
 		this.RUT = rut;
 		this.sucursales = new HashMap<Integer, Sucursal>();
-		this.clientes = new HashMap<Integer, Cliente>();
+		this.clientes = new HashMap<String, Cliente>();
 		this.flota = new HashMap<String, MedioDeTransporte>();
 		this.pedidos = new HashMap<Integer, Pedido>();
 		this.encomiendas = new HashMap<Integer, Encomienda>();
@@ -27,8 +27,8 @@ public class Empresa {
 		this.sucursales.put(id, newSucursal);
 	}
 
-	public void AgregarCliente (int id, Cliente newCliente) {
-		this.clientes.put(id, newCliente);
+	public void AgregarCliente (Cliente newCliente) {
+		this.clientes.put(newCliente.GetRut(), newCliente);
 	}
 
 	public void AgregarPedido(Pedido pedido) {

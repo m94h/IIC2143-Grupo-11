@@ -10,4 +10,8 @@ public abstract class Persona {
 		this.telefono = telefono;
 	}
 
+	public String GetRut() {
+		return RUT;
+	}
+
 }
