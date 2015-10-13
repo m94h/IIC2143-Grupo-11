@@ -14,4 +14,12 @@ public abstract class Persona {
 		return RUT;
 	}
 
+  public String GetNombre() {
+    return this.nombre;
+  }
+
+  public int GetTelefono() {
+    return this.telefono;
+  }
+
 }
