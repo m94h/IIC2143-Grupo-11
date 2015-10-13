@@ -10,6 +10,8 @@ public class Sucursal {
 	private Map<Integer, Empleado> empleados;
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
+  private ArrayList<>
+
 
 	public Sucursal(String direccion, int telefono, int capacidad) {
     this.id = Sistema.GetInstance().Get_id_sucursal();
@@ -53,6 +55,10 @@ public class Sucursal {
   
   public void EnviarCamion(Camion camion){
 	  this.camionesListos.remove(camion);
+  }
+
+  public void AgregarPedido(Pedido pedido){
+
   }
 	
 }

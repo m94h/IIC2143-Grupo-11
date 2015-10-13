@@ -7,7 +7,8 @@ public class Pedido {
 	private Sucursal origen;
   	private Sucursal destino;
   	public Estado estado;
-  	private int urgencia;
+  	private PrioridadPedido prioridad;
+    private int urgencia;
 
   	private OrdenCompra orden_compra;
   	private List<Encomienda> encomiendas;
@@ -20,6 +21,9 @@ public class Pedido {
     	this.urgencia = urgencia;
     	this.estado = Estado.EnSucursalOrigen;
     	this.encomiendas = new ArrayList<Encomienda>();
+      if(this.urgencia == 1) {this.prioridad = PrioridadPedido.Baja;}
+      else if(this.urgencia == 2) {this.prioridad = PrioridadPedido.Media;}
+      else{this.prioridad = PrioridadPedido.Alta}
   	}
 
   	public int GetId() {return id;}
