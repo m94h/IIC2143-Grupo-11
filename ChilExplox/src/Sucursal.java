@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Sucursal {
   private int id;
@@ -10,8 +11,7 @@ public class Sucursal {
 	private Map<String, Empleado> empleados;
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
-  private ArrayList<>
-
+  private ArrayList<Pedido> pedidos;
 
 	public Sucursal(String direccion, int telefono, int capacidad) {
     this.id = Sistema.GetInstance().Get_id_sucursal();
@@ -58,7 +58,13 @@ public class Sucursal {
   }
 
   public void AgregarPedido(Pedido pedido){
-
+    int auxPos = 0;
+    for(int i = pedidos.size(); i > 0 ; i--){
+      if(pedido.prioridad >= pedidos[i].prioridad){
+        auxPos = i;
+      }
+    }
+    pedidos.add(auxPos, pedido)
   }
 	
 }
