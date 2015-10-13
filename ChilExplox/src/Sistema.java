@@ -4,7 +4,7 @@ import java.io.FileReader;
 //Fachada, Sistema
 //Será una clase Singleton
 public class Sistema {
-	private static Sistema INSTANCE;
+	private static Sistema INSTANCE = new Sistema();
 
 	// Estos no se si los dejamos aca o en empresa
 	private int precioPorKilo;
@@ -56,22 +56,26 @@ public class Sistema {
 
 		//leer archivo de empleados
 		br = new BufferedReader(new FileReader("archivos/empleados.data"));
-		
+
+		Empleado empleado;
+		Sucursal sucursal;
+		int sucursal_id;
+
 		while ((sCurrentLine = br.readLine()) != null) {
 			parametros = sCurrentLine.split(",");
-
-
-			// Aqui hay que arreglar, no entiendo nada, el que hizo esto que me explique lo que trato de hacer
-			Empleado empleado;
-			int sucursal_id;
+			sucursal_id = (int) parametros[0];
+			sucursal = this.empresa.GetSucursal(sucursal_id);
+			empleado_id = (int) parametros[1];
 
 			if (parametros[0] == "venta") {
-				sucursal_id = parametros[0];
-				empleado_id = parametros[1];
-				empleado = new OperarioVenta(parametros[1], parametros[2], parametros[3], parametros[4]);
+				empleado = new OperarioVenta(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
+			} else if (parametros[0] == "camion") {
+				empleado = new OperarioCamion(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
+			} else if (parametros[0] == "bodega") {
+				empleado = new OperarioBodega(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
 			}
 
-			this.empresa.GetSucursal(sucursal_id).AgregarEmpleado(empleado_id, empleado);
+			sucursal.AgregarEmpleado(empleado_id, empleado);
 
 		}
 
