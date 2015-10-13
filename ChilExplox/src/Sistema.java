@@ -4,6 +4,7 @@ import java.io.FileReader;
 //Fachada, Sistema
 //Será una clase Singleton
 public class Sistema {
+	//Se define la instancia para que sea singleton
 	private static Sistema INSTANCE = new Sistema();
 
 	// Estos no se si los dejamos aca o en empresa
@@ -17,7 +18,9 @@ public class Sistema {
 	//Constructor privado por singleton
 	private Sistema() {
 
-		//Definir buferes
+		//A continuacion se leen los archivos de datos para cargarlos
+
+		//Definir buferes para lectura
 		String sCurrentLine;
 		BufferedReader br;
 		String [] parametros;
