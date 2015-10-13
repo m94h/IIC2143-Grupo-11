@@ -69,6 +69,5 @@ public class Sucursal {
       }
     }
     pedidos.add(auxPos, pedido)
-  }
-	
+  }	
 }

@@ -207,6 +207,9 @@ public class Sistema {
 		empresa.AgregarCliente(c);
 	}
 
+	public String SolicitarCamion(OperarioBodega solicitador){
+		solicitador.PedirCamion();
+	}
 
 
 
