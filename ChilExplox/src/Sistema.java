@@ -19,7 +19,10 @@ public class Sistema {
 
 	//Constructor privado por singleton
 	private Sistema() {
+		this.LeerYCrear();
+	}
 
+	private void LeerYCrear() {
 		//Definir buferes
 		String sCurrentLine = "";
 		BufferedReader br = null;
@@ -162,6 +165,89 @@ public class Sistema {
 		} catch (IOException e) {
 			// Error en la lectura
 		}
+
+	}
+
+	public void Guardar() {
+
+		//Definir escritor
+		PrintWriter writer;
+
+		//A continuacion se guardan los datos en los archivos
+
+		//guardar archivo de empresa
+		try {
+			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
+
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  this.precioPorKilo.toString() + ";" + this.id_pedido.toString() + ";" + this.id_encomienda.toString());
+
+		} catch (FileNotFoundException e) {
+			// Archivo no encontrado
+		}
+
+		//guardar archivo de sucursales
+		try {
+			writer = new PrintWriter("archivos/sucursales.data", "UTF-8");
+
+			PrintWriter writer_empleados = new PrintWriter("archivos/empleados.data", "UTF-8");
+
+			//Iterar sobre las sucursales
+			Iterator it = this.empresa.GetSucursales().entrySet().iterator();
+			Map.Entry e;
+			Sucursal sucursal;
+
+			while (it.hasNext()) {
+				e = (Map.Entry)it.next();
+				sucursal = (Sucursal) e.getValue;
+
+				try {
+
+					writer.println(sucursal.GetId().toString() + ";" + sucursal.GetDireccion() + ";" + sucursal.GetTelefono.toString() + ";" + sucursal.GetCapacidad().toString());
+
+					//recorrer listado de empleados
+					Iterator it_empleado = sucursal.GetEmpleados().entrySet().iterator();
+					Map.Entry e_empleado;
+					Empleado empleado;
+
+					while (it_empleado.hasNext()) {
+						e_empleado = (Map.Entry)it.next();
+						empleado = (Empleado) e.getValue;
+
+						writer.println(sucursal.GetId().toString() + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + empleado.GetTelefono().toString() + ";" + empleado.GetSueldo().toString());
+					}
+				
+				} catch (FileNotFoundException e4) {
+					// Archivo no encontrado
+				}
+
+			}
+
+		} catch (FileNotFoundException e2) {
+			// Archivo no encontrado
+		}
+
+		//guardar archivo de clientes
+		try {
+			writer = new PrintWriter("archivos/clientes.data", "UTF-8");
+
+			//Iterar sobre los clientes
+			Iterator it = this.empresa.GetClientes().entrySet().iterator();
+			Map.Entry e;
+			Cliente cliente;
+
+			while (it.hasNext()) {
+				e = (Map.Entry)it.next();
+				cliente = (Cliente) e.getValue;
+
+				writer.println(cliente.GetRut() + ";" + cliente.GetNombre() + ";" + cliente.GetTelefono().toString() + ";" + cliente.GetDireccion());
+
+			}
+
+
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
 	}
 
 	//Get instance para singleton
@@ -209,10 +295,6 @@ public class Sistema {
 		Cliente c = new Cliente (rut, nombre, telefono, direccion);
 		empresa.AgregarCliente(c);
 	}
-
-
-
-
 
 	// Metodos de Empresa
 	public  void AgregarPedido(Pedido pedido) {
