@@ -23,10 +23,6 @@ public class Sucursal {
     this.Initialize(direccion, telefono, capacidad);
   }
 
-  public int GetId() {
-    return this.id;
-  }
-
   private void Initialize (String direccion, int telefono, int capacidad) {
     this.direccion = direccion;
     this.telefono = telefono;
@@ -34,6 +30,26 @@ public class Sucursal {
     this.empleados = new HashMap<String, Empleado>();
     this.camionesEsperando = new ArrayList<Camion>();
     this.camionesListos = new ArrayList<Camion>();
+  }
+
+  public int GetId() {
+    return this.id;
+  }
+
+  public String GetDireccion() {
+    return this.direccion;
+  }
+
+  public int GetTelefono() {
+    return this.telefono;
+  }
+
+  public int GetCapacidad() {
+    return this.capacidad;
+  }
+
+  public Map<String, Empleado> GetEmpleados() {
+    return this.empleados;
   }
 
   public void AgregarEmpleado(Empleado empleado) {

@@ -32,30 +32,46 @@ public class Empresa {
 	}
 
 	public void AgregarPedido(Pedido pedido) {
-		pedidos.put(pedido.GetId(), pedido);
+		this.pedidos.put(pedido.GetId(), pedido);
+	}
+
+	public String GetNombre() {
+		return this.nombre;
+	}
+
+	public String GetRut() {
+		return this.RUT;
+	}
+
+	public Map<String, Cliente> GetClientes() {
+		return this.clientes;
+	}
+
+	public Map<Integer, Sucursal> GetScursales() {
+		return this.sucursales;
 	}
 
 	public Sucursal GetSucursal(int id) {
-		return sucursales.get(id);
+		return this.sucursales.get(id);
 	}
 
 	public Pedido GetPedido (int id) {
-		return pedidos.get(id);
+		return this.pedidos.get(id);
 	}
 
 	public void AgregarEncomienda(Encomienda encomienda) {
-		encomiendas.put(encomienda.GetId(), encomienda);
+		this.encomiendas.put(encomienda.GetId(), encomienda);
 	}
 
 	public Encomienda GetEncomienda (int id) {
-		return encomiendas.get(id);
+		return this.encomiendas.get(id);
 	}
 
 	public void AgregarTransporte(MedioDeTransporte vehiculo){
-		flota.put(vehiculo.GetPatente(), vehiculo);
+		this.flota.put(vehiculo.GetPatente(), vehiculo);
 	}
 
 	public MedioDeTransporte GetTransporte(String patente){
-		return flota.get(patente);
+		return this.flota.get(patente);
 	}
 }

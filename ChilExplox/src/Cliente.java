@@ -7,4 +7,8 @@ public class Cliente extends Persona {
     this.direccion = direccion;
 	}
 
+  public String GetDireccion() {
+    return this.direccion;
+  }
+
 }
