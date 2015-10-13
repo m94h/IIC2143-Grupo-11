@@ -18,7 +18,9 @@ public class OperarioBodega extends Empleado {
 		this.sucursal.AgregarCamionListo(camion);
 	}
 
-	public Mensaje CrearMensaje(String mensaje, Sucursal destino){
-		return new Mensaje(mensaje, destino, this);
+	public void CrearMensaje(String mensaje, Sucursal destino) {
+		Mensaje m = new Mensaje(mensaje, destino, this);
+		//Enviar
+		destino.RecibirMensaje(m);
 	}
 }

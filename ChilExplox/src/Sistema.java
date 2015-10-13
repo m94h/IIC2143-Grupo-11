@@ -284,8 +284,7 @@ public class Sistema {
 	}
 
 	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
-		Mensaje m = creador.CrearMensaje(texto, destino);
-		// Enviar mensaje
+		creador.CrearMensaje(texto, destino);
 	}
 
 	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
