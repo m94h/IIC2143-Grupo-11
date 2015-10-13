@@ -11,7 +11,7 @@ public class OperarioBodega extends Empleado {
 	}
 
 	public void DescargarCamion(Camion camion){
-		for(int i = 0; i < camion.listaPedidos.size(); i++)
+		for(Pedido item:camion.listaPedidos)
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
@@ -22,5 +22,11 @@ public class OperarioBodega extends Empleado {
 		Mensaje m = new Mensaje(mensaje, destino, this);
 		//Enviar
 		destino.RecibirMensaje(m);
+	}
+
+	public String PedirCamion(){
+		// solicitar a la empresa un camion, retorna la patente de este
+
+		return camion.GetPatente();
 	}
 }

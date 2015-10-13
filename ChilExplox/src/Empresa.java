@@ -74,4 +74,15 @@ public class Empresa {
 	public MedioDeTransporte GetTransporte(String patente){
 		return this.flota.get(patente);
 	}
+
+	public Camion EntregarCamion(){
+		String auxPat;
+		for(Camion item:this.flota)
+		{
+			if(item.Disponible()){
+				auxPat = item.GetPatente();
+			}
+		}
+		return flota[auxPat];
+	}
 }
