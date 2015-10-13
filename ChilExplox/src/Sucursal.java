@@ -7,7 +7,7 @@ public class Sucursal {
 	private String direccion;
 	private int telefono;
 	private int capacidad;
-	private Map<Integer, Empleado> empleados;
+	private Map<String, Empleado> empleados;
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
   private ArrayList<>
@@ -27,12 +27,12 @@ public class Sucursal {
     this.direccion = direccion;
     this.telefono = telefono;
     this.capacidad = capacidad;
-    this.empleados = new HashMap<Integer, Empleado>();
+    this.empleados = new HashMap<String, Empleado>();
     this.camionesEsperando = new ArrayList<Camion>();
     this.camionesListos = new ArrayList<Camion>();
   }
 
-  public void AgregarEmpleado(int id_empleado, Empleado empleado) {
+  public void AgregarEmpleado(String id_empleado, Empleado empleado) {
     this.empleados.put(id_empleado, empleado);
   }
   
