@@ -52,10 +52,10 @@ public class Empresa {
 	}
 
 	public void AgregarTransporte(MedioDeTransporte vehiculo){
-		flota.put(vehiculo.GetPatente(), vehiculo);
+		flota.put(vehiculo.getPatente(), camion);
 	}
 
 	public MedioDeTransporte GetTransporte(String patente){
-		return flota.get(patente);
+		flota.get(patente)
 	}
 }
