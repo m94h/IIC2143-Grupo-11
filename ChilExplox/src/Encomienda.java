@@ -6,6 +6,15 @@ public class Encomienda {
 	
 	public Encomienda (int peso, int volumen) {
 		this.id = Sistema.GetInstance().Get_id_encomienda();
+		Initialize(peso, volumen);
+	}
+
+	public Encomienda (int id, int peso, int volumen) {
+		this.id = id;
+		Initialize(peso, volumen);
+	}
+
+	private void Initialize(int peso, int volumen) {
 		this.peso = peso;
 		this.volumen = volumen;
 	}

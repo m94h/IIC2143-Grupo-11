@@ -24,7 +24,22 @@ public class Pedido {
       if(this.urgencia == 1) {this.prioridad = PrioridadPedido.Baja;}
       else if(this.urgencia == 2) {this.prioridad = PrioridadPedido.Media;}
       else{this.prioridad = PrioridadPedido.Alta}
+      Initialize(cliente, origen, destino, urgencia);
   	}
+
+    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+      this.id = id;
+      Initialize(cliente, origen, destino, urgencia);
+    }
+
+    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+      this.cliente = cliente;
+      this.origen = origen;
+      this.destino = destino;
+      this.urgencia = urgencia;
+      this.estado = Estado.EnSucursalOrigen;
+      this.encomiendas = new ArrayList<Encomienda>();
+    }
 
   	public int GetId() {return id;}
 
