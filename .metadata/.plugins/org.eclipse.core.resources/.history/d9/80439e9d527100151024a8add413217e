@@ -74,7 +74,7 @@ public class Sistema {
 					telefono = Integer.parseInt(parametros[2]);
 					capacidad = Integer.parseInt(parametros[3]);
 					sucursal = new Sucursal(id_sucursal, direccion, telefono, capacidad);
-					this.empresa.AgregarSucursal(sucursal);
+					this.empresa.AgregarSucursal(id_sucursal, sucursal);
 				}
 				catch(Exception e) {
 					// Error en los archivos
@@ -123,9 +123,10 @@ public class Sistema {
 
 					sucursal.AgregarEmpleado(empleado);
 				}
-				catch (Exception e) {
+				catch () {
 					// Error en el parseo
 					}
+				}
 			}
 		} 
 		catch (IOException e1) {

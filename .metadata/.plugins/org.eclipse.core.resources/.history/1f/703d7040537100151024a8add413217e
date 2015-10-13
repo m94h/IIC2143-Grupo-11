@@ -67,7 +67,7 @@ public class Sucursal {
       return true;
     }
     for(int i = 0; i < pedidos.size(); i++){
-      if(pedido.GetUrgencia().ordinal() > pedidos.get(i).GetUrgencia().ordinal()) {
+      if(pedido.GetUrgencia() > pedidos[i].GetUrgencia()) {
         pedidos.add(i, pedido);
         return true;
       }
