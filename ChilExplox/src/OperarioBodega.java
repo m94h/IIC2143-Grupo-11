@@ -11,7 +11,7 @@ public class OperarioBodega extends Empleado {
 	}
 
 	public void DescargarCamion(Camion camion){
-		for(Pedido item:camion.listaPedidos)
+		for(int i = 0; i < camion.listaPedidos.size(); i++)
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
