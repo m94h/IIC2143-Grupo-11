@@ -292,14 +292,18 @@ public class Sistema {
 	}
 
 	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
-		Mensaje m = creador.CrearMensaje(texto, destino);
-		// Enviar mensaje
+		creador.CrearMensaje(texto, destino);
 	}
 
 	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
 		Cliente c = new Cliente (rut, nombre, telefono, direccion);
 		empresa.AgregarCliente(c);
 	}
+
+	public String SolicitarCamion(OperarioBodega solicitador){
+		solicitador.PedirCamion();
+	}
+
 
 	// Metodos de Empresa
 	public  void AgregarPedido(Pedido pedido) {

@@ -12,6 +12,7 @@ public class Sucursal {
 	private ArrayList<Camion> camionesEsperando;
   private ArrayList<Camion> camionesListos;
   private ArrayList<Pedido> pedidos;
+  private ArrayList<Mensaje> cola_mensajes;
 
 	public Sucursal(String direccion, int telefono, int capacidad) {
     this.id = Sistema.GetInstance().Get_id_sucursal();
@@ -30,6 +31,7 @@ public class Sucursal {
     this.empleados = new HashMap<String, Empleado>();
     this.camionesEsperando = new ArrayList<Camion>();
     this.camionesListos = new ArrayList<Camion>();
+    this.cola_mensajes = new ArrayList<Mensaje>();
   }
 
   public int GetId() {
@@ -88,7 +90,21 @@ public class Sucursal {
         return true;
       }
     }
-    return false;
+    pedidos.add(auxPos, pedido)
+  }
+
+  public void RecibirMensaje(Mensaje mensaje) {
+    this.cola_mensajes.add(mensaje);
+  }
+
+  public Mensaje GetUltimoMensaje() {
+    if (this.cola_mensajes.size() > 0) {
+      //Get el primer mensaje y luego removerlo de la lista
+      Mensaje ret = this.cola_mensajes[0];
+      this.cola_mensajes.remove(0);
+      return ret;
+    }
+    return null;
   }
 	
 }
