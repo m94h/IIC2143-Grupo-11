@@ -23,8 +23,8 @@ public class Empresa {
 		this.encomiendas = new HashMap<Integer, Encomienda>();
 	}
 	
-	public void AgregarSucursal (int id, Sucursal newSucursal) {
-		this.sucursales.put(id, newSucursal);
+	public void AgregarSucursal (Sucursal newSucursal) {
+		this.sucursales.put(newSucursal.GetId(), newSucursal);
 	}
 
 	public void AgregarCliente (Cliente newCliente) {

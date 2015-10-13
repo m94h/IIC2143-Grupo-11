@@ -57,7 +57,7 @@ public class Sistema {
 				telefono = Integer.parseInt(parametros[2]);
 				capacidad = Integer.parseInt(parametros[3]);
 				sucursal = new Sucursal(id, direccion, telefono, capacidad);
-				this.empresa.AgregarSucursal(id, sucursal);
+				this.empresa.AgregarSucursal(sucursal);
 			}
 			catch(Exception e) {
 				// Error en los archivos
@@ -99,7 +99,7 @@ public class Sistema {
 					continue;
 				}
 
-				sucursal.AgregarEmpleado(empleado_id, empleado);
+				sucursal.AgregarEmpleado(empleado);
 
 			}
 			catch(Exception e) {
@@ -127,7 +127,7 @@ public class Sistema {
 
 				cliente = new Cliente(cliente_id, nombre, telefono, direccion);
 
-				this.empresa.AgregarCliente(cliente_id, cliente);
+				this.empresa.AgregarCliente(cliente);
 			}
 			catch(Exception e) {
 				// Error en los archivos

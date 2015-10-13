@@ -21,6 +21,10 @@ public class Sucursal {
     this.Initialize(direccion, telefono, capacidad);
   }
 
+  public int GetId() {
+    return this.id;
+  }
+
   private void Initialize (String direccion, int telefono, int capacidad) {
     this.direccion = direccion;
     this.telefono = telefono;
@@ -30,8 +34,8 @@ public class Sucursal {
     this.camionesListos = new ArrayList<Camion>();
   }
 
-  public void AgregarEmpleado(String id_empleado, Empleado empleado) {
-    this.empleados.put(id_empleado, empleado);
+  public void AgregarEmpleado(Empleado empleado) {
+    this.empleados.put(empleado.GetRut(), empleado);
   }
   
   public void CambiarDireccion(String nuevaDireccion){
