@@ -288,18 +288,11 @@ public class Sistema {
 		// Enviar mensaje
 	}
 
-<<<<<<< HEAD
-=======
 	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
 		Cliente c = new Cliente (rut, nombre, telefono, direccion);
 		empresa.AgregarCliente(c);
 	}
 
-
-
-
-
->>>>>>> dc5c5abb33c2250400cb5e7c9f14dd366193e895
 	// Metodos de Empresa
 	public  void AgregarPedido(Pedido pedido) {
 		empresa.AgregarPedido(pedido);
