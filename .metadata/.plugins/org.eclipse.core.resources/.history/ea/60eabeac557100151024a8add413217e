@@ -90,7 +90,7 @@ public class Sucursal {
         return true;
       }
     }
-    return false;
+    pedidos.add(auxPos, pedido)
   }
 
   public void RecibirMensaje(Mensaje mensaje) {
@@ -100,7 +100,7 @@ public class Sucursal {
   public Mensaje GetUltimoMensaje() {
     if (this.cola_mensajes.size() > 0) {
       //Get el primer mensaje y luego removerlo de la lista
-      Mensaje ret = this.cola_mensajes.get(0);
+      Mensaje ret = this.cola_mensajes[0];
       this.cola_mensajes.remove(0);
       return ret;
     }

@@ -75,7 +75,6 @@ public class Empresa {
 		return this.flota.get(patente);
 	}
 
-	/*
 	public Camion EntregarCamion(){
 		String auxPat;
 		for(Camion item:this.flota)
@@ -86,5 +85,4 @@ public class Empresa {
 		}
 		return flota[auxPat];
 	}
-	*/
 }
