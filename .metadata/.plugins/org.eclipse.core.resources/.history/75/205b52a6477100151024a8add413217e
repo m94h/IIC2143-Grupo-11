@@ -25,7 +25,7 @@ public class Sucursal {
     this.direccion = direccion;
     this.telefono = telefono;
     this.capacidad = capacidad;
-    this.empleados = new HashMap<String, Empleado>();
+    this.empleados = new HashMap<Stromg, Empleado>();
     this.camionesEsperando = new ArrayList<Camion>();
     this.camionesListos = new ArrayList<Camion>();
   }

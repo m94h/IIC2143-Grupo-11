@@ -20,8 +20,8 @@ public class Sistema {
 	private Sistema() {
 
 		//Definir buferes
-		String sCurrentLine = "";
-		BufferedReader br = null;
+		String sCurrentLine;
+		BufferedReader br;
 		String [] parametros;
 
 		//leer archivo de empresa
@@ -133,35 +133,27 @@ public class Sistema {
 		}
 
 		//leer archivo de clientes
-		try {
-			br = new BufferedReader(new FileReader("archivos/clientes.data"));
-		} catch (FileNotFoundException e1) {
-			// Archivo no encontrado
-		}
+		br = new BufferedReader(new FileReader("archivos/clientes.data"));
 
 		Cliente cliente;
 		String rut;
 
-		try {
-			while ((sCurrentLine = br.readLine()) != null) {
-				try {
-					parametros = sCurrentLine.split(";");
-					rut = parametros[0];  // es el rut
-					nombre = parametros[1];
-					telefono = Integer.parseInt(parametros[2]);
-					direccion = parametros[3];
+		while ((sCurrentLine = br.readLine()) != null) {
+			try {
+				parametros = sCurrentLine.split(";");
+				rut = parametros[0];  // es el rut
+				nombre = parametros[1];
+				telefono = Integer.parseInt(parametros[2]);
+				direccion = parametros[3];
 
-					cliente = new Cliente(rut, nombre, telefono, direccion);
+				cliente = new Cliente(rut, nombre, telefono, direccion);
 
-					this.empresa.AgregarCliente(cliente);
-				}
-				catch(Exception e) {
-					// Error en los archivos
-				}
-
+				this.empresa.AgregarCliente(cliente);
 			}
-		} catch (IOException e) {
-			// Error en la lectura
+			catch(Exception e) {
+				// Error en los archivos
+			}
+
 		}
 		
 	}
