@@ -6,7 +6,6 @@ import java.io.IOException;
 //Fachada, Sistema
 //Será una clase Singleton
 public class Sistema {
-	//Se define la instancia para que sea singleton
 	private static Sistema INSTANCE = new Sistema();
 
 	// Estos no se si los dejamos aca o en empresa
@@ -21,10 +20,9 @@ public class Sistema {
 	private Sistema() {
 
 		//Definir buferes
-		String sCurrentLine = "";
-		BufferedReader br = null;
+		String sCurrentLine;
+		BufferedReader br;
 		String [] parametros;
-		//A continuacion se leen los archivos de datos para cargarlos
 
 		//leer archivo de empresa
 		try {
@@ -79,6 +77,7 @@ public class Sistema {
 				catch(Exception e) {
 					// Error en los archivos
 				}
+
 			}
 		} catch (IOException e2) {
 			// Error en la lectura
@@ -124,41 +123,39 @@ public class Sistema {
 					sucursal.AgregarEmpleado(empleado_id, empleado);
 
 				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+
 			}
 		} catch (IOException e1) {
 			// Error en lectura
 		}
 
 		//leer archivo de clientes
-		try {
-			br = new BufferedReader(new FileReader("archivos/clientes.data"));
-		} catch (FileNotFoundException e1) {
-			// Archivo no encontrado
-		}
+		br = new BufferedReader(new FileReader("archivos/clientes.data"));
 
 		Cliente cliente;
 		String rut;
 
-		try {
-			while ((sCurrentLine = br.readLine()) != null) {
-				try {
-					parametros = sCurrentLine.split(";");
-					rut = parametros[0];  // es el rut
-					nombre = parametros[1];
-					telefono = Integer.parseInt(parametros[2]);
-					direccion = parametros[3];
+		while ((sCurrentLine = br.readLine()) != null) {
+			try {
+				parametros = sCurrentLine.split(";");
+				rut = parametros[0];  // es el rut
+				nombre = parametros[1];
+				telefono = Integer.parseInt(parametros[2]);
+				direccion = parametros[3];
 
-					cliente = new Cliente(rut, nombre, telefono, direccion);
+				cliente = new Cliente(rut, nombre, telefono, direccion);
 
-					this.empresa.AgregarCliente(cliente);
-				}
-				catch(Exception e) {
-					// Error en los archivos
-				}
+				this.empresa.AgregarCliente(cliente);
 			}
-		} catch (IOException e) {
-			// Error en la lectura
+			catch(Exception e) {
+				// Error en los archivos
+			}
+
 		}
+		
 	}
 
 	//Get instance para singleton
@@ -190,21 +187,16 @@ public class Sistema {
 
 	// Interaccion con usuario
 	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-	    return vendedor.CrearPedido(cliente, origen, destino, urgencia); // Retorna el id del pedido
+	    return vendedor.CrearPedido(cliente, origen, destino, urgencia);
 	}
 
 	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, int peso, int volumen) {
-	  	return vendedor.CrearEncomienda(pedido, peso, volumen); // Retorna el id de la encomienda
+	  	return vendedor.CrearEncomienda(pedido, peso, volumen);
 	}
 
 	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
 		Mensaje m = creador.CrearMensaje(texto, destino);
 		// Enviar mensaje
-	}
-
-	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
-		Cliente c = new Cliente (rut, nombre, telefono, direccion);
-		empresa.AgregarCliente(c);
 	}
 
 
