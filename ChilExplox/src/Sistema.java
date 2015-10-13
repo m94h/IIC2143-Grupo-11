@@ -17,11 +17,16 @@ public class Sistema {
 	//Constructor privado por singleton
 	private Sistema() {
 
-		//leer archivo de empresa
-		BufferedReader br = new BufferedReader(new FileReader("archivos/empresa.data"));
+		//Definir buferes
+		String sCurrentLine;
+		BufferedReader br;
+		String [] parametros;
 
-		String sCurrentLine = br.readLine();
-		String [] parametros = sCurrentLine.split(",");
+		//leer archivo de empresa
+		br = new BufferedReader(new FileReader("archivos/empresa.data"));
+
+		sCurrentLine = br.readLine();
+		parametros = sCurrentLine.split(";");
 
 		//instanciar clase empresa
 		this.empresa = new Empresa(parametros[0], parametros[1]); //nombre, rut
@@ -36,16 +41,22 @@ public class Sistema {
 
 		//leer archivo de sucursales
 		br = new BufferedReader(new FileReader("archivos/sucursales.data"));
+
+		int id_sucursal;
+		String direccion;
+		int telefono;
+		int capacidad;
+		Sucursal sucursal;
 		
 		while ((sCurrentLine = br.readLine()) != null) {
-			parametros = sCurrentLine.split(",");
+			parametros = sCurrentLine.split(";");
 			
 			try {
-				int id = Integer.parseInt(parametros[0]);
-				String direccion = parametros[1];
-				int telefono = Integer.parseInt(parametros[2]);
-				int capacidad = Integer.parseInt(parametros[3]);
-				Sucursal sucursal = new Sucursal(id, direccion, telefono, capacidad);
+				id = Integer.parseInt(parametros[0]);
+				direccion = parametros[1];
+				telefono = Integer.parseInt(parametros[2]);
+				capacidad = Integer.parseInt(parametros[3]);
+				sucursal = new Sucursal(id, direccion, telefono, capacidad);
 				this.empresa.AgregarSucursal(id, sucursal);
 			}
 			catch(Exception e) {
@@ -60,26 +71,69 @@ public class Sistema {
 		Empleado empleado;
 		Sucursal sucursal;
 		int sucursal_id;
+		String empleado_id;
+		String tipo_empleado;
+		String nombre;
+		int telefono;
 
 		while ((sCurrentLine = br.readLine()) != null) {
-			parametros = sCurrentLine.split(",");
-			sucursal_id = (int) parametros[0];
-			sucursal = this.empresa.GetSucursal(sucursal_id);
-			empleado_id = (int) parametros[1];
 
-			if (parametros[0] == "venta") {
-				empleado = new OperarioVenta(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
-			} else if (parametros[0] == "camion") {
-				empleado = new OperarioCamion(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
-			} else if (parametros[0] == "bodega") {
-				empleado = new OperarioBodega(empleado_id, parametros[2], parametros[3], parametros[4], sucursal);
+			try {
+				parametros = sCurrentLine.split(";");
+				sucursal_id = Integer.parseInt(parametros[0]);
+				empleado_id = parametros[1]; // es el rut
+				tipo_empleado = parametros[2];
+				nombre = parametros[3];
+				telefono = Integer.parseInt(parametros[4]);
+				sueldo = Integer.parseInt(parametros[5]);
+				sucursal = this.empresa.GetSucursal(sucursal_id);
+
+				if (tipo_empleado == "venta") {
+					empleado = new OperarioVenta(empleado_id, nombre, telefono, sueldo, sucursal);
+				} else if (tipo_empleado == "camion") {
+					empleado = new OperarioCamion(empleado_id, nombre, telefono, sueldo, sucursal);
+				} else if (tipo_empleado == "bodega") {
+					empleado = new OperarioBodega(empleado_id, nombre, telefono, sueldo, sucursal);
+				} else {
+					//error dato
+					continue;
+				}
+
+				sucursal.AgregarEmpleado(empleado_id, empleado);
+
 			}
-
-			sucursal.AgregarEmpleado(empleado_id, empleado);
+			catch(Exception e) {
+				// Error en los archivos
+			}
 
 		}
 
-		
+		//leer archivo de clientes
+		br = new BufferedReader(new FileReader("archivos/clientes.data"));
+
+		Cliente cliente;
+		String cliente_id;
+		String nombre;
+		int telefono;
+		String direccion;
+
+		while ((sCurrentLine = br.readLine()) != null) {
+			try {
+				parametros = sCurrentLine.split(";");
+				cliente_id = Integer.parseInt(parametros[0]);  // es el rut
+				nombre = parametros[1];
+				telefono = Integer.parseInt(parametros[2]);
+				direccion = parametros[3];
+
+				cliente = new Cliente(cliente_id, nombre, telefono, direccion);
+
+				this.empresa.AgregarCliente(cliente_id, cliente);
+			}
+			catch(Exception e) {
+				// Error en los archivos
+			}
+
+		}
 		
 	}
 
