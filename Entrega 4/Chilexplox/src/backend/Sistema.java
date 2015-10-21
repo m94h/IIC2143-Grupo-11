@@ -1,6 +1,7 @@
 package backend;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Sistema {
 		try {
 			br = new BufferedReader(new FileReader("archivos/empresa.data"));
 		} catch (FileNotFoundException e3) {
-			// Archivo no encontrado
+			System.out.println(e3.getMessage()); // Archivo no encontrado
 		}
 
 		try {
@@ -114,7 +115,7 @@ public class Sistema {
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
-
+				
 				try {
 					parametros = sCurrentLine.split(";");
 					id_sucursal = Integer.parseInt(parametros[0]);
@@ -125,22 +126,26 @@ public class Sistema {
 					sueldo = Integer.parseInt(parametros[5]);
 					sucursal = this.empresa.GetSucursal(id_sucursal);
 					clave = parametros[6];
-
-					if (tipo_empleado == "venta") {
-						empleado = new OperarioVenta(empleado_id, nombre, telefono, sueldo, sucursal, clave);
-					} else if (tipo_empleado == "camion") {
-						empleado = new OperarioCamion(empleado_id, nombre, telefono, sueldo, sucursal, clave);
-					} else if (tipo_empleado == "bodega") {
-						empleado = new OperarioBodega(empleado_id, nombre, telefono, sueldo, sucursal, clave);
-					} else {
+					
+					if (tipo_empleado.equals("venta")) {
+						empleado = new OperarioVenta(nombre, empleado_id, telefono, sueldo, sucursal, clave);
+					} 
+					else if (tipo_empleado.equals("camion")) {
+						empleado = new OperarioCamion(nombre, empleado_id, telefono, sueldo, sucursal, clave);
+					} 
+					else if (tipo_empleado.equals("bodega")) {
+						empleado = new OperarioBodega(nombre, empleado_id, telefono, sueldo, sucursal, clave);
+					} 
+					else {
 						//error dato
 						continue;
 					}
-
+										
 					sucursal.AgregarEmpleado(empleado);
+					this.empresa.AgregarEmpleado(empleado);
 				}
 				catch (Exception e) {
-					// Error en el parseo
+					System.out.println("error"); // Error en el parseo
 					}
 			}
 		} 
@@ -327,7 +332,7 @@ public class Sistema {
 	
 	public boolean LogIn(String rut, String clave) {
 		if (this.empresa.GetEmpleados().get(rut) != null) {
-			Empleado empleado_loged = this.empresa.GetEmpleados().get(rut);
+			Empleado empleado_loged = this.empresa.GetEmpleados().get(rut);			
 			if (empleado_loged.CheckLogin(clave)) {
 				//login correcto
 				this.usuario_loged = empleado_loged;

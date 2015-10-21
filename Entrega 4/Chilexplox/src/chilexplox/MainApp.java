@@ -20,7 +20,7 @@ public class MainApp extends Application {
 		this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Chilexplox");
 
-        // Iniciar la ventana principal que contendrá todo
+        // Iniciar la ventana principal que contendra todo
         IniciarVentanaPrincipal();
 
         // Iniciar la vista del login
@@ -60,8 +60,8 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(login);
             
             // Dar acceso al controlador de login
-            LoginController controller = loader.getController();
-            controller.setMainApp(this);
+            LoginController controllerView = loader.getController();
+            controllerView.setMainApp(this);
 
             
         } catch (IOException e) {

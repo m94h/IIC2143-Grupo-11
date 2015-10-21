@@ -1,5 +1,7 @@
 package chilexplox.view;
 
+import java.awt.EventQueue;
+
 import javax.swing.JOptionPane;
 
 //Fachada del backend
@@ -35,21 +37,29 @@ public class LoginController {
         this.mainApp = mainApp;
     }
 	
+	private void ShowMessage(String message) {
+	    EventQueue.invokeLater(new Runnable() {
+	        @Override
+	        public void run() {
+	            JOptionPane.showMessageDialog(null, message);
+	        }
+	    });
+	}
+	
 	@FXML
 	private void handleIngresar() {
-		
 		if (Sistema.GetInstance().LogIn(rut.getText(), clave.getText())) {
 			
 			//Login correcto
 			//Avisar 
-			JOptionPane.showMessageDialog(null, "Has ingresado correctamente al sistema");
+			this.ShowMessage("Has ingresado correctamente al sistema");
 			
 			//Mostrar menu con opciones
 			this.mainApp.MostrarMenu();
 		} else {
 			//Login incorrecto
 			//Avisar 
-			JOptionPane.showMessageDialog(null, "Has ingresado datos incorrectos. Intentalo nuevamente.");
+			this.ShowMessage("Has ingresado datos incorrectos. Intentalo nuevamente.");
 			//Limpiar campos
 			this.rut.setText("");
 			this.clave.setText("");

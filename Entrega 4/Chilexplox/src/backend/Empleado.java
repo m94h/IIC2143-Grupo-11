@@ -43,7 +43,7 @@ public abstract class Empleado extends Persona {
   }
   
   public boolean CheckLogin(String clave) {
-		if (this.clave == clave) {
+		if (this.clave.equals(clave)) {
 			return true;
 		}
 		return false;
