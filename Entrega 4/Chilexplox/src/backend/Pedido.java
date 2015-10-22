@@ -1,5 +1,6 @@
 package backend;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Pedido {
   	private Sucursal destino;
   	public Estado estado;
     private int urgencia;
+    private LocalDate fecha;
 
   	private OrdenCompra orden_compra;
   	private List<Encomienda> encomiendas;
@@ -31,23 +33,38 @@ public class Pedido {
       this.urgencia = urgencia;
       this.estado = Estado.EnSucursalOrigen;
       this.encomiendas = new ArrayList<Encomienda>();
+      this.fecha = LocalDate.now();
     }
 
     /*
      * Getters
      */
-  	public int GetId() {return id;}
+  	public int GetId() {
+  		return id;
+  	}
   	
-  	public Cliente GetCliente() {return cliente;}
+  	public Cliente GetCliente() {
+  		return cliente;
+  	}
   	
-  	public Sucursal GetOrigen() {return origen;}
+  	public Sucursal GetOrigen() {
+  		return origen;
+  	}
   	
-  	public Sucursal GetDestino() {return destino;}
+  	public Sucursal GetDestino() {
+  		return destino;
+  	}
   	
-    public int GetUrgencia () {return urgencia;}
+    public int GetUrgencia () {
+    	return urgencia;
+    }
     
     public Estado GetEstado () {
     	return this.estado;
+    }
+    
+    public LocalDate GetFecha() {
+    	return this.fecha;
     }
 
   	public void AgregarEncomienda (Encomienda encomienda) {

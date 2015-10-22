@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -115,14 +114,15 @@ public class ListadoPedidosController {
 		this.estado.setDisable(false);
 		this.origen.setDisable(false);
 		this.destino.setDisable(false);
-		this.fecha.setDisable(false);
+		//Fecha sigue inactiva, se guarda la fecha actual
+		this.fecha.setValue(null);
 		this.urgencia.setDisable(false);
 		
 		this.estado.getSelectionModel().clearSelection();
 		this.origen.getSelectionModel().clearSelection();
 		this.destino.getSelectionModel().clearSelection();
 		
-		this.fecha.setValue(null);
+		
 		
 		this.rut.setDisable(false);
 		this.rut.setText("");
@@ -158,6 +158,9 @@ public class ListadoPedidosController {
 			this.estado.getSelectionModel().select(Arrays.asList(Estado.values()).indexOf(pedido_b.estado));
 			
 			this.destino.getSelectionModel().select(pedido_b.GetDestino().GetDireccion());
+			this.origen.getSelectionModel().select(pedido_b.GetOrigen().GetDireccion());
+			this.urgencia.getSelectionModel().select(pedido_b.GetUrgencia() - 1);
+			this.fecha.setValue(pedido_b.GetFecha());
 		}
 	}
 	
