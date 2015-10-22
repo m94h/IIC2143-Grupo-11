@@ -34,7 +34,13 @@ public class Pedido {
     }
 
   	public int GetId() {return id;}
-
+  	
+  	public Cliente GetCliente() {return cliente;}
+  	
+  	public Sucursal GetOrigen() {return origen;}
+  	
+  	public Sucursal GetDestino() {return destino;}
+  	
     public int GetUrgencia () {return urgencia;}
 
   	public void AgregarEncomienda (Encomienda encomienda) {

@@ -63,16 +63,20 @@ public class Empresa {
 		this.clientes.remove(rut);
 	}
 
+	public Map<String, Empleado> GetEmpleados() {
+	    return this.empleados;
+	}
+
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.sucursales;
 	}
 	
-	public Map<String, Empleado> GetEmpleados() {
-	    return this.empleados;
-	  }
-
 	public Sucursal GetSucursal(int id) {
 		return this.sucursales.get(id);
+	}
+
+	public Map<Integer, Pedido> GetPedidos() {
+	    return this.pedidos;
 	}
 
 	public Pedido GetPedido (int id) {
@@ -81,6 +85,10 @@ public class Empresa {
 
 	public void AgregarEncomienda(Encomienda encomienda) {
 		this.encomiendas.put(encomienda.GetId(), encomienda);
+	}
+
+	public Map<Integer, Encomienda> GetEncomiendas() {
+	    return this.encomiendas;
 	}
 
 	public Encomienda GetEncomienda (int id) {

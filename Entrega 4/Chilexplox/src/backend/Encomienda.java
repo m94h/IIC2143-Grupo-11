@@ -22,6 +22,10 @@ public class Encomienda {
 
 	public int GetId() {return id;}
 
+	public int GetPeso() {return peso;}
+
+	public int GetVolumen() {return volumen;}
+
 	public int GenerarPresupuesto() {
 		int valor;
 		valor = Sistema.GetInstance().GetPrecioPorKilo() * peso;
