@@ -7,7 +7,7 @@ public class OperarioVenta extends Empleado {
     this.tipo_empleado = "venta";
 	}
 	
-  public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, PrioridadPedido urgencia) {
+  public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     Pedido p = new Pedido (cliente, origen, destino, urgencia);
     Sistema.GetInstance().AgregarPedido (p);
     return p.GetId();

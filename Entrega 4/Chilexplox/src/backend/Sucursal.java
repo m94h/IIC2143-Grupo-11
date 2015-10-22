@@ -82,12 +82,12 @@ public class Sucursal {
   }
 
   public boolean AgregarPedido(Pedido pedido){
-    if (pedidos.size() == 0 || pedido.GetUrgencia() == PrioridadPedido.Baja) {
+    if (pedidos.size() == 0 || pedido.GetUrgencia() == 1) {
       pedidos.add(pedido);
       return true;
     }
     for(int i = 0; i < pedidos.size(); i++){
-      if(pedido.GetUrgencia().ordinal() > pedidos.get(i).GetUrgencia().ordinal()) {
+      if(pedido.GetUrgencia() > pedidos.get(i).GetUrgencia()) {
         pedidos.add(i, pedido);
         return true;
       }

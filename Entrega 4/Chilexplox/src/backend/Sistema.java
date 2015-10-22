@@ -209,15 +209,16 @@ public class Sistema {
 		} catch (FileNotFoundException e1) {
 				e1.getMessage();
 		}
-		
-		int id_sucursal;
-		int telefono;
-		Sucursal sucursal;
+
 		Empleado empleado;
+
+		int id_sucursal;
 		String empleado_id;
 		String tipo_empleado;
 		String nombre;
+		int telefono;
 		int sueldo;
+		Sucursal sucursal;
 		String clave;
 
 		try {
@@ -268,9 +269,10 @@ public class Sistema {
 		}
 
 		Cliente cliente;
+
 		String rut;
-		int telefono;
 		String nombre;
+		int telefono;
 		String direccion;
 
 		try {
@@ -296,11 +298,87 @@ public class Sistema {
 		}
 	}
 
+	private void CargarPedidos() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/pedidos.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Pedido pedido;
+
+		int id_pedido;
+		String rut_cliente;
+		Sucursal sucursal_origen;
+		Sucursal sucursal_destino;
+		int urgencia;
+
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					id_pedido = Integer.parseInt(parametros[0]); 
+					rut_cliente = parametros[1];
+					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
+					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
+					urgencia = Integer.parseInt(parametros[4]);
+
+					pedido = new Pedido(id_pedido, rut_cliente, sucursal_origen, sucursal_destino, urgencia);
+
+					this.empresa.AgregarPedido(pedido);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		} 
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
+	private void CargarEncomiendas() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/encomiendas.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Encomienda encomienda;
+
+		int id_encomienda;
+		int peso;
+		int volumen;
+		int id_pedido;
+
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					id_encomienda = Integer.parseInt(parametros[0]); 
+					peso = Integer.parseInt(parametros[1]); 
+					volumen = Integer.parseInt(parametros[2]); 
+					id_pedido = Integer.parseInt(parametros[3]); 
+
+					encomienda = new Encomienda(id_encomienda, peso, volumen);
+					this.empresa.GetPedido(id_pedido).AgregarEncomienda(encomienda);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		} 
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
 	private void CargarTodo() {		
 		this.CargarEmpresa();
 		this.CargarSucursales();
 		this.CargarEmpleados();
 		this.CargarClientes();
+		this.CargarPedidos();
 	}
 	
 	private void GuardarTodo() {

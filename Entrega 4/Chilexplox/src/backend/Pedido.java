@@ -9,22 +9,22 @@ public class Pedido {
 	private Sucursal origen;
   	private Sucursal destino;
   	public Estado estado;
-    private PrioridadPedido urgencia;
+    private int urgencia;
 
   	private OrdenCompra orden_compra;
   	private List<Encomienda> encomiendas;
 
-  	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, PrioridadPedido urgencia) {
+  	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     	this.id = Sistema.GetInstance().Get_id_pedido();
       Initialize(cliente, origen, destino, urgencia);
   	}
 
-    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, PrioridadPedido urgencia) {
+    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
       this.id = id;
       Initialize(cliente, origen, destino, urgencia);
     }
 
-    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, PrioridadPedido urgencia) {
+    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
       this.cliente = cliente;
       this.origen = origen;
       this.destino = destino;
@@ -35,7 +35,7 @@ public class Pedido {
 
   	public int GetId() {return id;}
 
-    public PrioridadPedido GetUrgencia () {return urgencia;}
+    public int GetUrgencia () {return urgencia;}
 
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.add(encomienda);
