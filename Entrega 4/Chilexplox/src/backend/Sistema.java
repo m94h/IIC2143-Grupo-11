@@ -262,6 +262,10 @@ public class Sistema {
 		return precioPorKilo;
 	}
 	
+	public Map<Integer, Sucursal> GetSucursales() {
+		return this.empresa.GetSucursales();
+	}
+	
 	public Sucursal GetSucursalLoged() {
 		return this.sucursal_loged;
 	}

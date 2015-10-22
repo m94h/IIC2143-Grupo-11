@@ -48,12 +48,12 @@ public class MenuController {
 	
 	@FXML
 	public void handlePedidos () {
-		//this.mainApp.mostrarPedidos();
+		this.mainApp.MostrarPedidos();
 	}
 	
 	@FXML
 	public void handleClientes () {
-		//this.mainApp.mostrarClientes();
+		this.mainApp.MostrarClientes();
 	}
 	
 	@FXML
