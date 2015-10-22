@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
@@ -51,13 +52,31 @@ public class ListadoPedidosController {
 	@FXML
 	private TextField direccion;
 	
+	/*
+	 * Tabla
+	 */
 	@FXML
 	private TableView<PedidoTableModel> tabla_pedidos;
+	
+	@FXML
+    private TableColumn<PedidoTableModel, String> idColumn;
+    @FXML
+    private TableColumn<PedidoTableModel, String> origenColumn;
+    @FXML
+    private TableColumn<PedidoTableModel, String> destinoColumn;
+    @FXML
+    private TableColumn<PedidoTableModel, String> estadoColumn;
 	
 	private ObservableList<PedidoTableModel> pedidosData;
 
 	@FXML
     private void initialize() {
+		// Set las properties para que se actualice la tabla
+		this.idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        this.origenColumn.setCellValueFactory(cellData -> cellData.getValue().origenProperty());
+        this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
+        this.estadoColumn.setCellValueFactory(cellData -> cellData.getValue().estadoProperty());
+        
         this.UpdatePedidos();
     }
 	
@@ -65,10 +84,10 @@ public class ListadoPedidosController {
 		//Get pedidos
 		pedidosData = FXCollections.observableArrayList();
 		
-		ArrayList<Pedido> pedidos = Sistema.GetInstance().GetSucursalLoged().GetPedidos();
+		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
-			for (int i = 0; i < pedidos.size(); i++) {
-				Pedido pedido = pedidos.get(i);
+			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
+				Pedido pedido = entry.getValue();
 				pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), "a", "b", "c"));
 			}
 		}

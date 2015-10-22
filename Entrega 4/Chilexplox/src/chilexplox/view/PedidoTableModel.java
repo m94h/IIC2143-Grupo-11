@@ -40,5 +40,20 @@ public class PedidoTableModel {
 	public void setEstado(String estado) {
 		this.estado.set(estado);
 	}
+	/*
+	 * Properties
+	 */
+	public StringProperty idProperty() {
+        return this.id;
+    }
+	public StringProperty origenProperty() {
+        return this.origen;
+    }
+	public StringProperty destinoProperty() {
+        return this.destino;
+    }
+	public StringProperty estadoProperty() {
+        return this.estado;
+    }
 	
 }
