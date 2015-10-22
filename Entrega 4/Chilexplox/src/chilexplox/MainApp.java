@@ -1,7 +1,8 @@
 package chilexplox;
 import java.io.IOException;
 
-import chilexplox.view.LoginController;
+import backend.Sistema;
+import chilexplox.view.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -85,7 +86,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(menu);
             
             // Dar acceso al controlador de menu
-            LoginController controllerView = loader.getController();
+            MenuController controllerView = loader.getController();
             controllerView.setMainApp(this);
             
             
@@ -105,7 +106,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(pedidos);
             
             // Dar acceso al controlador
-            LoginController controllerView = loader.getController();
+            ListadoPedidosController controllerView = loader.getController();
             controllerView.setMainApp(this);
             
             
@@ -125,7 +126,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(clientes);
             
             // Dar acceso al controlador
-            LoginController controllerView = loader.getController();
+            ClientesController controllerView = loader.getController();
             controllerView.setMainApp(this);
             
             

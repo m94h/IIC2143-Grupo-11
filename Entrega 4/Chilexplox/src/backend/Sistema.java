@@ -251,7 +251,7 @@ public class Sistema {
 					this.empresa.AgregarEmpleado(empleado);
 				}
 				catch (Exception e) {
-					System.out.println("error empleados"); // Error en el parseo
+					System.out.println(""); // Error en el parseo
 					}
 			}
 		} 

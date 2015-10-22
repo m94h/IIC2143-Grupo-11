@@ -24,9 +24,8 @@ public class MenuController {
     private void initialize() {
 		Sucursal sucursal = Sistema.GetInstance().GetSucursalLoged();		
 		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
-		//this.Actualizar(this.sucursal, sucursal.GetDireccion());
-		//this.Actualizar(this.nombre, usuario.GetNombre());
 		this.sucursal.setText(sucursal.GetDireccion());
+		this.nombre.setText(usuario.GetNombre());
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -35,16 +34,6 @@ public class MenuController {
 	
 	public MenuController() {
 		
-	}
-	
-	public void Actualizar(Label lab, String text) {
-	    Thread t = new Thread(new Runnable() {
-	        @Override
-	        public void run() {
-	        	lab.setText(text);
-	        }     
-	    });
-	    t.start();
 	}
 	
 	@FXML
