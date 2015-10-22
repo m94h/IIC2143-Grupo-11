@@ -33,6 +33,9 @@ public class Pedido {
       this.encomiendas = new ArrayList<Encomienda>();
     }
 
+    /*
+     * Getters
+     */
   	public int GetId() {return id;}
   	
   	public Cliente GetCliente() {return cliente;}
@@ -42,6 +45,10 @@ public class Pedido {
   	public Sucursal GetDestino() {return destino;}
   	
     public int GetUrgencia () {return urgencia;}
+    
+    public Estado GetEstado () {
+    	return this.estado;
+    }
 
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.add(encomienda);

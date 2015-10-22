@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class ListadoPedidosController {
 	private MainApp mainApp;
 	
 	@FXML
-	private TextField id;
+	private TextField id_pedido;
 	
 	@FXML
 	private ChoiceBox estado;
@@ -53,13 +54,13 @@ public class ListadoPedidosController {
 	private TextField direccion;
 	
 	/*
-	 * Tabla
+	 * Tabla pedidos y sus columnas
 	 */
 	@FXML
 	private TableView<PedidoTableModel> tabla_pedidos;
 	
 	@FXML
-    private TableColumn<PedidoTableModel, String> idColumn;
+    private TableColumn<PedidoTableModel, String> id_pedidoColumn;
     @FXML
     private TableColumn<PedidoTableModel, String> origenColumn;
     @FXML
@@ -67,55 +68,61 @@ public class ListadoPedidosController {
     @FXML
     private TableColumn<PedidoTableModel, String> estadoColumn;
 	
+    /*
+     * Data de los pedidos para la tabla
+     */
 	private ObservableList<PedidoTableModel> pedidosData;
 
 	@FXML
     private void initialize() {
 		// Set las properties para que se actualice la tabla
-		this.idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+		this.id_pedidoColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         this.origenColumn.setCellValueFactory(cellData -> cellData.getValue().origenProperty());
         this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.estadoColumn.setCellValueFactory(cellData -> cellData.getValue().estadoProperty());
-        
+                
+        //Mostrar pedidos
         this.UpdatePedidos();
+        
+        //Poner los valores de los choice box
+		this.estado.getItems().addAll("Transito", "Origen", "Destino");
+		this.origen.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
+		this.destino.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
+		this.urgencia.getItems().addAll("1", "2", "3");
+		
+		// Escuchar cambios en la seleccion de la tabla
+        tabla_pedidos.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> MostrarDetallesPedido(newValue));
     }
 	
 	private void UpdatePedidos() {
 		//Get pedidos
-		pedidosData = FXCollections.observableArrayList();
+		this.pedidosData = FXCollections.observableArrayList();
 		
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), "a", "b", "c"));
+				this.pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString()));
 			}
 		}
-		tabla_pedidos.setItems(this.pedidosData);
+		this.tabla_pedidos.setItems(this.pedidosData);
 	}
 	
 	@FXML
 	private void handleNuevo() {
-		this.id.setText("nuevo");
+		this.id_pedido.setText("nuevo");
 		this.estado.setDisable(false);
 		this.origen.setDisable(false);
 		this.destino.setDisable(false);
 		this.fecha.setDisable(false);
 		this.urgencia.setDisable(false);
 		
-		this.estado.getItems().clear();
-		this.estado.getItems().addAll("Transito", "Origen", "Destino");
-		
-		this.origen.getItems().clear();
-		this.origen.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
-		
-		this.destino.getItems().clear();
-		this.destino.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
+		this.estado.getSelectionModel().clearSelection();
+		this.origen.getSelectionModel().clearSelection();
+		this.destino.getSelectionModel().clearSelection();
 		
 		this.fecha.setValue(null);
-		
-		this.estado.getItems().clear();
-		this.estado.getItems().addAll("1", "2", "3");
 		
 		this.rut.setDisable(false);
 		this.rut.setText("");
@@ -123,6 +130,35 @@ public class ListadoPedidosController {
 		this.telefono.setText("");
 		this.direccion.setText("");
 		
+	}
+	
+	/*
+	 * Para mostrar detalles del pedido al seleccionar uno
+	 */
+	private void MostrarDetallesPedido(PedidoTableModel pedido){
+		if (pedido != null) {
+			//Desbloquear componentes formulario
+			this.estado.setDisable(false);
+			this.origen.setDisable(false);
+			this.destino.setDisable(false);
+			this.fecha.setDisable(false);
+			this.urgencia.setDisable(false);
+			this.rut.setDisable(false);
+			this.nombre.setDisable(false);
+			this.telefono.setDisable(false);
+			this.direccion.setDisable(false);
+			
+			//Get los datos del pedido backend
+			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
+			
+			//agregar datos
+			this.id_pedido.setText(Integer.toString(pedido_b.GetId()));
+			//Get el index dado un value de enum
+			//http://stackoverflow.com/questions/15436721/get-index-of-enum-from-sting
+			this.estado.getSelectionModel().select(Arrays.asList(Estado.values()).indexOf(pedido_b.estado));
+			
+			this.destino.getSelectionModel().select(pedido_b.GetDestino().GetDireccion());
+		}
 	}
 	
 	@FXML
