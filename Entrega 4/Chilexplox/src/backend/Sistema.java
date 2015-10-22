@@ -71,6 +71,10 @@ public class Sistema {
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.empresa.GetSucursales();
 	}
+	
+	public Sucursal GetSucursal(int id) {
+		return this.empresa.GetSucursales().get(id);
+	}
 
 	public int Get_id_sucursal() {
 		int valor = id_sucursal;
@@ -94,6 +98,14 @@ public class Sistema {
 	public void AgregarCliente (String rut, String nombre, int telefono, String direccion) {
 		Cliente c = new Cliente (rut, nombre, telefono, direccion);
 		empresa.AgregarCliente(c);
+	}
+	
+	public Cliente GetCliente (String rut) {
+		return this.empresa.GetCliente(rut);
+	}
+	
+	public void BorrarCliente (String rut) {
+		this.empresa.BorrarCliente(rut);
 	}
 
 	/*

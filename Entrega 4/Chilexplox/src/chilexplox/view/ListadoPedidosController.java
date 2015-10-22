@@ -9,8 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-//Fachada del backend
-import backend.Sistema;
+//backend
+import backend.*;
 
 public class ListadoPedidosController {
 	
@@ -53,7 +53,7 @@ public class ListadoPedidosController {
 	
 	@FXML
 	private void handleNuevo() {
-		this.id.setText( Integer.toString(Sistema.GetInstance().Get_id_pedido()) );
+		this.id.setText("nuevo");
 		this.estado.setDisable(false);
 		this.origen.setDisable(false);
 		this.destino.setDisable(false);
@@ -80,6 +80,29 @@ public class ListadoPedidosController {
 		this.telefono.setText("");
 		this.direccion.setText("");
 		
+	}
+	
+	@FXML
+	public void handleGuardarCambios() {
+		
+		//chequear cliente
+		if (Sistema.GetInstance().GetCliente(this.rut.getText()) != null) {
+			//ya existe, se borra para actualizarlo con uno nuevo
+			Sistema.GetInstance().BorrarCliente(this.rut.getText());
+		}
+		//crear cliente con datos nuevos
+		Sistema.GetInstance().AgregarCliente(this.rut.getText(), this.nombre.getText(), Integer.parseInt(this.telefono.getText()), this.direccion.getText());
+		
+		Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
+		
+		//Ver si es nuevo el pedido o si se actualiza
+		String nuevo_id = Integer.toString(Sistema.GetInstance().Get_id_pedido());
+		
+		//otros parametros
+		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
+		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
+		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
+		Sistema.GetInstance().CrearPedido(Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
 	}
 	
 	public void setMainApp(MainApp mainApp) {

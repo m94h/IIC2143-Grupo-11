@@ -54,6 +54,14 @@ public class Empresa {
 	public Map<String, Cliente> GetClientes() {
 		return this.clientes;
 	}
+	
+	public Cliente GetCliente(String rut) {
+		return this.clientes.get(rut);
+	}
+	
+	public void BorrarCliente(String rut) {
+		this.clientes.remove(rut);
+	}
 
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.sucursales;
