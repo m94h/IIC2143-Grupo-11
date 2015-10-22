@@ -79,12 +79,52 @@ public class MainApp extends Application {
             // Load menu
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/Menu.fxml"));
-            AnchorPane login = (AnchorPane) loader.load();
+            AnchorPane menu = (AnchorPane) loader.load();
 
             // Poner la vista del menu en el centro de la ventana principal
-            ventanaPrincipal.setCenter(login);
+            ventanaPrincipal.setCenter(menu);
             
             // Dar acceso al controlador de menu
+            LoginController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void MostrarPedidos() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ListadoPedidos.fxml"));
+            AnchorPane pedidos = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(pedidos);
+            
+            // Dar acceso al controlador
+            LoginController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void MostrarClientes() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Clientes.fxml"));
+            AnchorPane clientes = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(clientes);
+            
+            // Dar acceso al controlador
             LoginController controllerView = loader.getController();
             controllerView.setMainApp(this);
             

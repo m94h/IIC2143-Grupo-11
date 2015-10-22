@@ -68,6 +68,10 @@ public class Sistema {
 		return valor;
 	}
 
+	public Map<Integer, Sucursal> GetSucursales() {
+		return this.empresa.GetSucursales();
+	}
+
 	public int Get_id_sucursal() {
 		int valor = id_sucursal;
 		id_sucursal++;
@@ -364,5 +368,4 @@ public class Sistema {
 		}
 
 	}
-	
 }
