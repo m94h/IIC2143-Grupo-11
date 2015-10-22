@@ -115,7 +115,7 @@ public class ListadoPedidosController {
 		this.origen.setDisable(false);
 		this.destino.setDisable(false);
 		//Fecha sigue inactiva, se guarda la fecha actual
-		this.fecha.setValue(null);
+		this.fecha.setValue(LocalDate.now());
 		this.urgencia.setDisable(false);
 		
 		this.estado.getSelectionModel().clearSelection();
