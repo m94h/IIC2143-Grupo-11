@@ -66,9 +66,11 @@ public class ListadoPedidosController {
 		pedidosData = FXCollections.observableArrayList();
 		
 		ArrayList<Pedido> pedidos = Sistema.GetInstance().GetSucursalLoged().GetPedidos();
-		for (int i = 0; i < pedidos.size(); i++) {
-			Pedido pedido = pedidos.get(i);
-			pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), "a", "b", "c"));
+		if (pedidos != null) { //Si hay pedidos
+			for (int i = 0; i < pedidos.size(); i++) {
+				Pedido pedido = pedidos.get(i);
+				pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), "a", "b", "c"));
+			}
 		}
 		tabla_pedidos.setItems(this.pedidosData);
 	}
