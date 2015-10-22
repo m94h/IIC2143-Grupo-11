@@ -21,7 +21,6 @@ public class Sistema {
 	//Los id a continuacion son contadores para cuando se cree una nueva...
 	private int id_pedido;
 	private int id_encomienda;
-	private int id_sucursal;
 
 	private Empresa empresa;
 	
@@ -48,6 +47,9 @@ public class Sistema {
 		return precioPorKilo;
 	}
 	
+	/*
+	 * Informacion sobre el usuario logeado y su sucursal
+	 */
 	public Sucursal GetSucursalLoged() {
 		return this.sucursal_loged;
 	}
@@ -56,6 +58,9 @@ public class Sistema {
 		return this.usuario_loged;
 	}
 
+	/* 
+	 * Informacion sobre el id de pedido y de encomienda cuando se crea uno nuevo
+	 */
 	public int Get_id_pedido() {
 		int valor = id_pedido;
 		id_pedido++;
@@ -68,6 +73,9 @@ public class Sistema {
 		return valor;
 	}
 
+	/*
+	 * Obtener Sucursales
+	 */
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.empresa.GetSucursales();
 	}
@@ -76,12 +84,40 @@ public class Sistema {
 		return this.empresa.GetSucursales().get(id);
 	}
 
-	public int Get_id_sucursal() {
-		int valor = id_sucursal;
-		id_sucursal++;
-		return valor;
+
+
+	/*
+	 *  Metodos de Empresa
+	 */
+	public Map<Integer, Pedido> GetPedidos() {
+		return empresa.GetPedidos();
+	}
+	
+	public Pedido GetPedido (int id) {
+		return empresa.GetPedido(id);
+	}
+	
+	public void AgregarPedido(Pedido pedido) {
+		empresa.AgregarPedido(pedido);
 	}
 
+	public void AgregarEncomienda(Encomienda encomienda) {
+		empresa.AgregarEncomienda(encomienda);
+	}
+
+	public  Encomienda GetEncomienda (int id) {
+		return empresa.GetEncomienda(id);
+	}
+
+	public void AgregarTransporte(MedioDeTransporte vehiculo){
+		empresa.AgregarTransporte(vehiculo);
+	}
+
+	public MedioDeTransporte GetVehiculo (String patente){
+		return empresa.GetTransporte(patente);
+	}
+	
+	
 	// Interaccion con usuario
 	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
 	    return vendedor.CrearPedido(cliente, origen, destino, urgencia); // Retorna el id del pedido
@@ -113,33 +149,10 @@ public class Sistema {
 		solicitador.PedirCamion();
 	}
 	*/
-
-
-	// Metodos de Empresa
-	public  void AgregarPedido(Pedido pedido) {
-		empresa.AgregarPedido(pedido);
-	}
-
-	public  Pedido GetPedido (int id) {
-		return empresa.GetPedido(id);
-	}
-
-	public  void AgregarEncomienda(Encomienda encomienda) {
-		empresa.AgregarEncomienda(encomienda);
-	}
-
-	public  Encomienda GetEncomienda (int id) {
-		return empresa.GetEncomienda(id);
-	}
-
-	public void AgregarTransporte(MedioDeTransporte vehiculo){
-		empresa.AgregarTransporte(vehiculo);
-	}
-
-	public MedioDeTransporte GetVehiculo (String patente){
-		return empresa.GetTransporte(patente);
-	}
-	
+		
+	/*
+	 * Login
+	 */
 	public boolean LogIn(String rut, String clave) {
 		if (this.empresa.GetEmpleados().get(rut) != null) {
 			Empleado empleado_loged = this.empresa.GetEmpleados().get(rut);			
@@ -156,6 +169,12 @@ public class Sistema {
 	}
 
 
+	/*
+	 * Metodos para cargar archivos
+	 */
+	/*
+	 * Cargar info empresa
+	 */
 	private void CargarEmpresa(){
 		try {
 			br = new BufferedReader(new FileReader("archivos/empresa.data"));
@@ -182,6 +201,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar sucursales
+	 */
 	private void CargarSucursales() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/sucursales.data"));
@@ -215,6 +237,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar empleados
+	 */
 	private void CargarEmpleados() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/empleados.data"));
@@ -273,6 +298,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar Clientes
+	 */
 	private void CargarClientes() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/clientes.data"));
@@ -310,6 +338,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar pedidos
+	 */
 	private void CargarPedidos() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/pedidos.data"));
@@ -338,6 +369,7 @@ public class Sistema {
 					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia);
 
 					this.empresa.AgregarPedido(pedido);
+
 				}
 				catch(Exception e) {
 					// Error en los archivos
@@ -349,6 +381,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar Encomiendas de los pedidos
+	 */
 	private void CargarEncomiendas() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/encomiendas.data"));
@@ -385,6 +420,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Cargar Camiones
+	 */
 	private void CargarCamiones() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/camiones.data"));
@@ -423,6 +461,9 @@ public class Sistema {
 		}
 	}
 
+	/*
+	 * Caller de Cargar los archivos
+	 */
 	private void CargarTodo() {		
 		this.CargarEmpresa();
 		this.CargarSucursales();
@@ -430,8 +471,12 @@ public class Sistema {
 		this.CargarClientes();
 		this.CargarPedidos();
 		this.CargarEncomiendas();
+		this.CargarCamiones();
 	}
 	
+	/*
+	 * Para guardar los archivos (actualizar la info)
+	 */
 	private void GuardarTodo() {
 		
 		//Definir escritor
