@@ -83,7 +83,7 @@ public class Sistema {
 	}
 
 	// Interaccion con usuario
-	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, PrioridadPedido urgencia) {
+	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
 	    return vendedor.CrearPedido(cliente, origen, destino, urgencia); // Retorna el id del pedido
 	}
 
@@ -320,7 +320,7 @@ public class Sistema {
 		Pedido pedido;
 
 		int id_pedido;
-		String rut_cliente;
+		Cliente cliente;
 		Sucursal sucursal_origen;
 		Sucursal sucursal_destino;
 		int urgencia;
@@ -330,12 +330,12 @@ public class Sistema {
 				try {
 					parametros = sCurrentLine.split(";");
 					id_pedido = Integer.parseInt(parametros[0]); 
-					rut_cliente = parametros[1];
+					cliente = this.empresa.GetCliente(parametros[1]);
 					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
 					urgencia = Integer.parseInt(parametros[4]);
 
-					pedido = new Pedido(id_pedido, rut_cliente, sucursal_origen, sucursal_destino, urgencia);
+					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia);
 
 					this.empresa.AgregarPedido(pedido);
 				}

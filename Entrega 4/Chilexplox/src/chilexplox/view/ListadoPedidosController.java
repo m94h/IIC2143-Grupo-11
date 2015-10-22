@@ -102,7 +102,7 @@ public class ListadoPedidosController {
 		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
 		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
 		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
-		Sistema.GetInstance().CrearPedido(Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
+		Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
 	}
 	
 	public void setMainApp(MainApp mainApp) {
