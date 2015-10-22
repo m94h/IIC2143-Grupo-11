@@ -385,12 +385,51 @@ public class Sistema {
 		}
 	}
 
+	private void CargarCamiones() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/camiones.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Camion camion;
+
+		String patente;
+		String marca;
+		String modelo;
+		int cap_maxima;
+		int km;
+
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					patente = parametros[0]; 
+					marca = parametros[1]; 
+					modelo = parametros[2]; 
+					cap_maxima = Integer.parseInt(parametros[3]);
+					km = Integer.parseInt(parametros[4]);  
+
+					camion = new Camion(patente, marca, modelo, cap_maxima, km);
+					this.empresa.AgregarTransporte((MedioDeTransporte)camion);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		} 
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
 	private void CargarTodo() {		
 		this.CargarEmpresa();
 		this.CargarSucursales();
 		this.CargarEmpleados();
 		this.CargarClientes();
 		this.CargarPedidos();
+		this.CargarEncomiendas();
 	}
 	
 	private void GuardarTodo() {
