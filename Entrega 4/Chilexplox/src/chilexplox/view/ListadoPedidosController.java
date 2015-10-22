@@ -7,7 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 //backend
 import backend.*;
@@ -45,11 +50,28 @@ public class ListadoPedidosController {
 	
 	@FXML
 	private TextField direccion;
+	
+	@FXML
+	private TableView<PedidoTableModel> tabla_pedidos;
+	
+	private ObservableList<PedidoTableModel> pedidosData;
 
 	@FXML
     private void initialize() {
-        
+        this.UpdatePedidos();
     }
+	
+	private void UpdatePedidos() {
+		//Get pedidos
+		pedidosData = FXCollections.observableArrayList();
+		
+		ArrayList<Pedido> pedidos = Sistema.GetInstance().GetSucursalLoged().GetPedidos();
+		for (int i = 0; i < pedidos.size(); i++) {
+			Pedido pedido = pedidos.get(i);
+			pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), "a", "b", "c"));
+		}
+		tabla_pedidos.setItems(this.pedidosData);
+	}
 	
 	@FXML
 	private void handleNuevo() {

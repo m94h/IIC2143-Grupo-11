@@ -12,9 +12,9 @@ public class Sucursal {
 	private int capacidad;
 	private Map<String, Empleado> empleados;
 	private ArrayList<Camion> camionesEsperando;
-  private ArrayList<Camion> camionesListos;
-  private ArrayList<Pedido> pedidos;
-  private ArrayList<Mensaje> cola_mensajes;
+	private ArrayList<Camion> camionesListos;
+	private ArrayList<Pedido> pedidos;
+	private ArrayList<Mensaje> cola_mensajes;
 
 	public Sucursal(String direccion, int telefono, int capacidad) {
     this.id = Sistema.GetInstance().Get_id_sucursal();
@@ -79,6 +79,10 @@ public class Sucursal {
   
   public void EnviarCamion(Camion camion){
 	  this.camionesListos.remove(camion);
+  }
+  
+  public ArrayList<Pedido> GetPedidos() {
+	  return this.pedidos;
   }
 
   public boolean AgregarPedido(Pedido pedido){
