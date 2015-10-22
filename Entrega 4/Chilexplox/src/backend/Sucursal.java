@@ -57,7 +57,7 @@ public class Sucursal {
   }
 
   public void AgregarEmpleado(Empleado empleado) {
-    this.empleados.put(empleado.GetRut(), empleado);
+	this.empleados.put(empleado.GetRut(), empleado);
   }
   
   public void CambiarDireccion(String nuevaDireccion){

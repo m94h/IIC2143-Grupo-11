@@ -22,7 +22,11 @@ public class MenuController {
 	
 	@FXML
     private void initialize() {
-        
+		Sucursal sucursal = Sistema.GetInstance().GetSucursalLoged();		
+		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
+		//this.Actualizar(this.sucursal, sucursal.GetDireccion());
+		//this.Actualizar(this.nombre, usuario.GetNombre());
+		this.sucursal.setText(sucursal.GetDireccion());
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -30,10 +34,7 @@ public class MenuController {
     }
 	
 	public MenuController() {
-		Sucursal sucursal = Sistema.GetInstance().GetSucursalLoged();		
-		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
-		this.Actualizar(this.sucursal, sucursal.GetDireccion());
-		this.Actualizar(this.nombre, usuario.GetNombre());
+		
 	}
 	
 	public void Actualizar(Label lab, String text) {

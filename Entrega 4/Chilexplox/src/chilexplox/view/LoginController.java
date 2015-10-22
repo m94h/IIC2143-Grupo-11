@@ -45,8 +45,6 @@ public class LoginController {
 		if (Sistema.GetInstance().LogIn(rut.getText(), clave.getText())) {
 			
 			//Login correcto
-			//Avisar 
-			this.ShowMessage("Has ingresado correctamente al sistema");
 			
 			//Mostrar menu con opciones
 			this.mainApp.IngresoCorrecto();
