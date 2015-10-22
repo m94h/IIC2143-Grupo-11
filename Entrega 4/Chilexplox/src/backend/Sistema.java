@@ -427,7 +427,7 @@ public class Sistema {
 				for (Map.Entry<String, Empleado> entry_empleado : sucursal.GetEmpleados().entrySet())
 				{
 					Empleado empleado = entry_empleado.getValue();
-					writer_sucursales.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()));
+					writer_empleados.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()));
 				}
 
 			}
@@ -454,6 +454,34 @@ public class Sistema {
 
 		} 
 		catch (FileNotFoundException | UnsupportedEncodingException e1) {
+			// Archivo no encontrado o enconding malo
+		}
+
+		//guardar archivo de pedidos y encomiendas
+		try {
+			PrintWriter writer_pedidos = new PrintWriter("archivos/pedidos.data", "UTF-8");
+			PrintWriter writer_encomiendas = new PrintWriter("archivos/encomiendas.data", "UTF-8");
+
+			//Iterar sobre los pedidos
+			//http://stackoverflow.com/questions/46898/iterate-over-each-entry-in-a-map
+			for (Map.Entry<Integer, Pedido> entry_pedido : this.empresa.GetPedidos().entrySet())
+			{
+				Pedido pedido = entry_pedido.getValue();
+
+				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()));
+
+				//recorrer listado de empleados
+				for (Map.Entry<Integer, Encomienda> entry_encomienda : this.empresa.GetEncomiendas().entrySet())
+				{
+					Encomienda encomienda = entry_encomienda.getValue();
+					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
+				}
+			}
+			
+			writer_pedidos.close();
+			writer_encomiendas.close();
+
+		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
 			// Archivo no encontrado o enconding malo
 		}
 
