@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 
@@ -373,6 +375,9 @@ public class Sistema {
 		Sucursal sucursal_origen;
 		Sucursal sucursal_destino;
 		int urgencia;
+		Estado estado = null;
+		LocalDate fecha;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -383,8 +388,21 @@ public class Sistema {
 					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
 					urgencia = Integer.parseInt(parametros[4]);
+					switch (parametros[5]) {
+						case "viajando":
+							estado = Estado.Viajando;
+							break;
+						case "origen":
+							estado = Estado.EnSucursalOrigen;
+							break;
+						case "destino":
+							estado = Estado.EnSucursalDestino;
+							break;
+					}
+					fecha = LocalDate.parse(parametros[5], formatter);
+					
 
-					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia);
+					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha);
 
 					this.empresa.AgregarPedido(pedido);
 
@@ -489,7 +507,7 @@ public class Sistema {
 		OrdenCompra orden;
 
 		int monto;
-		MedioPago medio;
+		MedioPago medio = null;
 		int id_pedido;
 
 		try {
@@ -500,12 +518,16 @@ public class Sistema {
 					switch (parametros[1]){
 						case "credito":
 							medio = MedioPago.CREDITO;
+							break;
 						case "debito":
 							medio = MedioPago.DEBITO;
+							break;
 						case "efectivo":
 							medio = MedioPago.EFECTIVO;
+							break;
 						case "cheque":
 							medio = MedioPago.CHEQUE;
+							break;
  					} 
 					id_pedido = Integer.parseInt(parametros[2]); 
 
