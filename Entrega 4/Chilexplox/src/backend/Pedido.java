@@ -14,6 +14,7 @@ public class Pedido {
   	public Estado estado;
     private int urgencia;
     private LocalDate fecha;
+    private MedioDeTransporte cargadoEn;
 
   	private OrdenCompra orden_compra;
   	private Map<Integer, Encomienda> encomiendas;
@@ -89,7 +90,15 @@ public class Pedido {
     public Encomienda GetEncomienda(int id) {
     	return this.encomiendas.get(id);
     }
-
+    
+    public MedioDeTransporte GetCargadoEn() {
+    	return this.cargadoEn;
+    }
+    
+   
+    /*
+     * Otras operaciones
+     */
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.put(encomienda.GetId(), encomienda);
   	}
@@ -112,5 +121,9 @@ public class Pedido {
  	
  	public void AgregarOrden(OrdenCompra orden) {
  		this.orden_compra = orden;
+ 	}
+ 	
+ 	public void Cargado(MedioDeTransporte medio) {
+ 		this.cargadoEn = medio;
  	}
 }

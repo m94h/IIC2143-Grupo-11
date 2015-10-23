@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 //Fachada, Sistema
@@ -132,8 +133,8 @@ public class Sistema {
 		empresa.AgregarTransporte(vehiculo);
 	}
 
-	public Camion GetCamion (String patente){
-		return (Camion)empresa.GetTransporte(patente);
+	public MedioDeTransporte GetMedio (String patente){
+		return empresa.GetTransporte(patente);
 	}
 
 
@@ -389,13 +390,13 @@ public class Sistema {
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
 					urgencia = Integer.parseInt(parametros[4]);
 					switch (parametros[5]) {
-						case "viajando":
+						case "Viajando":
 							estado = Estado.Viajando;
 							break;
-						case "origen":
+						case "EnSucursalOrigen":
 							estado = Estado.EnSucursalOrigen;
 							break;
-						case "destino":
+						case "EnSucursalDestino":
 							estado = Estado.EnSucursalDestino;
 							break;
 					}
@@ -476,6 +477,7 @@ public class Sistema {
 		int km;
 
 		try {
+			int i = 1;
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
@@ -486,11 +488,20 @@ public class Sistema {
 					km = Integer.parseInt(parametros[4]);
 
 					camion = new Camion(patente, marca, modelo, cap_maxima, km);
-					this.empresa.AgregarTransporte((MedioDeTransporte)camion);
+					this.empresa.AgregarTransporte(camion);
+					
+					//Asignar un camion por sucursal
+					Sucursal sucursal = this.GetSucursal(i);
+					if (sucursal == null) {
+						i = 1;
+						sucursal = this.GetSucursal(i);
+					}
+					sucursal.AgregarMedioDisponible(camion);
 				}
 				catch(Exception e) {
 					// Error en los archivos
 				}
+				i++;
 			}
 		}
 		catch (IOException e) {
@@ -518,16 +529,16 @@ public class Sistema {
 					parametros = sCurrentLine.split(";");
 					monto = Integer.parseInt(parametros[0]);
 					switch (parametros[1]){
-						case "credito":
+						case "CREDITO":
 							medio = MedioPago.CREDITO;
 							break;
-						case "debito":
+						case "DEBITO":
 							medio = MedioPago.DEBITO;
 							break;
-						case "efectivo":
+						case "EFECTIVO":
 							medio = MedioPago.EFECTIVO;
 							break;
-						case "cheque":
+						case "CHEQUE":
 							medio = MedioPago.CHEQUE;
 							break;
  					}
@@ -571,7 +582,7 @@ public class Sistema {
 	/*
 	 * Para guardar los archivos (actualizar la info)
 	 */
-	private void GuardarTodo() {
+	public void GuardarTodo() {
 
 		//Definir escritor
 		PrintWriter writer;
@@ -584,6 +595,7 @@ public class Sistema {
 
 			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda));
 
+			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// Archivo no encontrado o enconding malo
 		}
@@ -605,7 +617,7 @@ public class Sistema {
 				for (Map.Entry<String, Empleado> entry_empleado : sucursal.GetEmpleados().entrySet())
 				{
 					Empleado empleado = entry_empleado.getValue();
-					writer_empleados.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()));
+					writer_empleados.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()) + ";" + empleado.GetClave());
 				}
 
 			}
@@ -646,7 +658,7 @@ public class Sistema {
 			{
 				Pedido pedido = entry_pedido.getValue();
 
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
 
 				OrdenCompra orden = pedido.GetOrden();
@@ -659,7 +671,7 @@ public class Sistema {
 				}
 
 				//recorrer listado de empleados
-				for (Map.Entry<Integer, Encomienda> entry_encomienda : this.empresa.GetEncomiendas().entrySet())
+				for (Map.Entry<Integer, Encomienda> entry_encomienda : pedido.GetEncomiendas().entrySet())
 				{
 					Encomienda encomienda = entry_encomienda.getValue();
 					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
@@ -683,8 +695,9 @@ public class Sistema {
 				{
 					Camion camion = (Camion)entry.getValue();
 
-					writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
+					writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));			
 				}
+				writer_camiones.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
 				// Archivo no encontrado o enconding malo
 		}

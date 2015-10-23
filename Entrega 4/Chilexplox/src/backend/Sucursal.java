@@ -15,13 +15,14 @@ public class Sucursal {
 	/*
 	 * Camiones disponibles para cargar pedidos
 	 */
-	private ArrayList<Camion> camionesEsperando;
+	private ArrayList<MedioDeTransporte> mediosArrivados;
 	
 	/*
-	 * Camiones listos para ser despachados
+	 * Camiones disponibles para cargar pedidos
 	 */
-	private ArrayList<Camion> camionesListos;
+	private ArrayList<MedioDeTransporte> mediosDisponibles;
 	
+
 	
 	/*private ArrayList<Pedido> pedidos;*/
 	private ArrayList<Mensaje> cola_mensajes;
@@ -36,8 +37,8 @@ public class Sucursal {
 		this.telefono = telefono;
 	    this.capacidad = capacidad;
 	    this.empleados = new HashMap<String, Empleado>();
-	    this.camionesEsperando = new ArrayList<Camion>();
-	    this.camionesListos = new ArrayList<Camion>();
+	    this.mediosArrivados = new ArrayList<MedioDeTransporte>();
+	    this.mediosDisponibles = new ArrayList<MedioDeTransporte>();
 	    this.cola_mensajes = new ArrayList<Mensaje>();
 	}
 
@@ -73,21 +74,29 @@ public class Sucursal {
 		this.capacidad = this.capacidad + nueva_capacidad;
 	}
 	
-	public ArrayList<Camion> GetCamionesEsperando() {
-		return this.camionesEsperando;
+	public ArrayList<MedioDeTransporte> GetMediosDisponibles() {
+		return this.mediosDisponibles;
 	}
 	
-	public void AgregarCamionEsperando(Camion camion){
-		this.camionesEsperando.add(camion);
+	public ArrayList<MedioDeTransporte> GetMediosArrivados() {
+		return this.mediosArrivados;
 	}
 	
-	public void AgregarCamionListo(Camion camion){
-		this.camionesEsperando.remove(camion);
-		this.camionesListos.add(camion);
+	public void AgregarMedioArrivado(MedioDeTransporte medio){
+		this.mediosArrivados.add(medio);
+	}
+	
+	public void AgregarMedioDisponible(MedioDeTransporte medio){
+		this.mediosDisponibles.add(medio);
+	}
+	
+	public void SetMedioDisponible(MedioDeTransporte medio){
+		this.mediosArrivados.remove(medio);
+		this.mediosDisponibles.add(medio);
 	}
 	  
-	public void EnviarCamion(Camion camion){
-		this.camionesListos.remove(camion);
+	public void EnviarMedio(MedioDeTransporte medio){
+		this.mediosDisponibles.remove(medio);
 	}
 	  /*
 	  public ArrayList<Pedido> GetPedidos() {

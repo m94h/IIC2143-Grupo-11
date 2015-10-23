@@ -46,13 +46,22 @@ public abstract class MedioDeTransporte {
 		return this.listaPedidos;
 	}
 
-	public void CargarPedido(Pedido pedido){
+	public boolean CargarPedido(Pedido pedido){
 		if(this.capacidadActual < this.capacidadMax){
 			listaPedidos.add(pedido);
+			//avisar al pedido que fue cargado
+			pedido.Cargado(this);
 			this.capacidadActual += 1;
+			return true;
 		}
 		else{
-			// Mensaje que ya esta lleno
+			// Mensaje qe ya esta lleno
+			return false;
 		}
+	}
+	
+	public void Desocupar() {
+		this.capacidadActual = 0;
+		this.listaPedidos.clear();
 	}
 }

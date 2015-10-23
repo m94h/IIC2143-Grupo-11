@@ -95,6 +95,54 @@ public class MainApp extends Application {
         }
     }
     
+    /**
+     * Mostrar el Carga y descarga de medios de trnasporte
+     */
+    public void mostrarCargayDescarga() {
+        try {
+            // Load login
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CargayDescarga.fxml"));
+            AnchorPane cargaydescarga = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(cargaydescarga);
+            
+            // Dar acceso al controlador
+            CargayDescargaController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Mostrar el arrivo y salida de medios de trnasporte
+     */
+    public void mostrarArrivoSalida() {
+        try {
+            // Load login
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ArrivoySalida.fxml"));
+            AnchorPane arrivosalida = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(arrivosalida);
+            
+            // Dar acceso al controlador
+            ListadoPedidosController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
     public void MostrarPedidos() {
     	try {
             // Load menu
@@ -135,6 +183,12 @@ public class MainApp extends Application {
         }		
 	}
 
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        Sistema.GetInstance().GuardarTodo();
+    }
+    
 	public static void main(String[] args) {
 		launch(args);
 	}

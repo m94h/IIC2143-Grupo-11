@@ -80,11 +80,6 @@ public class ListadoPedidosController {
 	
 	
 	/*
-	 * Variable auxiliar para almacenar encomiendas temporales (sin un pedido con id asociado)
-	 */
-	private Map<Integer, Encomienda> encomiendas_temp;
-	
-	/*
 	 * Tabla pedidos y sus columnas
 	 */
 	@FXML
@@ -146,11 +141,16 @@ public class ListadoPedidosController {
         this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
         this.precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty());
         
+        //Inicializar observablearraylist
+        this.pedidosData = FXCollections.observableArrayList();
+        this.encomiendasData = FXCollections.observableArrayList();
+        
         //Mostrar pedidos
+        
         this.UpdatePedidos();
 
         //Poner los valores de los choice box
-		this.estado.getItems().addAll("Transito", "Origen", "Destino");
+		this.estado.getItems().addAll(Estado.values());
 		
 		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
 			this.origen.getItems().add(entry.getValue().GetDireccion());
@@ -175,8 +175,7 @@ public class ListadoPedidosController {
 
 	private void UpdatePedidos() {
 		//Get pedidos
-		this.pedidosData = FXCollections.observableArrayList();
-
+		this.pedidosData.clear();
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
@@ -194,7 +193,7 @@ public class ListadoPedidosController {
 	@FXML
 	private void handleNuevo() {
 		
-		if (this.id_pedido.getText() != null && this.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. ¿Esta seguro de querer crear uno nuevo?")) {
+		if (this.id_pedido.getText() != null && this.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. ï¿½Esta seguro de querer crear uno nuevo?")) {
 				
 			this.id_pedido.setText("nuevo");
 			this.origen.setDisable(false);
@@ -206,7 +205,7 @@ public class ListadoPedidosController {
 	
 			// Estado debe partir en origen
 			this.estado.setDisable(true);
-			this.estado.getSelectionModel().select("Origen");
+			this.estado.getSelectionModel().select(Estado.EnSucursalOrigen.ordinal());
 			
 			//Borrar selecciones antiguas
 			this.urgencia.getSelectionModel().clearSelection();
@@ -382,7 +381,7 @@ public class ListadoPedidosController {
 			this.direccion.setText(cliente.GetDireccion());
 			
 			//encomienda
-			this.encomiendasData = FXCollections.observableArrayList();
+			this.encomiendasData.clear();
 			Map<Integer, Encomienda> encomiendas = pedido_b.GetEncomiendas();
 			if (encomiendas != null) {
 				for (Map.Entry<Integer, Encomienda> entry : encomiendas.entrySet()) {
@@ -412,6 +411,28 @@ public class ListadoPedidosController {
 
 	@FXML
 	public void handleGuardarCambios() {
+		
+		//Verificar que haya ingresado datos
+		if (this.id_pedido.getText().isEmpty())
+			return;
+		if (this.estado.getSelectionModel().isEmpty())
+			return;
+		if (this.origen.getSelectionModel().isEmpty())
+			return;
+		if (this.destino.getSelectionModel().isEmpty())
+			return;
+		if (this.urgencia.getSelectionModel().isEmpty())
+			return;
+		if (this.rut.getText().isEmpty())
+			return;
+		if (this.nombre.getText().isEmpty())
+			return;
+		if (this.telefono.getText().isEmpty())
+			return;
+		if (this.direccion.getText().isEmpty())
+			return;
+		
+		
 		//chequear cliente
 		if (Sistema.GetInstance().GetCliente(this.rut.getText()) == null) {
 			//ya existe, se borra para actualizarlo con uno nuevo
@@ -423,9 +444,9 @@ public class ListadoPedidosController {
 		Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
 
 		//otros parametros
-		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
-		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
-		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
+		Sucursal origen = (new ArrayList<Sucursal>(Sistema.GetInstance().GetSucursales().values())).get(this.origen.getSelectionModel().getSelectedIndex());
+		Sucursal destino = (new ArrayList<Sucursal>(Sistema.GetInstance().GetSucursales().values())).get(this.destino.getSelectionModel().getSelectedIndex());
+		int urgencia = Integer.parseInt(this.urgencia.getSelectionModel().getSelectedItem().toString());
 		Estado estado = Estado.valueOf(this.estado.getValue().toString());
 		
 		if (this.id_pedido.getText().equals("nuevo")) {
@@ -462,7 +483,7 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleVolverMenu() {
-		if (this.ShowConfirm("Guarde los cambios antes de salir. ¿Esta seguro de querer salir?"))
+		if (this.ShowConfirm("Guarde los cambios antes de salir. ï¿½Esta seguro de querer salir?"))
 			this.mainApp.MostrarMenu();
 	}
 

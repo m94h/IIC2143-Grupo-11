@@ -19,7 +19,7 @@ import java.util.Map;
 //backend
 import backend.*;
 
-public class ListadoCamionesController {
+public class ArrivoySalidaController {
 
 	private MainApp mainApp;
 
@@ -116,7 +116,7 @@ public class ListadoCamionesController {
 			this.kms.setDisable(false);
 
 			//Get los datos del camion backend
-			Camion camion_b = Sistema.GetInstance().GetCamion(camion.getPatente());
+			Camion camion_b = (Camion) Sistema.GetInstance().GetMedio(camion.getPatente());
 
 			//agregar datos
 			this.patente.setText(camion_b.GetPatente());
