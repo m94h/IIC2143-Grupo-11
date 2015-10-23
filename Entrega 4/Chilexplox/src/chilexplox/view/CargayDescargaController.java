@@ -14,24 +14,24 @@ import javafx.scene.control.TextField;
 public class CargayDescargaController {
 
 	private MainApp mainApp;
-	
+
 	@FXML
 	private Label sucursal;
-	
+
 	@FXML
 	private TextField id_pedido;
-	
+
 	@FXML
 	private ChoiceBox patente_carga;
-	
+
 	@FXML
 	private ChoiceBox patente_descarga;
-	
+
 	@FXML
     private void initialize() {
 		// Poner la sucursal actual
 		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
-		
+
 		//poner los valores
 		//medios disponibles para cargar
 		ArrayList<MedioDeTransporte> medioPorDescargar = Sistema.GetInstance().GetSucursalLoged().GetMediosArrivados();
@@ -39,21 +39,21 @@ public class CargayDescargaController {
 			MedioDeTransporte medio = medioPorDescargar.get(i);
 			this.patente_descarga.getItems().add(medio.GetPatente());
 		}
-	
+
 		//medios disponibles para descargar
 		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
 		for (int i = 0; i < medioPorCargar.size(); i++) {
 			MedioDeTransporte medio = medioPorCargar.get(i);
 			this.patente_carga.getItems().add(medio.GetPatente());
 		}
-		
+
 
 	}
-	
+
 	public CargayDescargaController() {
-		
+
 	}
-	
+
 	/*
 	 * Handle boton cargar
 	 */
@@ -63,7 +63,7 @@ public class CargayDescargaController {
 			this.ShowMessage("Ingrese un id de pedido y seleccione un camion");
 			return;
 		}
-		
+
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
 		if (pedido != null) {
 			if (pedido.GetCargadoEn() != null) {
@@ -79,7 +79,7 @@ public class CargayDescargaController {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleDescargarMedio() {
 		if (this.patente_descarga.getSelectionModel().isEmpty()) {
@@ -91,15 +91,15 @@ public class CargayDescargaController {
 		operario.DescargarMedio(medio);
 		this.ShowMessage("El camion seleccionado ha sido descargado");
 	}
-	
+
 	/*
 	 * Para mostrar alertas
 	 */
 	private void ShowMessage(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
 	}
-	
-	
+
+
 	/*
 	 * Para volver al menu principal
 	 */
@@ -111,5 +111,5 @@ public class CargayDescargaController {
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-	
+
 }

@@ -25,7 +25,7 @@ public abstract class MedioDeTransporte {
 	}
 
 	public void Viajar(){
-		this.estado = Estado.Viajando;
+		this.estado = Estado.EnTransito;
 	}
 
 	public int GetCapacidadDisponible(){
@@ -59,7 +59,7 @@ public abstract class MedioDeTransporte {
 			return false;
 		}
 	}
-	
+
 	public void Desocupar() {
 		this.capacidadActual = 0;
 		this.listaPedidos.clear();

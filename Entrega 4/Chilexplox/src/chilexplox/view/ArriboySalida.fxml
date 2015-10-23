@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArriboySalidaController">
+   <children>
+      <Button layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
+      <Button layoutX="446.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAvisarArribo" text="Arribo" />
+      <Button layoutX="446.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleAvisarSalida" text="Salida" />
+      <Label layoutX="49.0" layoutY="32.0" text="Sucursal:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="sucursal" layoutX="116.0" layoutY="31.0" text="sucursal" />
+      <Label layoutX="49.0" layoutY="101.0" text="Arrivo de camion">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="48.0" layoutY="238.0" text="Salida de camion">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="47.0" layoutY="135.0" text="Patente camion:" />
+      <Label layoutX="47.0" layoutY="267.0" text="Patente camion:" />
+      <ChoiceBox fx:id="patenteArribo" layoutX="205.0" layoutY="130.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="patenteSalida" layoutX="205.0" layoutY="267.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

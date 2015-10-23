@@ -15,5 +15,5 @@ public class OperarioCamion extends Empleado {
 		destino.AgregarMedioArrivado(camion);
 		camion.estado = Estado.EnSucursalDestino;
 	}
-  
+
 }

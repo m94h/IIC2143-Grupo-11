@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -28,6 +29,8 @@ public class Sistema {
 	//private int id_orden_compra;
 
 	private Empresa empresa;
+
+	private ArrayList<MedioDeTransporte> mediosEnTransito;
 
 	//Valores de interaccion con usuario
 	private Empleado usuario_loged;
@@ -68,6 +71,21 @@ public class Sistema {
 
 	public Empleado GetUsuarioLoged() {
 		return this.usuario_loged;
+	}
+
+	/*
+	 *  Agregar/eliminar de lista con camiones en transito
+	 */
+	public void AgregarMedioEnTransito(MedioDeTransporte medio){
+		this.mediosEnTransito.add(medio);
+	}
+
+	public void EliminarMedioEnTransito(MedioDeTransporte medio){
+		this.mediosEnTransito.remove(medio);
+	}
+
+	public ArrayList<MedioDeTransporte> GetMediosEnTransito() {
+		return this.mediosEnTransito;
 	}
 
 	/*
@@ -391,7 +409,7 @@ public class Sistema {
 					urgencia = Integer.parseInt(parametros[4]);
 					switch (parametros[5]) {
 						case "Viajando":
-							estado = Estado.Viajando;
+							estado = Estado.EnTransito;
 							break;
 						case "EnSucursalOrigen":
 							estado = Estado.EnSucursalOrigen;
@@ -489,7 +507,7 @@ public class Sistema {
 
 					camion = new Camion(patente, marca, modelo, cap_maxima, km);
 					this.empresa.AgregarTransporte(camion);
-					
+
 					//Asignar un camion por sucursal
 					Sucursal sucursal = this.GetSucursal(i);
 					if (sucursal == null) {
@@ -695,7 +713,7 @@ public class Sistema {
 				{
 					Camion camion = (Camion)entry.getValue();
 
-					writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));			
+					writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
 				}
 				writer_camiones.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e2) {

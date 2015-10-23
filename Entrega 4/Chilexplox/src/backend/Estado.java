@@ -1,4 +1,4 @@
 package backend;
 
-public enum Estado {Viajando, EnSucursalOrigen, EnSucursalDestino}
+public enum Estado {EnTransito, EnSucursalOrigen, EnSucursalDestino}
 
