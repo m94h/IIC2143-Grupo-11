@@ -370,8 +370,10 @@ public class ListadoPedidosController {
 		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
 		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
 		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
+		Estado estado = Estado.valueOf(this.estado.getValue().toString());
+		
 		if (this.id_pedido.getText().equals("nuevo")) {
-			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
+			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia, estado, fecha.getValue());
 			Pedido pedido = Sistema.GetInstance().GetPedido(id_nuevo);
 			PedidoTableModel pedidoModel = new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia()));
 			this.pedidosData.add(pedidoModel);
@@ -382,7 +384,6 @@ public class ListadoPedidosController {
 			
 		} else {
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
-			Estado estado = Estado.valueOf(this.estado.getValue().toString());
 			pedido.Actualizar(cliente, origen, destino, urgencia, estado, fecha.getValue());
 		}
 	}

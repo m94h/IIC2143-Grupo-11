@@ -377,7 +377,7 @@ public class Sistema {
 		int urgencia;
 		Estado estado = null;
 		LocalDate fecha;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -399,7 +399,7 @@ public class Sistema {
 							estado = Estado.EnSucursalDestino;
 							break;
 					}
-					fecha = LocalDate.parse(parametros[5], formatter);
+					fecha = LocalDate.parse(parametros[6], formatter);
 					
 
 					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha);
@@ -408,6 +408,7 @@ public class Sistema {
 
 				}
 				catch(Exception e) {
+					System.out.println(e);
 					// Error en los archivos
 				}
 			}
