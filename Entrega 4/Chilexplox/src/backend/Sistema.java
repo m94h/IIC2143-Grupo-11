@@ -634,8 +634,9 @@ public class Sistema {
 			for (Map.Entry<Integer, Pedido> entry_pedido : this.empresa.GetPedidos().entrySet())
 			{
 				Pedido pedido = entry_pedido.getValue();
-
-				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()));
+				
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
+				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));                         
 
 				//recorrer listado de empleados
 				for (Map.Entry<Integer, Encomienda> entry_encomienda : this.empresa.GetEncomiendas().entrySet())
