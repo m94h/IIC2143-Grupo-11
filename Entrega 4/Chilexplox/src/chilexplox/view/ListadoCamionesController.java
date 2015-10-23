@@ -117,7 +117,7 @@ public class ListadoCamionesController {
 
 
 			//Get los datos del camion backend
-			Camion camion_b = Sistema.GetInstance().GetCamion(camion.getPatente());
+			Camion camion_b = (Camion) Sistema.GetInstance().GetMedio(camion.getPatente());
 
 			//agregar datos
 			this.patente.setText(camion_b.GetPatente());

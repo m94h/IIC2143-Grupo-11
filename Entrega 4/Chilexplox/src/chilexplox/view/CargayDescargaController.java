@@ -70,7 +70,7 @@ public class CargayDescargaController {
 				this.ShowMessage("Este pedido ya fue cargado a un camion");
 				return;
 			}
-			MedioDeTransporte medio = Sistema.GetInstance().GetTransporte((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
+			MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
 			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 			if (operario.CargarMedio(medio, pedido)) {
 				this.ShowMessage("Pedido cargado correctamente al medio de transporte");
@@ -86,7 +86,7 @@ public class CargayDescargaController {
 			this.ShowMessage("Seleccione un medio de transporte");
 			return;
 		}
-		MedioDeTransporte medio = Sistema.GetInstance().GetTransporte(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DescargarMedio(medio);
 		this.ShowMessage("El camion seleccionado ha sido descargado");

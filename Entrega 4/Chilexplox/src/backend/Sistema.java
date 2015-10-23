@@ -132,7 +132,7 @@ public class Sistema {
 		empresa.AgregarTransporte(vehiculo);
 	}
 
-	public MedioDeTransporte GetTransporte (String patente){
+	public MedioDeTransporte GetMedio (String patente){
 		return empresa.GetTransporte(patente);
 	}
 
