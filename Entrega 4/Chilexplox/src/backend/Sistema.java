@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 //Fachada, Sistema
@@ -476,6 +477,7 @@ public class Sistema {
 		int km;
 
 		try {
+			int i = 1;
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
@@ -486,11 +488,20 @@ public class Sistema {
 					km = Integer.parseInt(parametros[4]);
 
 					camion = new Camion(patente, marca, modelo, cap_maxima, km);
-					this.empresa.AgregarTransporte((MedioDeTransporte)camion);
+					this.empresa.AgregarTransporte(camion);
+					
+					//Asignar un camion por sucursal
+					Sucursal sucursal = this.GetSucursal(i);
+					if (sucursal == null) {
+						i = 1;
+						sucursal = this.GetSucursal(i);
+					}
+					sucursal.AgregarMedioDisponible(camion);
 				}
 				catch(Exception e) {
 					// Error en los archivos
 				}
+				i++;
 			}
 		}
 		catch (IOException e) {

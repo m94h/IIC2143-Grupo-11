@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="640.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ListadoCamionesController">
+<AnchorPane prefHeight="640.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArrivoySalidaController">
    <children>
       <TreeTableView fx:id="tabla_esperando" layoutX="46.0" layoutY="73.0" prefHeight="384.0" prefWidth="470.0">
         <columns>

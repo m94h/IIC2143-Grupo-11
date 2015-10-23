@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
 //backend
 import backend.*;
 
-public class ListadoPedidosController {
+public class ArrivoySalidaController {
 
 	private MainApp mainApp;
 	

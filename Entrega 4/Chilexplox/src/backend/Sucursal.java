@@ -86,6 +86,10 @@ public class Sucursal {
 		this.mediosArrivados.add(medio);
 	}
 	
+	public void AgregarMedioDisponible(MedioDeTransporte medio){
+		this.mediosDisponibles.add(medio);
+	}
+	
 	public void SetMedioDisponible(MedioDeTransporte medio){
 		this.mediosArrivados.remove(medio);
 		this.mediosDisponibles.add(medio);

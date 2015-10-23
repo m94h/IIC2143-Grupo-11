@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.CargayDescargaController">
    <children>
       <Label layoutX="29.0" layoutY="67.0" text="Carga de pedidos">
@@ -32,7 +31,7 @@
       <ChoiceBox fx:id="patente_carga" layoutX="134.0" layoutY="154.0" prefWidth="150.0" />
       <ChoiceBox fx:id="patente_descarga" layoutX="134.0" layoutY="254.0" prefWidth="150.0" />
       <Label layoutX="29.0" layoutY="258.0" text="Pantente camion:" />
-      <Button layoutX="346.0" layoutY="253.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="92.0" text="Descargar" />
+      <Button layoutX="346.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="45.0" prefWidth="92.0" text="Descargar" />
       <Button layoutX="248.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
    </children>
 </AnchorPane>
