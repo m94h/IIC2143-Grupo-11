@@ -8,8 +8,9 @@
 <AnchorPane prefHeight="406.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.MensajeController">
    <children>
       <TextArea fx:id="mensaje" layoutX="29.0" layoutY="89.0" prefHeight="251.0" prefWidth="573.0" />
-      <Button layoutX="428.0" layoutY="44.0" mnemonicParsing="false" onAction="#Enviar" text="Enviar Mensaje" />
+      <Button layoutX="309.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleEnviar" text="Enviar Mensaje" />
       <Label layoutX="107.0" layoutY="22.0" text="Sucursal Destino" />
       <ChoiceBox fx:id="destino" layoutX="51.0" layoutY="44.0" prefHeight="26.0" prefWidth="216.0" />
+      <Button layoutX="487.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleVolver" text="Volver" />
    </children>
 </AnchorPane>
