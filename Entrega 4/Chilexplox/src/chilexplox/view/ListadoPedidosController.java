@@ -365,7 +365,6 @@ public class ListadoPedidosController {
 
 		Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
 
-
 		//otros parametros
 		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
 		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
