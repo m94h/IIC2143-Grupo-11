@@ -20,36 +20,36 @@ import java.util.Map;
 import backend.*;
 
 public class ListadoPedidosController {
-	
+
 	private MainApp mainApp;
-	
+
 	@FXML
 	private TextField id_pedido;
-	
+
 	@FXML
 	private ChoiceBox estado;
-	
+
 	@FXML
 	private ChoiceBox origen;
-	
+
 	@FXML
 	private ChoiceBox destino;
-	
+
 	@FXML
 	private DatePicker fecha;
-	
+
 	@FXML
 	private ChoiceBox urgencia;
-	
+
 	@FXML
 	private TextField rut;
-	
+
 	@FXML
 	private TextField nombre;
-	
+
 	@FXML
 	private TextField telefono;
-	
+
 	@FXML
 	private TextField direccion;
 	
@@ -59,12 +59,13 @@ public class ListadoPedidosController {
 	@FXML
 	private TextField volumen;
 	
+
 	/*
 	 * Tabla pedidos y sus columnas
 	 */
 	@FXML
 	private TableView<PedidoTableModel> tabla_pedidos;
-	
+
 	@FXML
     private TableColumn<PedidoTableModel, String> id_pedidoColumn;
     @FXML
@@ -119,7 +120,7 @@ public class ListadoPedidosController {
         
         //Mostrar pedidos
         this.UpdatePedidos();
-        
+
         //Poner los valores de los choice box
 		this.estado.getItems().addAll("Transito", "Origen", "Destino");
 		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
@@ -138,11 +139,11 @@ public class ListadoPedidosController {
         tabla_pedidos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> MostrarDetallesPedido(newValue));
     }
-	
+
 	private void UpdatePedidos() {
 		//Get pedidos
 		this.pedidosData = FXCollections.observableArrayList();
-		
+
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
@@ -152,6 +153,7 @@ public class ListadoPedidosController {
 		}
 		this.tabla_pedidos.setItems(this.pedidosData);
 	}
+
 	
 	/*
 	 * Handle para nuevo pedido
@@ -165,11 +167,11 @@ public class ListadoPedidosController {
 		//Fecha sigue inactiva, se guarda la fecha actual
 		this.fecha.setValue(LocalDate.now());
 		this.urgencia.setDisable(false);
-		
+
 		this.estado.getSelectionModel().clearSelection();
 		this.origen.getSelectionModel().clearSelection();
 		this.destino.getSelectionModel().clearSelection();
-		
+
 		this.rut.setDisable(false);
 		this.rut.setText("");
 		this.nombre.setText("");
@@ -205,8 +207,9 @@ public class ListadoPedidosController {
 			this.peso.setText("");
 			this.volumen.setText("");
 		}
+
 	}
-	
+
 	/*
 	 * Para mostrar detalles del pedido al seleccionar uno
 	 */
@@ -227,13 +230,13 @@ public class ListadoPedidosController {
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
-			
+
 			//agregar datos
 			this.id_pedido.setText(Integer.toString(pedido_b.GetId()));
 			//Get el index dado un value de enum
 			//http://stackoverflow.com/questions/15436721/get-index-of-enum-from-sting
 			this.estado.getSelectionModel().select(Arrays.asList(Estado.values()).indexOf(pedido_b.estado));
-			
+
 			this.destino.getSelectionModel().select(pedido_b.GetDestino().GetDireccion());
 			this.origen.getSelectionModel().select(pedido_b.GetOrigen().GetDireccion());
 			this.urgencia.getSelectionModel().select(pedido_b.GetUrgencia() - 1);
@@ -260,10 +263,10 @@ public class ListadoPedidosController {
 			
 		}
 	}
-	
+
 	@FXML
 	public void handleGuardarCambios() {
-		
+
 		//chequear cliente
 		if (Sistema.GetInstance().GetCliente(this.rut.getText()) != null) {
 			//ya existe, se borra para actualizarlo con uno nuevo
@@ -271,21 +274,21 @@ public class ListadoPedidosController {
 		}
 		//crear cliente con datos nuevos
 		Sistema.GetInstance().AgregarCliente(this.rut.getText(), this.nombre.getText(), Integer.parseInt(this.telefono.getText()), this.direccion.getText());
-		
+
 		Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
-		
+
 		//Ver si es nuevo el pedido o si se actualiza
 		String nuevo_id = Integer.toString(Sistema.GetInstance().Get_id_pedido());
-		
+
 		//otros parametros
 		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
 		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
 		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
 		Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
 	}
-	
+
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-	
+
 }

@@ -94,11 +94,6 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="16.0" layoutY="390.0" text="Agregar encomiendas">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
                   <Button layoutX="526.0" layoutY="463.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="164.0" text="Despachar" />
                   <Button layoutX="526.0" layoutY="533.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="164.0" text="Guardar Cambios" />
                   <GridPane layoutX="20.0" layoutY="415.0" prefHeight="59.0" prefWidth="404.0">
@@ -117,7 +112,7 @@
                         <TextField fx:id="volumen" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <Button layoutX="295.0" layoutY="488.0" mnemonicParsing="false" text="Agregar" />
+                  <Button layoutX="295.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleAgregarEncomienda" text="Agregar" />
                   <TableView fx:id="tabla_encomiendas" layoutX="451.0" layoutY="41.0" prefHeight="403.0" prefWidth="309.0">
                     <columns>
                       <TableColumn fx:id="id_encomiendaColumn" prefWidth="95.0" text="ID" />
