@@ -78,8 +78,6 @@ public class ListadoPedidosController {
 	@FXML
 	private ChoiceBox estadoPago;
 	
-	@FXML
-	private TextField montoRecibido;
 	
 	/*
 	 * Variable auxiliar para almacenar encomiendas temporales (sin un pedido con id asociado)
@@ -153,6 +151,7 @@ public class ListadoPedidosController {
 
         //Poner los valores de los choice box
 		this.estado.getItems().addAll("Transito", "Origen", "Destino");
+		
 		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
 			this.origen.getItems().add(entry.getValue().GetDireccion());
 			this.destino.getItems().add(entry.getValue().GetDireccion());
@@ -160,6 +159,10 @@ public class ListadoPedidosController {
 		
 		//Agregar urgencias
 		this.urgencia.getItems().addAll("1", "2", "3");
+		
+		//Agregar choices del pago
+		this.estadoPago.getItems().addAll("No pagado", "Pagado");
+		this.medioPago.getItems().addAll(MedioPago.values());
 		
 		//Ordenar tabla por urgencia por defecto
 		this.tabla_pedidos.getSortOrder().add(this.urgenciaColumn);
@@ -215,12 +218,10 @@ public class ListadoPedidosController {
 		
 		this.medioPago.setDisable(false);
 		this.estado.setDisable(false);
-		this.montoRecibido.setDisable(false);
 		this.montoEncomienda.setText("$");
 		this.montoTotal.setText("$");
 		this.medioPago.getSelectionModel().clearSelection();
 		this.estadoPago.getSelectionModel().clearSelection();
-		this.montoRecibido.setText("");
 		
 	}
 	
@@ -249,6 +250,27 @@ public class ListadoPedidosController {
 	            JOptionPane.showMessageDialog(null, message);
 	        }
 	    });
+	}
+	
+	/*
+	 * Handle Para buscar cliente con el rut
+	 */
+	@FXML
+	private void handleBuscarCliente() {
+		if (this.id_pedido.getText() != null) {
+			
+			if (this.rut.getText() != null) {
+				Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
+				if (cliente != null) {
+					this.nombre.setText(cliente.GetNombre());
+					this.telefono.setText(Integer.toString(cliente.GetTelefono()));
+					this.direccion.setText(cliente.GetDireccion());
+					return;
+				}
+			}
+			
+		}
+		this.ShowMessage("Cliente no encontrado, verifique el rut o ingrese manualmente");
 	}
 	
 	/*
@@ -310,7 +332,6 @@ public class ListadoPedidosController {
 			this.volumen.setDisable(false);
 			this.medioPago.setDisable(false);
 			this.estado.setDisable(false);
-			this.montoRecibido.setDisable(false);
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
@@ -348,6 +369,16 @@ public class ListadoPedidosController {
 			// actualizar monto total
 			this.montoTotal.setText("$" + Integer.toString(pedido_b.CalcularMonto()));
 			
+			OrdenCompra orden = pedido_b.GetOrden();
+			if (orden != null) {
+				this.medioPago.getSelectionModel().select(orden.GetMedio().toString());
+				if (orden.GetEstado()){
+					this.estadoPago.getSelectionModel().select(1);
+				} else {
+					this.estadoPago.getSelectionModel().select(0);
+				}
+			}
+			
 		}
 	}
 
@@ -384,6 +415,16 @@ public class ListadoPedidosController {
 		} else {
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
 			pedido.Actualizar(cliente, origen, destino, urgencia, estado, fecha.getValue());
+			
+			OrdenCompra orden = pedido.GetOrden();
+			if (orden == null) {
+				pedido.GenerarOrden();
+				orden = pedido.GetOrden();
+			}
+			
+			if (this.estado.getSelectionModel().getSelectedItem().equals("Pagado")) {
+				orden.Pagar(MedioPago.valueOf(this.medioPago.getSelectionModel().getSelectedItem().toString()));
+			}
 		}
 	}
 
