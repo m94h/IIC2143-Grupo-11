@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ListadoPedidosController">
    <children>
-      <SplitPane dividerPositions="0.39914163090128757" layoutX="-43.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-43.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.39914163090128757" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -109,15 +109,15 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Peso" />
-                        <Label text="Volumen" GridPane.rowIndex="1" />
+                        <Label text="Peso (gr)" />
+                        <Label text="Volumen (cc)" GridPane.rowIndex="1" />
                         <TextField fx:id="peso" disable="true" GridPane.columnIndex="1" />
                         <TextField fx:id="volumen" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Monto calculado" GridPane.rowIndex="2" />
                         <Label fx:id="montoEncomienda" text="\$" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <Button layoutX="187.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleAgregarEncomienda" text="Agregar" />
+                  <Button layoutX="225.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleAgregarEncomienda" text="Agregar" />
                   <TableView fx:id="tabla_encomiendas" layoutX="451.0" layoutY="41.0" prefHeight="274.0" prefWidth="309.0">
                     <columns>
                       <TableColumn fx:id="id_encomiendaColumn" prefWidth="95.0" text="ID" />
@@ -166,6 +166,7 @@
                         <Label fx:id="montoTotal" text="\$" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
+                  <Button layoutX="118.0" layoutY="491.0" mnemonicParsing="false" onAction="#handleGenerarPresupuesto" text="Presupuesto" />
                </children>
             </AnchorPane>
         </items>
