@@ -5,54 +5,54 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 //backend
 import backend.*;
 
-public class ListadoCamionesController {
+public class NuevoPedidoController {
 
 	private MainApp mainApp;
 
 	@FXML
-	private TextField patente;
+	private TextField rut;
 
 	@FXML
-	private TextField estado;
+	private ChoiceBox origen;
 
 	@FXML
-	private TextField capacidad;
+	private ChoiceBox destino;
 
 	@FXML
-	private TextField sucursalOrigen;
+	private ChoiceBox urgencia;
 
 	@FXML
-	private TextField sucursalDestino;
+	private TextField peso;
 
 	@FXML
-	private TextField Modelo;
+	private TextField volumen;
 
 	@FXML
-	private TextField Marca;
+	private TextField monto;
 
 	@FXML
-	private TextField Kms;
-
+	private ChoiceBox medioPago;
 
 	@FXML
-	private void initialize() {
-		// Get camiones listos y esperando
-	}
+	private TextField efectivoRecibido;
 
-	public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
+	/*
+	 * Tabla encomiendas y sus columnas
+	 */
+
 
 }
