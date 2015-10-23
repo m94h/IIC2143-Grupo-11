@@ -193,36 +193,39 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleNuevo() {
-		this.id_pedido.setText("nuevo");
-		this.estado.setDisable(false);
-		this.origen.setDisable(false);
-		this.destino.setDisable(false);
-		//Fecha sigue inactiva, se guarda la fecha actual
-		this.fecha.setValue(LocalDate.now());
-		this.urgencia.setDisable(false);
-
-		this.estado.getSelectionModel().clearSelection();
-		this.origen.getSelectionModel().clearSelection();
-		this.destino.getSelectionModel().clearSelection();
-
-		this.rut.setDisable(false);
-		this.rut.setText("");
-		this.nombre.setText("");
-		this.telefono.setText("");
-		this.direccion.setText("");
 		
-		this.peso.setDisable(false);
-		this.volumen.setDisable(false);
-		this.peso.setText("");
-		this.volumen.setText("");
-		
-		this.medioPago.setDisable(false);
-		this.estado.setDisable(false);
-		this.montoEncomienda.setText("$");
-		this.montoTotal.setText("$");
-		this.medioPago.getSelectionModel().clearSelection();
-		this.estadoPago.getSelectionModel().clearSelection();
-		
+		if (this.id_pedido.getText() != null && this.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. ¿Esta seguro de querer crear uno nuevo?")) {
+				
+			this.id_pedido.setText("nuevo");
+			this.estado.setDisable(false);
+			this.origen.setDisable(false);
+			this.destino.setDisable(false);
+			//Fecha sigue inactiva, se guarda la fecha actual
+			this.fecha.setValue(LocalDate.now());
+			this.urgencia.setDisable(false);
+	
+			this.estado.getSelectionModel().clearSelection();
+			this.origen.getSelectionModel().clearSelection();
+			this.destino.getSelectionModel().clearSelection();
+	
+			this.rut.setDisable(false);
+			this.rut.setText("");
+			this.nombre.setText("");
+			this.telefono.setText("");
+			this.direccion.setText("");
+			
+			this.peso.setDisable(false);
+			this.volumen.setDisable(false);
+			this.peso.setText("");
+			this.volumen.setText("");
+			
+			this.medioPago.setDisable(false);
+			this.estado.setDisable(false);
+			this.montoEncomienda.setText("$");
+			this.montoTotal.setText("$");
+			this.medioPago.getSelectionModel().clearSelection();
+			this.estadoPago.getSelectionModel().clearSelection();
+		}
 	}
 	
 	/*
@@ -243,14 +246,23 @@ public class ListadoPedidosController {
 	/*
 	 * Para mostrar alertas
 	 */
-	private void ShowMessage(String message) {
-	    EventQueue.invokeLater(new Runnable() {
-	        @Override
-	        public void run() {
-	            JOptionPane.showMessageDialog(null, message);
-	        }
-	    });
+	private void ShowMessage(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
 	}
+	
+	/*
+	 * Para confirmar
+	 */
+	private boolean ShowConfirm(String mensaje) {
+		int dialogButton = JOptionPane.YES_NO_OPTION;
+		int dialogResult = JOptionPane.showConfirmDialog(null, mensaje, "Por favor Confirme una opcion", dialogButton);
+		if(dialogResult == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+
 	
 	/*
 	 * Handle Para buscar cliente con el rut
@@ -411,6 +423,7 @@ public class ListadoPedidosController {
 			this.tabla_pedidos.sort(); //sort
 			this.tabla_pedidos.getSelectionModel().select(pedidoModel); //seleccionar para que se actualice
 			
+			this.ShowMessage("Nuevo Pedido guardado correctamente");
 			
 		} else {
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
@@ -425,7 +438,18 @@ public class ListadoPedidosController {
 			if (this.estado.getSelectionModel().getSelectedItem().equals("Pagado")) {
 				orden.Pagar(MedioPago.valueOf(this.medioPago.getSelectionModel().getSelectedItem().toString()));
 			}
+			
+			this.ShowMessage("Pedido actualizado correctamente");
 		}
+	}
+	
+	/*
+	 * Para volver al menu principal
+	 */
+	@FXML
+	private void handleVolverMenu() {
+		if (this.ShowConfirm("Guarde los cambios antes de salir. ¿Esta seguro de querer salir?"))
+			this.mainApp.MostrarMenu();
 	}
 
 	public void setMainApp(MainApp mainApp) {
