@@ -197,22 +197,34 @@ public class ListadoPedidosController {
 		if (this.id_pedido.getText() != null && this.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. ¿Esta seguro de querer crear uno nuevo?")) {
 				
 			this.id_pedido.setText("nuevo");
-			this.estado.setDisable(false);
 			this.origen.setDisable(false);
 			this.destino.setDisable(false);
 			//Fecha sigue inactiva, se guarda la fecha actual
+			this.fecha.setDisable(true);
 			this.fecha.setValue(LocalDate.now());
 			this.urgencia.setDisable(false);
 	
-			this.estado.getSelectionModel().clearSelection();
+			// Estado debe partir en origen
+			this.estado.setDisable(true);
+			this.estado.getSelectionModel().select("Origen");
+			
+			//Borrar selecciones antiguas
+			this.urgencia.getSelectionModel().clearSelection();
 			this.origen.getSelectionModel().clearSelection();
 			this.destino.getSelectionModel().clearSelection();
 	
 			this.rut.setDisable(false);
+			this.nombre.setDisable(false);
+			this.telefono.setDisable(false);
+			this.direccion.setDisable(false);
 			this.rut.setText("");
 			this.nombre.setText("");
 			this.telefono.setText("");
 			this.direccion.setText("");
+			
+			//limpiar encomiendas
+			this.encomiendasData.clear();
+			this.tabla_encomiendas.setItems(this.encomiendasData);
 			
 			this.peso.setDisable(false);
 			this.volumen.setDisable(false);
@@ -220,7 +232,7 @@ public class ListadoPedidosController {
 			this.volumen.setText("");
 			
 			this.medioPago.setDisable(false);
-			this.estado.setDisable(false);
+			this.estadoPago.setDisable(false);
 			this.montoEncomienda.setText("$");
 			this.montoTotal.setText("$");
 			this.medioPago.getSelectionModel().clearSelection();
@@ -271,7 +283,7 @@ public class ListadoPedidosController {
 	private void handleBuscarCliente() {
 		if (this.id_pedido.getText() != null) {
 			
-			if (this.rut.getText() != null) {
+			if (!this.rut.getText().equals("")) {
 				Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
 				if (cliente != null) {
 					this.nombre.setText(cliente.GetNombre());
@@ -279,6 +291,9 @@ public class ListadoPedidosController {
 					this.direccion.setText(cliente.GetDireccion());
 					return;
 				}
+			} else {
+				this.ShowMessage("Ingrese un Rut");
+				return;
 			}
 			
 		}
@@ -291,11 +306,11 @@ public class ListadoPedidosController {
 	@FXML
 	private void handleAgregarEncomienda() {
 		//get id del pedido
-		int id = Integer.parseInt(this.id_pedido.getText());
+		String id = this.id_pedido.getText();
+		
 		
 		//Si hay un pedido agregar
-		if (this.id_pedido.getText() != null) {
-			
+		if (!id.equals("")) {
 			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
 				
 				if (this.id_pedido.getText().equals("nuevo")) {
@@ -304,7 +319,7 @@ public class ListadoPedidosController {
 					return;
 				}
 							
-				Pedido pedido = Sistema.GetInstance().GetPedido(id);
+				Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(id));
 				int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
 				Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
 				pedido.AgregarEncomienda(encomienda);
@@ -397,9 +412,8 @@ public class ListadoPedidosController {
 
 	@FXML
 	public void handleGuardarCambios() {
-
 		//chequear cliente
-		if (Sistema.GetInstance().GetCliente(this.rut.getText()) != null) {
+		if (Sistema.GetInstance().GetCliente(this.rut.getText()) == null) {
 			//ya existe, se borra para actualizarlo con uno nuevo
 			Sistema.GetInstance().BorrarCliente(this.rut.getText());
 		}

@@ -13,8 +13,10 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="rut" layoutX="126.0" layoutY="102.0" promptText="Rut" />
-      <PasswordField fx:id="clave" layoutX="126.0" layoutY="150.0" promptText="Contraseña" />
-      <Button layoutX="174.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleIngresar" text="Ingresar" />
+      <TextField fx:id="rut" layoutX="145.0" layoutY="101.0" promptText="Rut" />
+      <PasswordField fx:id="clave" layoutX="145.0" layoutY="150.0" promptText="Contraseña" />
+      <Button layoutX="161.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleIngresar" text="Ingresar" />
+      <Label layoutX="103.0" layoutY="105.0" text="Rut:" />
+      <Label layoutX="65.0" layoutY="154.0" text="Contraseña:" />
    </children>
 </AnchorPane>
