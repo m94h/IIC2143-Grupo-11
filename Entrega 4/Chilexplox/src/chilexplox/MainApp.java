@@ -132,7 +132,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(arrivosalida);
             
             // Dar acceso al controlador
-            ArrivoySalidaController controllerView = loader.getController();
+            ListadoPedidosController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
             
@@ -154,7 +154,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(pedidos);
             
             // Dar acceso al controlador
-            ArrivoySalidaController controllerView = loader.getController();
+            ListadoPedidosController controllerView = loader.getController();
             controllerView.setMainApp(this);
             
             
