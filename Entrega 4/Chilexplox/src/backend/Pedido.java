@@ -18,24 +18,37 @@ public class Pedido {
   	private OrdenCompra orden_compra;
   	private Map<Integer, Encomienda> encomiendas;
 
-  	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+  	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
     	this.id = Sistema.GetInstance().Get_id_pedido();
-      Initialize(cliente, origen, destino, urgencia);
+      Initialize(cliente, origen, destino, urgencia, estado, fecha);
   	}
 
-    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
       this.id = id;
-      Initialize(cliente, origen, destino, urgencia);
+      Initialize(cliente, origen, destino, urgencia, estado, fecha);
     }
 
-    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
+    private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
       this.cliente = cliente;
       this.origen = origen;
       this.destino = destino;
       this.urgencia = urgencia;
-      this.estado = Estado.EnSucursalOrigen;
+      this.estado = estado;
       this.encomiendas = new HashMap<Integer, Encomienda>();
-      this.fecha = LocalDate.now();
+      this.fecha = fecha;
+    }
+    
+    /*
+     * Actualizar pedido
+     */
+    public void Actualizar(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
+        this.cliente = cliente;
+        this.origen = origen;
+        this.destino = destino;
+        this.urgencia = urgencia;
+        this.estado = estado;
+        this.encomiendas = new HashMap<Integer, Encomienda>();
+        this.fecha = fecha;
     }
 
     /*
@@ -93,4 +106,8 @@ public class Pedido {
  	public void GenerarOrden() {
     	this.orden_compra = new OrdenCompra(CalcularMonto());
   	}
+ 	
+ 	public void AgregarOrden(OrdenCompra orden) {
+ 		this.orden_compra = orden;
+ 	}
 }

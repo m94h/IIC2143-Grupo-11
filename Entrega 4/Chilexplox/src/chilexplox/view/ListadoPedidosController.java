@@ -11,11 +11,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import java.awt.EventQueue;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
 
 //backend
 import backend.*;
@@ -78,6 +81,10 @@ public class ListadoPedidosController {
 	@FXML
 	private TextField montoRecibido;
 	
+	/*
+	 * Variable auxiliar para almacenar encomiendas temporales (sin un pedido con id asociado)
+	 */
+	private Map<Integer, Encomienda> encomiendas_temp;
 	
 	/*
 	 * Tabla pedidos y sus columnas
@@ -233,6 +240,18 @@ public class ListadoPedidosController {
 	}
 	
 	/*
+	 * Para mostrar alertas
+	 */
+	private void ShowMessage(String message) {
+	    EventQueue.invokeLater(new Runnable() {
+	        @Override
+	        public void run() {
+	            JOptionPane.showMessageDialog(null, message);
+	        }
+	    });
+	}
+	
+	/*
 	 * Handle para ingresar nueva encomienda
 	 */
 	@FXML
@@ -242,7 +261,15 @@ public class ListadoPedidosController {
 		
 		//Si hay un pedido agregar
 		if (this.id_pedido.getText() != null) {
+			
 			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
+				
+				if (this.id_pedido.getText().equals("nuevo")) {
+					//Se debe grabar la orden antes, para poder generar una id
+					this.ShowMessage("Grabe la orden antes de agregar encomiendas");
+					return;
+				}
+							
 				Pedido pedido = Sistema.GetInstance().GetPedido(id);
 				int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
 				Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
@@ -253,7 +280,8 @@ public class ListadoPedidosController {
 				
 				// Actualizar monto total
 				this.montoTotal.setText("$ " + Integer.toString(pedido.CalcularMonto()));
-				
+
+			} else {
 				//Borrar los input
 				this.peso.setText("");
 				this.volumen.setText("");
@@ -337,14 +365,26 @@ public class ListadoPedidosController {
 
 		Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
 
-		//Ver si es nuevo el pedido o si se actualiza
-		String nuevo_id = Integer.toString(Sistema.GetInstance().Get_id_pedido());
 
 		//otros parametros
 		Sucursal origen = Sistema.GetInstance().GetSucursal(this.origen.getSelectionModel().getSelectedIndex());
 		Sucursal destino = Sistema.GetInstance().GetSucursal(this.destino.getSelectionModel().getSelectedIndex());
 		int urgencia = this.urgencia.getSelectionModel().getSelectedIndex();
-		Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
+		if (this.id_pedido.getText().equals("nuevo")) {
+			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia);
+			Pedido pedido = Sistema.GetInstance().GetPedido(id_nuevo);
+			PedidoTableModel pedidoModel = new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia()));
+			this.pedidosData.add(pedidoModel);
+			this.tabla_pedidos.setItems(this.pedidosData);
+			this.tabla_pedidos.sort(); //sort
+			this.tabla_pedidos.getSelectionModel().select(pedidoModel); //seleccionar para que se actualice
+			
+			
+		} else {
+			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
+			Estado estado = Estado.valueOf(this.estado.getValue().toString());
+			pedido.Actualizar(cliente, origen, destino, urgencia, estado, fecha.getValue());
+		}
 	}
 
 	public void setMainApp(MainApp mainApp) {
