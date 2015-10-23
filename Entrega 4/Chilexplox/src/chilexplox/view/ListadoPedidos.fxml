@@ -57,11 +57,11 @@
                         <TextField fx:id="id_pedido" disable="true" GridPane.columnIndex="1" />
                         <Label text="Fecha" GridPane.rowIndex="4" />
                         <Label text="Urgencia" GridPane.rowIndex="5" />
-                        <ChoiceBox fx:id="estado" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ChoiceBox fx:id="origen" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ChoiceBox fx:id="destino" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ChoiceBox fx:id="urgencia" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <DatePicker fx:id="fecha" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ChoiceBox fx:id="estado" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="origen" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ChoiceBox fx:id="destino" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ChoiceBox fx:id="urgencia" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <DatePicker fx:id="fecha" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <Label layoutX="15.0" layoutY="223.0" text="Detalles Cliente">
