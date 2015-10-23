@@ -12,16 +12,28 @@ public class OrdenCompra {
     this.estado = false;
   }
 
-  public OrdenCompra(int monto, MedioPago medioPago) {
+  public OrdenCompra(int monto, MedioPago medioPago, boolean pagado) {
     //this.id = id;
     this.monto = monto;
     this.medioPago = medioPago;
-    this.estado = false;
+    this.estado = pagado;
   }
 
 public void Pagar(MedioPago medioPago) {
     this.medioPago = medioPago;
     this.estado = true;
+  }
+
+  public int GetMonto() {
+    return monto;
+  }
+
+  public MedioPago GetMedio() {
+    return medioPago;
+  }
+
+  public boolean GetEstado() {
+    return estado;
   }
 
   /*
