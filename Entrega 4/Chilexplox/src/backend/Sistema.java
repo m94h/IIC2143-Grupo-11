@@ -138,8 +138,8 @@ public class Sistema {
 	
 	
 	// Interaccion con usuario
-	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-	    return vendedor.CrearPedido(cliente, origen, destino, urgencia); // Retorna el id del pedido
+	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
+	    return vendedor.CrearPedido(cliente, origen, destino, urgencia, estado, fecha); // Retorna el id del pedido
 	}
 
 	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, int peso, int volumen) {
@@ -508,6 +508,7 @@ public class Sistema {
 
 		int monto;
 		MedioPago medio = null;
+		boolean estado = false;
 		int id_pedido;
 
 		try {
@@ -529,9 +530,17 @@ public class Sistema {
 							medio = MedioPago.CHEQUE;
 							break;
  					} 
-					id_pedido = Integer.parseInt(parametros[2]); 
+ 					switch (parametros[2]){
+							case "pagado":
+								estado = true;
+								break;
+							case "deuda":
+								estado = false;
+								break;
+ 					} 
+					id_pedido = Integer.parseInt(parametros[3]); 
 
-					orden = new OrdenCompra(monto, medio);
+					orden = new OrdenCompra(monto, medio, estado);
 					this.empresa.GetPedido(id_pedido).AgregarOrden(orden);
 				}
 				catch(Exception e) {
@@ -555,6 +564,7 @@ public class Sistema {
 		this.CargarPedidos();
 		this.CargarEncomiendas();
 		this.CargarCamiones();
+		this.CargarOrdenes();
 	}
 	
 	/*
@@ -628,15 +638,24 @@ public class Sistema {
 		try {
 			PrintWriter writer_pedidos = new PrintWriter("archivos/pedidos.data", "UTF-8");
 			PrintWriter writer_encomiendas = new PrintWriter("archivos/encomiendas.data", "UTF-8");
+			PrintWriter writer_ordenes = new PrintWriter("archivos/ordenes.data", "UTF-8");
 
 			//Iterar sobre los pedidos
-			//http://stackoverflow.com/questions/46898/iterate-over-each-entry-in-a-map
 			for (Map.Entry<Integer, Pedido> entry_pedido : this.empresa.GetPedidos().entrySet())
 			{
 				Pedido pedido = entry_pedido.getValue();
 				
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));                         
+				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));  
+
+				OrdenCompra orden = pedido.GetOrden();
+				String estado = "deuda";
+				if (orden != null) {
+					if (orden.GetEstado()){
+						estado = "pagado";
+					}
+					writer_ordenes.println(Integer.toString(orden.GetMonto()) + ";" + orden.GetMedio().toString() + ";" + estado + ";" + Integer.toString(pedido.GetId()));
+				}                       
 
 				//recorrer listado de empleados
 				for (Map.Entry<Integer, Encomienda> entry_encomienda : this.empresa.GetEncomiendas().entrySet())
@@ -648,6 +667,7 @@ public class Sistema {
 			
 			writer_pedidos.close();
 			writer_encomiendas.close();
+			writer_ordenes.close();
 
 			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
 				// Archivo no encontrado o enconding malo

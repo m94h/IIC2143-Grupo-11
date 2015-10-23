@@ -1,5 +1,7 @@
 package backend;
 
+import java.time.LocalDate;
+
 public class OperarioVenta extends Empleado {
 
 	public OperarioVenta(String nombre, String rut, int telefono, int sueldo, Sucursal sucursal, String clave){
@@ -7,8 +9,8 @@ public class OperarioVenta extends Empleado {
     this.tipo_empleado = "venta";
 	}
 	
-  public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
-    Pedido p = new Pedido (cliente, origen, destino, urgencia);
+  public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
+    Pedido p = new Pedido (cliente, origen, destino, urgencia, estado, fecha);
     Sistema.GetInstance().AgregarPedido (p);
     return p.GetId();
   }

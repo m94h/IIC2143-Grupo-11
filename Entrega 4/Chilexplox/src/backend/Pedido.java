@@ -102,6 +102,9 @@ public class Pedido {
   		return monto;
   	}
   	
+    public OrdenCompra GetOrden() {
+      return this.orden_compra;
+    }
 
  	public void GenerarOrden() {
     	this.orden_compra = new OrdenCompra(CalcularMonto());
