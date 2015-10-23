@@ -3,6 +3,7 @@ package chilexplox.view;
 import java.awt.EventQueue;
 import javax.swing.JOptionPane;
 import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 //Fachada del backend
@@ -18,7 +19,7 @@ public class LoginController {
 	private TextField rut;
 	
 	@FXML
-	private TextField clave;
+	private PasswordField clave;
 	
 	private MainApp mainApp;
 

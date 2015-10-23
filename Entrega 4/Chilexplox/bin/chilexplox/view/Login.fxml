@@ -14,7 +14,7 @@
          </font>
       </Label>
       <TextField fx:id="rut" layoutX="126.0" layoutY="102.0" promptText="Rut" />
-      <TextField fx:id="clave" layoutX="126.0" layoutY="158.0" promptText="Contraseña" />
+      <PasswordField fx:id="clave" layoutX="126.0" layoutY="150.0" promptText="Contraseña" />
       <Button layoutX="174.0" layoutY="218.0" mnemonicParsing="false" onAction="#handleIngresar" text="Ingresar" />
    </children>
 </AnchorPane>

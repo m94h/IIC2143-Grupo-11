@@ -7,12 +7,14 @@ public class PedidoTableModel {
 	private final StringProperty origen;
 	private final StringProperty destino;
 	private final StringProperty estado;
+	private final StringProperty urgencia;
 	
-	public PedidoTableModel(String id, String origen, String destino, String estado) {
+	public PedidoTableModel(String id, String origen, String destino, String estado, String urgencia) {
 		this.id = new SimpleStringProperty(id);
 		this.origen = new SimpleStringProperty(origen);
 		this.destino = new SimpleStringProperty(destino);
 		this.estado = new SimpleStringProperty(estado);
+		this.urgencia = new SimpleStringProperty(urgencia);
 	}
 	
 	//get del id
@@ -35,5 +37,7 @@ public class PedidoTableModel {
 	public StringProperty estadoProperty() {
         return this.estado;
     }
-	
+	public StringProperty urgenciaProperty() {
+        return this.urgencia;
+    }
 }

@@ -2,7 +2,9 @@ package backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pedido {
 	private int id;
@@ -14,7 +16,7 @@ public class Pedido {
     private LocalDate fecha;
 
   	private OrdenCompra orden_compra;
-  	private List<Encomienda> encomiendas;
+  	private Map<Integer, Encomienda> encomiendas;
 
   	public Pedido(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia) {
     	this.id = Sistema.GetInstance().Get_id_pedido();
@@ -32,7 +34,7 @@ public class Pedido {
       this.destino = destino;
       this.urgencia = urgencia;
       this.estado = Estado.EnSucursalOrigen;
-      this.encomiendas = new ArrayList<Encomienda>();
+      this.encomiendas = new HashMap<Integer, Encomienda>();
       this.fecha = LocalDate.now();
     }
 
@@ -66,18 +68,27 @@ public class Pedido {
     public LocalDate GetFecha() {
     	return this.fecha;
     }
+    
+    public Map<Integer, Encomienda> GetEncomiendas() {
+    	return this.encomiendas;
+    }
+    
+    public Encomienda GetEncomienda(int id) {
+    	return this.encomiendas.get(id);
+    }
 
   	public void AgregarEncomienda (Encomienda encomienda) {
-    	this.encomiendas.add(encomienda);
+    	this.encomiendas.put(encomienda.GetId(), encomienda);
   	}
 
   	public int CalcularMonto() {
   		int monto = 0;
-  		for (Encomienda e : encomiendas) {
-  			monto += e.GenerarPresupuesto();
+  		for (Map.Entry<Integer, Encomienda> entry : this.encomiendas.entrySet()) {
+  			monto += entry.getValue().GenerarPresupuesto();
   		}
   		return monto;
   	}
+  	
 
  	public void GenerarOrden() {
     	this.orden_compra = new OrdenCompra(CalcularMonto());
