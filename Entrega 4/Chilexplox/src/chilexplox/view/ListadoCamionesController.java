@@ -115,7 +115,6 @@ public class ListadoCamionesController {
 			this.marca.setDisable(false);
 			this.kms.setDisable(false);
 
-
 			//Get los datos del camion backend
 			Camion camion_b = Sistema.GetInstance().GetCamion(camion.getPatente());
 
@@ -128,6 +127,9 @@ public class ListadoCamionesController {
 			this.capacidad.setText(Integer.toString(camion_b.GetCapacidadMax()));
 			this.sucursalOrigen.getSelectionModel().select(camion_b.GetOrigen().GetDireccion());
 			this.sucursalDestino.getSelectionModel().select(camion_b.GetDestino().GetDireccion());
+			this.modelo.setText(camion_b.GetModelo());
+			this.marca.setText(camion_b.GetMarca());
+			this.kms.setText(Integer.toString(camion_b.GetKm()));
 		}
 	}
 }
