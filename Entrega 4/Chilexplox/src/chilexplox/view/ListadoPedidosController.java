@@ -78,7 +78,7 @@ public class ListadoPedidosController {
 	@FXML
 	private TextField montoRecibido;
 	
-
+	
 	/*
 	 * Tabla pedidos y sus columnas
 	 */
@@ -225,7 +225,9 @@ public class ListadoPedidosController {
 		if (this.id_pedido.getText() != null) {
 			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
 				int valor = Encomienda.Presupuesto(Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
-				this.montoEncomienda.setText("$" + Integer.toString(valor));
+				this.montoEncomienda.setText("$ " + Integer.toString(valor));
+			} else {
+				this.montoEncomienda.setText("$");
 			}
 		}
 	}
@@ -240,17 +242,23 @@ public class ListadoPedidosController {
 		
 		//Si hay un pedido agregar
 		if (this.id_pedido.getText() != null) {
-			Pedido pedido = Sistema.GetInstance().GetPedido(id);
-			int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
-			Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
-			pedido.AgregarEncomienda(encomienda);
-			
-			this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
-			this.tabla_encomiendas.setItems(this.encomiendasData);
-			
-			//Borrar los input
-			this.peso.setText("");
-			this.volumen.setText("");
+			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
+				Pedido pedido = Sistema.GetInstance().GetPedido(id);
+				int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
+				Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
+				pedido.AgregarEncomienda(encomienda);
+				
+				this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
+				this.tabla_encomiendas.setItems(this.encomiendasData);
+				
+				// Actualizar monto total
+				this.montoTotal.setText("$ " + Integer.toString(pedido.CalcularMonto()));
+				
+				//Borrar los input
+				this.peso.setText("");
+				this.volumen.setText("");
+				this.montoEncomienda.setText("$ ");
+			}
 		}
 
 	}
@@ -272,6 +280,9 @@ public class ListadoPedidosController {
 			this.direccion.setDisable(false);
 			this.peso.setDisable(false);
 			this.volumen.setDisable(false);
+			this.medioPago.setDisable(false);
+			this.estado.setDisable(false);
+			this.montoRecibido.setDisable(false);
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
@@ -305,9 +316,13 @@ public class ListadoPedidosController {
 			}
 			this.tabla_encomiendas.setItems(this.encomiendasData);
 			
+			// pagos (ordenes)
+			// actualizar monto total
+			this.montoTotal.setText("$" + Integer.toString(pedido_b.CalcularMonto()));
 			
 		}
 	}
+
 
 	@FXML
 	public void handleGuardarCambios() {

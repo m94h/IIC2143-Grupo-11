@@ -28,7 +28,7 @@ public class Encomienda {
 
 	public int GenerarPresupuesto() {
 		int valor;
-		valor = Sistema.GetInstance().GetPrecioPorDensidad() * this.peso * this.volumen;
+		valor = Sistema.GetInstance().GetPrecioPorGr() * this.peso + Sistema.GetInstance().GetPrecioPorCc() * this.volumen;
 		return valor;
 	}
 	
@@ -37,7 +37,7 @@ public class Encomienda {
 	 */
 	public static int Presupuesto(int peso, int volumen) {
 		int valor;
-		valor = Sistema.GetInstance().GetPrecioPorDensidad() * peso * volumen;
+		valor = Sistema.GetInstance().GetPrecioPorGr() * peso + Sistema.GetInstance().GetPrecioPorCc() * volumen;
 		return valor;
 	}
 	
