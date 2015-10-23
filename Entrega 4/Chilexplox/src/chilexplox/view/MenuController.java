@@ -1,6 +1,7 @@
 package chilexplox.view;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 
@@ -18,6 +19,16 @@ public class MenuController {
 	@FXML
 	private Label nombre;
 	
+	@FXML
+	private Button btnPedidos;
+	
+	@FXML
+	private Button btnEnviarMensaje;
+		
+	@FXML
+	private Button btnBandejaEntrada;
+	
+	
 	private MainApp mainApp;
 	
 	@FXML
@@ -26,7 +37,25 @@ public class MenuController {
 		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
 		this.sucursal.setText(sucursal.GetDireccion());
 		this.nombre.setText(usuario.GetNombre());
+		
+		
+		//set permisos
+		this.setPermisos(usuario);
     }
+	
+	/*
+	 * Para setear permisos de usuario, es decir que botones puede usar
+	 */
+	private void setPermisos(Empleado usuario) {
+		if (usuario.GetTipo().equals("bodega")) {
+			this.btnEnviarMensaje.setDisable(false);
+		}
+		if (usuario.GetTipo().equals("venta")) {
+			this.btnPedidos.setDisable(false);
+			this.btnBandejaEntrada.setDisable(false);
+		}
+		
+	}
 	
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -39,11 +68,6 @@ public class MenuController {
 	@FXML
 	public void handlePedidos () {
 		this.mainApp.MostrarPedidos();
-	}
-	
-	@FXML
-	public void handleClientes () {
-		this.mainApp.MostrarClientes();
 	}
 	
 	@FXML
