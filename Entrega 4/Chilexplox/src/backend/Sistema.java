@@ -22,7 +22,7 @@ public class Sistema {
 	//Los id a continuacion son contadores para cuando se cree una nueva...
 	private int id_pedido;
 	private int id_encomienda;
-	private int id_orden_compra;
+	//private int id_orden_compra;
 
 	private Empresa empresa;
 	
@@ -81,12 +81,14 @@ public class Sistema {
 		id_encomienda++;
 		return valor;
 	}
-
+ 
+ /*
 	public int Get_id_orden_compra() {
 		int valor = id_orden_compra;
 		id_orden_compra++;
 		return valor;
 	}
+	*/
 
 	/*
 	 * Obtener Sucursales
@@ -477,7 +479,6 @@ public class Sistema {
 		}
 	}
 
-/*
 	private void CargarOrdenes() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/ordenes.data"));
@@ -487,20 +488,29 @@ public class Sistema {
 
 		OrdenCompra orden;
 
-		int id_orden;
 		int monto;
+		MedioPago medio;
 		int id_pedido;
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
-					id_orden = Integer.parseInt(parametros[0]); 
-					monto = Integer.parseInt(parametros[1]); 
+					monto = Integer.parseInt(parametros[0]);
+					switch (parametros[1]){
+						case "credito":
+							medio = MedioPago.CREDITO;
+						case "debito":
+							medio = MedioPago.DEBITO;
+						case "efectivo":
+							medio = MedioPago.EFECTIVO;
+						case "cheque":
+							medio = MedioPago.CHEQUE;
+ 					} 
 					id_pedido = Integer.parseInt(parametros[2]); 
 
 					orden = new OrdenCompra(id_orden, monto);
-					this.empresa.AgregarTransporte((MedioDeTransporte)camion);
+					this.empresa.GetPedido(id_pedido).AgregarOrden(orden);
 				}
 				catch(Exception e) {
 					// Error en los archivos
@@ -511,7 +521,6 @@ public class Sistema {
 			// Error en la lectura
 		}
 	}
-	*/
 
 	/*
 	 * Caller de Cargar los archivos
@@ -636,5 +645,4 @@ public class Sistema {
 				// Archivo no encontrado o enconding malo
 		}
 	}
-	
 }
