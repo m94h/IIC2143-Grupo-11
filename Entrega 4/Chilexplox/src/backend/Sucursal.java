@@ -11,8 +11,18 @@ public class Sucursal {
 	private int telefono;
 	private int capacidad;
 	private Map<String, Empleado> empleados;
+	
+	/*
+	 * Camiones disponibles para cargar pedidos
+	 */
 	private ArrayList<Camion> camionesEsperando;
+	
+	/*
+	 * Camiones listos para ser despachados
+	 */
 	private ArrayList<Camion> camionesListos;
+	
+	
 	/*private ArrayList<Pedido> pedidos;*/
 	private ArrayList<Mensaje> cola_mensajes;
 	
@@ -62,7 +72,11 @@ public class Sucursal {
 	public void AgrandarSucursal(int nueva_capacidad){
 		this.capacidad = this.capacidad + nueva_capacidad;
 	}
-	  
+	
+	public ArrayList<Camion> GetCamionesEsperando() {
+		return this.camionesEsperando;
+	}
+	
 	public void AgregarCamionEsperando(Camion camion){
 		this.camionesEsperando.add(camion);
 	}
