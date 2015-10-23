@@ -16,8 +16,11 @@ public class OperarioBodega extends Empleado {
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
+		//Desocupar medio
 		medio.Desocupar();
-		this.sucursal.AgregarMedioListo(medio);
+		
+		//Poner el medio como disponible
+		this.sucursal.SetMedioDisponible(medio);
 	}
 
 	public void CrearMensaje(String mensaje, Sucursal destino) {

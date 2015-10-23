@@ -8,11 +8,11 @@ public class OperarioCamion extends Empleado {
 	}
 
 	public void DespacharCamion(Camion camion, Sucursal origen){
-		origen.EnviarCamion(camion);
+		origen.EnviarMedio(camion);
 	}
 
 	public void AvisarArrivoCamion(Camion camion, Sucursal destino){
-		destino.AgregarMedioEsperando(camion);
+		destino.AgregarMedioArrivado(camion);
 		camion.estado = Estado.EnSucursalDestino;
 	}
   

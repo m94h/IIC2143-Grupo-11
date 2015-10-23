@@ -1,5 +1,7 @@
 package chilexplox.view;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import backend.*;
@@ -31,7 +33,21 @@ public class CargayDescargaController {
 		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
 		
 		//poner los valores
-		//this.patente_carga.getItems().addAll(c)
+		//medios disponibles para cargar
+		ArrayList<MedioDeTransporte> medioPorDescargar = Sistema.GetInstance().GetSucursalLoged().GetMediosArrivados();
+		for (int i = 0; i < medioPorDescargar.size(); i++) {
+			MedioDeTransporte medio = medioPorDescargar.get(i);
+			this.patente_descarga.getItems().add(medio.GetPatente());
+		}
+	
+		//medios disponibles para descargar
+		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
+		for (int i = 0; i < medioPorCargar.size(); i++) {
+			MedioDeTransporte medio = medioPorCargar.get(i);
+			this.patente_carga.getItems().add(medio.GetPatente());
+		}
+		
+
 	}
 	
 	public CargayDescargaController() {

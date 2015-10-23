@@ -15,13 +15,14 @@ public class Sucursal {
 	/*
 	 * Camiones disponibles para cargar pedidos
 	 */
-	private ArrayList<MedioDeTransporte> mediosEsperando;
+	private ArrayList<MedioDeTransporte> mediosArrivados;
 	
 	/*
-	 * Camiones listos para ser despachados
+	 * Camiones disponibles para cargar pedidos
 	 */
-	private ArrayList<MedioDeTransporte> mediosListos;
+	private ArrayList<MedioDeTransporte> mediosDisponibles;
 	
+
 	
 	/*private ArrayList<Pedido> pedidos;*/
 	private ArrayList<Mensaje> cola_mensajes;
@@ -36,8 +37,8 @@ public class Sucursal {
 		this.telefono = telefono;
 	    this.capacidad = capacidad;
 	    this.empleados = new HashMap<String, Empleado>();
-	    this.mediosEsperando = new ArrayList<MedioDeTransporte>();
-	    this.mediosListos = new ArrayList<MedioDeTransporte>();
+	    this.mediosArrivados = new ArrayList<MedioDeTransporte>();
+	    this.mediosDisponibles = new ArrayList<MedioDeTransporte>();
 	    this.cola_mensajes = new ArrayList<Mensaje>();
 	}
 
@@ -73,21 +74,25 @@ public class Sucursal {
 		this.capacidad = this.capacidad + nueva_capacidad;
 	}
 	
-	public ArrayList<MedioDeTransporte> GetMedioEsperando() {
-		return this.mediosEsperando;
+	public ArrayList<MedioDeTransporte> GetMediosDisponibles() {
+		return this.mediosDisponibles;
 	}
 	
-	public void AgregarMedioEsperando(MedioDeTransporte medio){
-		this.mediosEsperando.add(medio);
+	public ArrayList<MedioDeTransporte> GetMediosArrivados() {
+		return this.mediosArrivados;
 	}
 	
-	public void AgregarMedioListo(MedioDeTransporte medio){
-		this.mediosEsperando.remove(medio);
-		this.mediosListos.add(medio);
+	public void AgregarMedioArrivado(MedioDeTransporte medio){
+		this.mediosArrivados.add(medio);
+	}
+	
+	public void SetMedioDisponible(MedioDeTransporte medio){
+		this.mediosArrivados.remove(medio);
+		this.mediosDisponibles.add(medio);
 	}
 	  
-	public void EnviarCamion(MedioDeTransporte medio){
-		this.mediosListos.remove(medio);
+	public void EnviarMedio(MedioDeTransporte medio){
+		this.mediosDisponibles.remove(medio);
 	}
 	  /*
 	  public ArrayList<Pedido> GetPedidos() {
