@@ -48,18 +48,18 @@
             <TextField fx:id="patente" GridPane.columnIndex="1" />
             <Label text="Estado" GridPane.rowIndex="1" />
             <Label text="Capacidad" GridPane.rowIndex="2" />
-            <TextField fx:id="estado" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="capacidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="sucursalOrigen" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="sucursalDestino" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="Modelo" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="modelo" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Sucursal Origen" GridPane.rowIndex="3" />
             <Label text="Sucursal Destino" GridPane.rowIndex="4" />
             <Label text="Modelo" GridPane.rowIndex="5" />
             <Label text="Marca" GridPane.rowIndex="6" />
             <Label text="Kms" GridPane.rowIndex="7" />
-            <TextField fx:id="Marca" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="Kms" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="marca" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="kms" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ChoiceBox fx:id="estado" prefHeight="31.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="sucursalOrigen" prefHeight="31.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ChoiceBox fx:id="sucursalDestino" prefHeight="31.0" prefWidth="168.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

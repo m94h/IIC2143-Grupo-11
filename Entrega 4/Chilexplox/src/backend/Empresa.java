@@ -15,7 +15,7 @@ public class Empresa {
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
 
-	
+
 	public Empresa (String nombre, String rut) {
 		this.nombre = nombre;
 		this.RUT = rut;
@@ -26,7 +26,7 @@ public class Empresa {
 		this.encomiendas = new HashMap<Integer, Encomienda>();
 		this.empleados = new HashMap<String, Empleado>();
 	}
-	
+
 	public void AgregarSucursal (Sucursal newSucursal) {
 		this.sucursales.put(newSucursal.GetId(), newSucursal);
 	}
@@ -34,7 +34,7 @@ public class Empresa {
 	public void AgregarCliente (Cliente newCliente) {
 		this.clientes.put(newCliente.GetRut(), newCliente);
 	}
-	
+
 	public void AgregarEmpleado (Empleado newEmpleado) {
 		this.empleados.put(newEmpleado.GetRut(), newEmpleado);
 	}
@@ -54,11 +54,11 @@ public class Empresa {
 	public Map<String, Cliente> GetClientes() {
 		return this.clientes;
 	}
-	
+
 	public Cliente GetCliente(String rut) {
 		return this.clientes.get(rut);
 	}
-	
+
 	public void BorrarCliente(String rut) {
 		this.clientes.remove(rut);
 	}
@@ -70,7 +70,7 @@ public class Empresa {
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.sucursales;
 	}
-	
+
 	public Sucursal GetSucursal(int id) {
 		return this.sucursales.get(id);
 	}

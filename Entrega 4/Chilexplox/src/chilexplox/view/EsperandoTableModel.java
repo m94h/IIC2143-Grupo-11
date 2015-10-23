@@ -3,37 +3,37 @@ package chilexplox.view;
 import javafx.beans.property.*;
 
 public class EsperandoTableModel {
-	private final StringProperty patente;
-	private final StringProperty estado;
-	private final StringProperty capacidad;
-	private final StringProperty destino;
+	private final StringProperty patenteE;
+	private final StringProperty estadoE;
+	private final StringProperty capacidadE;
+	private final StringProperty origen;
 
 	public EsperandoTableModel(String patente, String estado, String capacidad, String destino){
-		this.patente = new SimpleStringProperty(patente);
-		this.estado = new SimpleStringProperty(estado);
-		this.capacidad = new SimpleStringProperty(capacidad);
-		this.destino = new SimpleStringProperty(destino);
+		this.patenteE = new SimpleStringProperty(patente);
+		this.estadoE = new SimpleStringProperty(estado);
+		this.capacidadE = new SimpleStringProperty(capacidad);
+		this.origen = new SimpleStringProperty(destino);
 	}
 
 	//get de la patente
 		public String getPatente() {
-			return patente.get();
+			return patenteE.get();
 		}
 
 		/*
 		 * Properties
 		 */
-	public StringProperty patenteProperty() {
-        return this.patente;
+	public StringProperty patenteEProperty() {
+        return this.patenteE;
     }
-	public StringProperty estadoProperty() {
-        return this.estado;
+	public StringProperty estadoEProperty() {
+        return this.estadoE;
     }
-	public StringProperty capacidadProperty() {
-        return this.capacidad;
+	public StringProperty capacidadEProperty() {
+        return this.capacidadE;
     }
-	public StringProperty destinoProperty() {
-        return this.destino;
+	public StringProperty origenProperty() {
+        return this.origen;
     }
 
 }
