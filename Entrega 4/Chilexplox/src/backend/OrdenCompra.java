@@ -19,7 +19,7 @@ public class OrdenCompra {
     this.estado = false;
   }
 
-  public void Pagar(MedioPago medioPago) {
+public void Pagar(MedioPago medioPago) {
     this.medioPago = medioPago;
     this.estado = true;
   }

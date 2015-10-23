@@ -24,10 +24,10 @@ public class OperarioBodega extends Empleado {
 		//Enviar
 		destino.RecibirMensaje(m);
 	}
-	
+
 	/*
-	public String PedirCamion(){
-		// solicitar a la empresa un camion, retorna la patente de este
+	public Camion PedirCamion(String patente){
+
 
 		return camion.GetPatente();
 	}
