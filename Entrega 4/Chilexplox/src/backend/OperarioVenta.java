@@ -11,7 +11,7 @@ public class OperarioVenta extends Empleado {
 	
   public int CrearPedido (Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
     Pedido p = new Pedido (cliente, origen, destino, urgencia, estado, fecha);
-    Sistema.GetInstance().AgregarPedido (p);
+    Sistema.GetInstance().AgregarPedido(p);
     return p.GetId();
   }
 
