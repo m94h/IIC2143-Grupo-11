@@ -578,7 +578,6 @@ public class Sistema {
 
 		//A continuacion se guardan los datos en los archivos
 
-		System.out.println("1");
 		//guardar archivo de empresa
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
@@ -590,7 +589,6 @@ public class Sistema {
 			// Archivo no encontrado o enconding malo
 		}
 
-		System.out.println("2");
 		//guardar archivo de sucursales
 		try {
 			PrintWriter writer_sucursales = new PrintWriter("archivos/sucursales.data", "UTF-8");
@@ -620,7 +618,6 @@ public class Sistema {
 			// Archivo no encontrado o enconding malo
 		}
 
-		System.out.println("3");
 		//guardar archivo de clientes
 		try {
 			PrintWriter writer_clientes = new PrintWriter("archivos/clientes.data", "UTF-8");
@@ -639,7 +636,6 @@ public class Sistema {
 			// Archivo no encontrado o enconding malo
 		}
 
-		System.out.println("4");
 		//guardar archivo de pedidos y encomiendas
 		try {
 			PrintWriter writer_pedidos = new PrintWriter("archivos/pedidos.data", "UTF-8");
@@ -663,12 +659,10 @@ public class Sistema {
 					writer_ordenes.println(Integer.toString(orden.GetMonto()) + ";" + orden.GetMedio().toString() + ";" + estado + ";" + Integer.toString(pedido.GetId()));
 				}
 
-				System.out.println(pedido.GetEncomiendas() == null);
 				//recorrer listado de empleados
 				for (Map.Entry<Integer, Encomienda> entry_encomienda : pedido.GetEncomiendas().entrySet())
 				{
 					Encomienda encomienda = entry_encomienda.getValue();
-					System.out.println("hola");
 					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
 				}
 			}
@@ -681,7 +675,6 @@ public class Sistema {
 				// Archivo no encontrado o enconding malo
 			}
 
-				System.out.println("6");
 			//guardar archivo de camiones
 			try {
 				PrintWriter writer_camiones = new PrintWriter("archivos/camiones.data", "UTF-8");
