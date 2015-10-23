@@ -53,6 +53,12 @@ public class ListadoPedidosController {
 	@FXML
 	private TextField direccion;
 	
+	@FXML
+	private TextField peso;
+	
+	@FXML
+	private TextField volumen;
+	
 	/*
 	 * Tabla pedidos y sus columnas
 	 */
@@ -67,28 +73,66 @@ public class ListadoPedidosController {
     private TableColumn<PedidoTableModel, String> destinoColumn;
     @FXML
     private TableColumn<PedidoTableModel, String> estadoColumn;
+    @FXML
+    private TableColumn<PedidoTableModel, String> urgenciaColumn;
 	
     /*
      * Data de los pedidos para la tabla
      */
 	private ObservableList<PedidoTableModel> pedidosData;
-
+	
+	/*
+	 * Tabla Encomiendas y sus columnas
+	 */
+	@FXML
+	private TableView<EncomiendaTableModel> tabla_encomiendas;
+	
+	@FXML
+    private TableColumn<EncomiendaTableModel, String> id_encomiendaColumn;
+    @FXML
+    private TableColumn<EncomiendaTableModel, String> pesoColumn;
+    @FXML
+    private TableColumn<EncomiendaTableModel, String> volumenColumn;
+    @FXML
+    private TableColumn<EncomiendaTableModel, String> precioColumn;
+    
+    /*
+     * Data de las encomiendas para la tabla
+     */
+	private ObservableList<EncomiendaTableModel> encomiendasData;
+    
+    
 	@FXML
     private void initialize() {
-		// Set las properties para que se actualice la tabla
+		// Set las properties para que se actualice la tabla pedidos
 		this.id_pedidoColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         this.origenColumn.setCellValueFactory(cellData -> cellData.getValue().origenProperty());
         this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.estadoColumn.setCellValueFactory(cellData -> cellData.getValue().estadoProperty());
-                
+        this.urgenciaColumn.setCellValueFactory(cellData -> cellData.getValue().urgenciaProperty());
+        
+        //Set properties de la tabla encomiendas
+        this.id_encomiendaColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        this.pesoColumn.setCellValueFactory(cellData -> cellData.getValue().pesoProperty());
+        this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
+        this.precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty());
+        
         //Mostrar pedidos
         this.UpdatePedidos();
         
         //Poner los valores de los choice box
 		this.estado.getItems().addAll("Transito", "Origen", "Destino");
-		this.origen.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
-		this.destino.getItems().addAll(Sistema.GetInstance().GetSucursales().values());
+		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
+			this.origen.getItems().add(entry.getValue().GetDireccion());
+			this.destino.getItems().add(entry.getValue().GetDireccion());
+		}
+		
+		//Agregar urgencias
 		this.urgencia.getItems().addAll("1", "2", "3");
+		
+		//Ordenar tabla por urgencia por defecto
+		this.tabla_pedidos.getSortOrder().add(this.urgenciaColumn);
+		this.tabla_pedidos.sort();
 		
 		// Escuchar cambios en la seleccion de la tabla
         tabla_pedidos.getSelectionModel().selectedItemProperty().addListener(
@@ -103,12 +147,15 @@ public class ListadoPedidosController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				this.pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString()));
+				this.pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia())));
 			}
 		}
 		this.tabla_pedidos.setItems(this.pedidosData);
 	}
 	
+	/*
+	 * Handle para nuevo pedido
+	 */
 	@FXML
 	private void handleNuevo() {
 		this.id_pedido.setText("nuevo");
@@ -123,14 +170,41 @@ public class ListadoPedidosController {
 		this.origen.getSelectionModel().clearSelection();
 		this.destino.getSelectionModel().clearSelection();
 		
-		
-		
 		this.rut.setDisable(false);
 		this.rut.setText("");
 		this.nombre.setText("");
 		this.telefono.setText("");
 		this.direccion.setText("");
 		
+		this.peso.setDisable(false);
+		this.volumen.setDisable(false);
+		this.peso.setText("");
+		this.volumen.setText("");
+		
+	}
+	
+	/*
+	 * Handle para ingresar nueva encomienda
+	 */
+	@FXML
+	private void handleAgregarEncomienda() {
+		//get id del pedido
+		int id = Integer.parseInt(this.id_pedido.getText());
+		
+		//Si hay un pedido agregar
+		if (this.id_pedido.getText() != null) {
+			Pedido pedido = Sistema.GetInstance().GetPedido(id);
+			int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
+			Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
+			pedido.AgregarEncomienda(encomienda);
+			
+			this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
+			this.tabla_encomiendas.setItems(this.encomiendasData);
+			
+			//Borrar los input
+			this.peso.setText("");
+			this.volumen.setText("");
+		}
 	}
 	
 	/*
@@ -148,6 +222,8 @@ public class ListadoPedidosController {
 			this.nombre.setDisable(false);
 			this.telefono.setDisable(false);
 			this.direccion.setDisable(false);
+			this.peso.setDisable(false);
+			this.volumen.setDisable(false);
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
@@ -162,6 +238,26 @@ public class ListadoPedidosController {
 			this.origen.getSelectionModel().select(pedido_b.GetOrigen().GetDireccion());
 			this.urgencia.getSelectionModel().select(pedido_b.GetUrgencia() - 1);
 			this.fecha.setValue(pedido_b.GetFecha());
+			
+			//datos cliente
+			Cliente cliente = pedido_b.GetCliente();
+			this.rut.setText(cliente.GetRut());
+			this.nombre.setText(cliente.GetNombre());
+			this.telefono.setText(Integer.toString(cliente.GetTelefono()));
+			this.direccion.setText(cliente.GetDireccion());
+			
+			//encomienda
+			this.encomiendasData = FXCollections.observableArrayList();
+			Map<Integer, Encomienda> encomiendas = pedido_b.GetEncomiendas();
+			if (encomiendas != null) {
+				for (Map.Entry<Integer, Encomienda> entry : encomiendas.entrySet()) {
+					Encomienda encomienda = entry.getValue();
+					this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
+				}
+			}
+			this.tabla_encomiendas.setItems(this.encomiendasData);
+			
+			
 		}
 	}
 	

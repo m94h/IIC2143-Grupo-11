@@ -15,6 +15,7 @@
                   <TableView fx:id="tabla_pedidos" layoutX="-7.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                     <columns>
                       <TableColumn fx:id="id_pedidoColumn" prefWidth="75.0" text="ID" />
+                        <TableColumn fx:id="urgenciaColumn" prefWidth="75.0" sortType="DESCENDING" text="Urgencia" />
                       <TableColumn fx:id="estadoColumn" prefWidth="75.0" text="Estado" />
                         <TableColumn fx:id="origenColumn" prefWidth="75.0" text="Origen" />
                         <TableColumn fx:id="destinoColumn" prefWidth="75.0" text="Destino" />
@@ -112,17 +113,21 @@
                      <children>
                         <Label text="Peso" />
                         <Label text="Volumen" GridPane.rowIndex="1" />
-                        <TextField disable="true" GridPane.columnIndex="1" />
-                        <TextField disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="peso" disable="true" GridPane.columnIndex="1" />
+                        <TextField fx:id="volumen" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <Button layoutX="295.0" layoutY="488.0" mnemonicParsing="false" text="Agregar" />
-                  <TableView layoutX="451.0" layoutY="41.0" prefHeight="403.0" prefWidth="278.0">
+                  <TableView fx:id="tabla_encomiendas" layoutX="451.0" layoutY="41.0" prefHeight="403.0" prefWidth="309.0">
                     <columns>
-                      <TableColumn prefWidth="95.0" text="ID" />
-                      <TableColumn prefWidth="93.0" text="Peso" />
-                        <TableColumn prefWidth="88.0" text="Volumen" />
+                      <TableColumn fx:id="id_encomiendaColumn" prefWidth="95.0" text="ID" />
+                      <TableColumn fx:id="pesoColumn" prefWidth="93.0" text="Peso" />
+                        <TableColumn fx:id="volumenColumn" prefWidth="88.0" text="Volumen" />
+                        <TableColumn fx:id="precioColumn" prefWidth="75.0" text="Precio" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <Label layoutX="451.0" layoutY="14.0" text="Encomiendas en pedido">
                      <font>
