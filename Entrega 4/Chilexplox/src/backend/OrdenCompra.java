@@ -7,7 +7,7 @@ public class OrdenCompra {
   private boolean estado;
 
   public OrdenCompra(int monto) {
-    this.id = sistema.GetInstance().Get_id_orden_compra();
+    this.id = Sistema.GetInstance().Get_id_orden_compra();
     this.monto = monto;
     this.estado = false;
   }
