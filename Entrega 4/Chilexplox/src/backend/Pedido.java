@@ -88,6 +88,7 @@ public class Pedido {
   		}
   		return monto;
   	}
+  	
 
  	public void GenerarOrden() {
     	this.orden_compra = new OrdenCompra(CalcularMonto());

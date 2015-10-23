@@ -28,7 +28,16 @@ public class Encomienda {
 
 	public int GenerarPresupuesto() {
 		int valor;
-		valor = Sistema.GetInstance().GetPrecioPorKilo() * peso;
+		valor = Sistema.GetInstance().GetPrecioPorDensidad() * this.peso * this.volumen;
+		return valor;
+	}
+	
+	/*
+	 * Static para calcular presupuesto de encomienda sin que se cree
+	 */
+	public static int Presupuesto(int peso, int volumen) {
+		int valor;
+		valor = Sistema.GetInstance().GetPrecioPorDensidad() * peso * volumen;
 		return valor;
 	}
 	

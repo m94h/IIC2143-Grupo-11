@@ -17,7 +17,7 @@ public class Sistema {
 	private static Sistema INSTANCE = new Sistema();
 
 	// Estos no se si los dejamos aca o en empresa
-	private int precioPorKilo;
+	private int precioPorDensidad;
 	//Los id a continuacion son contadores para cuando se cree una nueva...
 	private int id_pedido;
 	private int id_encomienda;
@@ -43,8 +43,8 @@ public class Sistema {
 		return INSTANCE;
 	}
 	
-	public int GetPrecioPorKilo() {
-		return precioPorKilo;
+	public int GetPrecioPorDensidad() {
+		return precioPorDensidad;
 	}
 	
 	/*
@@ -192,7 +192,7 @@ public class Sistema {
 		//instanciar clase empresa
 		this.empresa = new Empresa(parametros[0], parametros[1]); //nombre, rut
 		try {
-			this.precioPorKilo = Integer.parseInt(parametros[2]);
+			this.precioPorDensidad = Integer.parseInt(parametros[2]);
 			this.id_pedido = Integer.parseInt(parametros[3]);
 			this.id_encomienda = Integer.parseInt(parametros[4]);
 		}
@@ -488,7 +488,7 @@ public class Sistema {
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
 
-			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorKilo) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda));
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorDensidad) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda));
 
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// Archivo no encontrado o enconding malo
@@ -570,4 +570,5 @@ public class Sistema {
 		}
 
 	}
+	
 }

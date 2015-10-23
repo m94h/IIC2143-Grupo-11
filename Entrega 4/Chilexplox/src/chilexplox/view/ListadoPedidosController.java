@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,6 +23,9 @@ import backend.*;
 public class ListadoPedidosController {
 
 	private MainApp mainApp;
+	
+	@FXML
+	private Label sucursal;
 
 	@FXML
 	private TextField id_pedido;
@@ -58,6 +62,21 @@ public class ListadoPedidosController {
 	
 	@FXML
 	private TextField volumen;
+	
+	@FXML
+	private Label montoEncomienda;
+	
+	@FXML
+	private Label montoTotal;
+	
+	@FXML
+	private ChoiceBox medioPago;
+	
+	@FXML
+	private ChoiceBox estadoPago;
+	
+	@FXML
+	private TextField montoRecibido;
 	
 
 	/*
@@ -105,6 +124,10 @@ public class ListadoPedidosController {
     
 	@FXML
     private void initialize() {
+		
+		// Poner la sucursal actual
+		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
+		
 		// Set las properties para que se actualice la tabla pedidos
 		this.id_pedidoColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         this.origenColumn.setCellValueFactory(cellData -> cellData.getValue().origenProperty());
@@ -183,6 +206,28 @@ public class ListadoPedidosController {
 		this.peso.setText("");
 		this.volumen.setText("");
 		
+		this.medioPago.setDisable(false);
+		this.estado.setDisable(false);
+		this.montoRecibido.setDisable(false);
+		this.montoEncomienda.setText("$");
+		this.montoTotal.setText("$");
+		this.medioPago.getSelectionModel().clearSelection();
+		this.estadoPago.getSelectionModel().clearSelection();
+		this.montoRecibido.setText("");
+		
+	}
+	
+	/*
+	 * Handle para generar presupuesto
+	 */
+	@FXML
+	private void handleGenerarPresupuesto() {
+		if (this.id_pedido.getText() != null) {
+			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
+				int valor = Encomienda.Presupuesto(Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
+				this.montoEncomienda.setText("$" + Integer.toString(valor));
+			}
+		}
 	}
 	
 	/*
