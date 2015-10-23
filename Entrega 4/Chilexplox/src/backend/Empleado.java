@@ -34,6 +34,10 @@ public abstract class Empleado extends Persona {
     return this.sucursal;
   }
 
+  public String GetClave() {
+    return this.clave;
+  }
+
   public void MarcarIngresoTrabajo (Date hora) {
     this.horarios_ingreso.add(hora);
   }

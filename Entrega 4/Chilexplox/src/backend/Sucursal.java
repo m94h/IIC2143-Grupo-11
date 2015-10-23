@@ -15,12 +15,12 @@ public class Sucursal {
 	/*
 	 * Camiones disponibles para cargar pedidos
 	 */
-	private ArrayList<Camion> camionesEsperando;
+	private ArrayList<MedioDeTransporte> mediosEsperando;
 	
 	/*
 	 * Camiones listos para ser despachados
 	 */
-	private ArrayList<Camion> camionesListos;
+	private ArrayList<MedioDeTransporte> mediosListos;
 	
 	
 	/*private ArrayList<Pedido> pedidos;*/
@@ -36,8 +36,8 @@ public class Sucursal {
 		this.telefono = telefono;
 	    this.capacidad = capacidad;
 	    this.empleados = new HashMap<String, Empleado>();
-	    this.camionesEsperando = new ArrayList<Camion>();
-	    this.camionesListos = new ArrayList<Camion>();
+	    this.mediosEsperando = new ArrayList<MedioDeTransporte>();
+	    this.mediosListos = new ArrayList<MedioDeTransporte>();
 	    this.cola_mensajes = new ArrayList<Mensaje>();
 	}
 
@@ -73,21 +73,21 @@ public class Sucursal {
 		this.capacidad = this.capacidad + nueva_capacidad;
 	}
 	
-	public ArrayList<Camion> GetCamionesEsperando() {
-		return this.camionesEsperando;
+	public ArrayList<MedioDeTransporte> GetMedioEsperando() {
+		return this.mediosEsperando;
 	}
 	
-	public void AgregarCamionEsperando(Camion camion){
-		this.camionesEsperando.add(camion);
+	public void AgregarMedioEsperando(MedioDeTransporte medio){
+		this.mediosEsperando.add(medio);
 	}
 	
-	public void AgregarCamionListo(Camion camion){
-		this.camionesEsperando.remove(camion);
-		this.camionesListos.add(camion);
+	public void AgregarMedioListo(MedioDeTransporte medio){
+		this.mediosEsperando.remove(medio);
+		this.mediosListos.add(medio);
 	}
 	  
-	public void EnviarCamion(Camion camion){
-		this.camionesListos.remove(camion);
+	public void EnviarCamion(MedioDeTransporte medio){
+		this.mediosListos.remove(medio);
 	}
 	  /*
 	  public ArrayList<Pedido> GetPedidos() {

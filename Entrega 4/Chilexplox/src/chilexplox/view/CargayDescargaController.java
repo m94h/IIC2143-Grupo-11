@@ -54,25 +54,25 @@ public class CargayDescargaController {
 				this.ShowMessage("Este pedido ya fue cargado a un camion");
 				return;
 			}
-			Camion camion = (Camion) Sistema.GetInstance().GetCamion(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+			MedioDeTransporte medio = Sistema.GetInstance().GetTransporte((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
 			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
-			if (operario.CargarCamion(camion, pedido)) {
-				this.ShowMessage("Pedido cargado correctamente al camion");
+			if (operario.CargarMedio(medio, pedido)) {
+				this.ShowMessage("Pedido cargado correctamente al medio de transporte");
 			} else {
-				this.ShowMessage("El camion seleccionado no tiene capacidad para este pedido");
+				this.ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido");
 			}
 		}
 	}
 	
 	@FXML
-	public void handleDescargarCamion() {
+	public void handleDescargarMedio() {
 		if (this.patente_descarga.getSelectionModel().isEmpty()) {
-			this.ShowMessage("Seleccione un camion");
+			this.ShowMessage("Seleccione un medio de transporte");
 			return;
 		}
-		Camion camion = (Camion) Sistema.GetInstance().GetCamion(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+		MedioDeTransporte medio = Sistema.GetInstance().GetTransporte(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
-		operario.DescargarCamion(camion);
+		operario.DescargarMedio(medio);
 		this.ShowMessage("El camion seleccionado ha sido descargado");
 	}
 	

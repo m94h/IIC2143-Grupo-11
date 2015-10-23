@@ -12,7 +12,7 @@ public class OperarioCamion extends Empleado {
 	}
 
 	public void AvisarArrivoCamion(Camion camion, Sucursal destino){
-		destino.AgregarCamionEsperando(camion);
+		destino.AgregarMedioEsperando(camion);
 		camion.estado = Estado.EnSucursalDestino;
 	}
   

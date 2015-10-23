@@ -158,6 +158,12 @@ public class MainApp extends Application {
         }		
 	}
 
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        Sistema.GetInstance().GuardarTodo();
+    }
+    
 	public static void main(String[] args) {
 		launch(args);
 	}

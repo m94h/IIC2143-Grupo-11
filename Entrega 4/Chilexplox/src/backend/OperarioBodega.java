@@ -7,17 +7,17 @@ public class OperarioBodega extends Empleado {
 		this.tipo_empleado = "bodega";
 	}
 
-	public boolean CargarCamion(Camion camion, Pedido pedido){
-		return camion.CargarPedido(pedido);
+	public boolean CargarMedio(MedioDeTransporte medio, Pedido pedido){
+		return medio.CargarPedido(pedido);
 	}
 
-	public void DescargarCamion(Camion camion){
-		for(Pedido item:camion.listaPedidos)
+	public void DescargarMedio(MedioDeTransporte medio){
+		for(Pedido item:medio.listaPedidos)
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
-		camion.Desocupar();
-		this.sucursal.AgregarCamionListo(camion);
+		medio.Desocupar();
+		this.sucursal.AgregarMedioListo(medio);
 	}
 
 	public void CrearMensaje(String mensaje, Sucursal destino) {
