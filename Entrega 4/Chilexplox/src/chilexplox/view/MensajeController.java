@@ -56,7 +56,7 @@ public class MensajeController {
 	}
 
 	@FXML
-    private void Enviar() {
+    private void handleEnviar() {
 		Sistema sistema = Sistema.GetInstance();
 		Empleado usuario = sistema.GetUsuarioLoged();
 		String direccion = destino.getSelectionModel().getSelectedItem().toString();
@@ -69,4 +69,10 @@ public class MensajeController {
 			this.ShowMessage("Solo un operario de bodega puede enviar mensajes");
 		}
 	}
+	
+	@FXML
+    private void handleVolver() {
+		this.mainApp.MostrarMenu();
+	}
+	
 }
