@@ -11,8 +11,11 @@ import backend.Sistema;
 import backend.Sucursal;
 import backend.Mensaje;
 
+import java.awt.EventQueue;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JOptionPane;
 
 import backend.Empleado;
 import backend.OperarioBodega;
@@ -42,13 +45,28 @@ public class MensajeController {
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+	
+	private void ShowMessage(String message) {
+	    EventQueue.invokeLater(new Runnable() {
+	        @Override
+	        public void run() {
+	            JOptionPane.showMessageDialog(null, message);
+	        }
+	    });
+	}
 
 	@FXML
     private void Enviar() {
 		Sistema sistema = Sistema.GetInstance();
 		Empleado usuario = sistema.GetUsuarioLoged();
+		String direccion = destino.getSelectionModel().getSelectedItem().toString();
 		
-		sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getPromptText(), sucursales.get(destino.getAccessibleText()));        
-		this.mensaje.setAccessibleText("");
+		if (usuario.GetTipo().equals("bodega")) {
+			sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getPromptText(), sucursales.get(direccion));        
+			this.mensaje.setAccessibleText("");
+		}
+		else {
+			this.ShowMessage("Solo un operario de bodega puede enviar mensajes");
+		}
 	}
 }

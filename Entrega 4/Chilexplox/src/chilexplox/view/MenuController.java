@@ -47,7 +47,14 @@ public class MenuController {
 	}
 	
 	@FXML
+	public void handleMensaje () {
+		this.mainApp.mostrarMensajes();
+	}
+	
+	@FXML
 	public void handleSalir () {
 		this.mainApp.mostrarLogin();
 	}
+	
+	
 }

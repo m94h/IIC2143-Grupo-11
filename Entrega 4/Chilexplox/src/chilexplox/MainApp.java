@@ -134,6 +134,26 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
+    public void mostrarMensajes() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Mensaje.fxml"));
+            AnchorPane mensaje = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(mensaje);
+            
+            // Dar acceso al controlador
+            MensajeController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }		
+	}
 
 	public static void main(String[] args) {
 		launch(args);
