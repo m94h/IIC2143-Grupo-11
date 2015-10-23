@@ -7,8 +7,8 @@ public class OperarioBodega extends Empleado {
 		this.tipo_empleado = "bodega";
 	}
 
-	public void CargarCamion(Camion camion, Pedido pedido){
-		camion.CargarPedido(pedido);
+	public boolean CargarCamion(Camion camion, Pedido pedido){
+		return camion.CargarPedido(pedido);
 	}
 
 	public void DescargarCamion(Camion camion){
@@ -16,6 +16,7 @@ public class OperarioBodega extends Empleado {
 		{
 			item.estado = Estado.EnSucursalDestino;
 		}
+		camion.Desocupar();
 		this.sucursal.AgregarCamionListo(camion);
 	}
 

@@ -95,6 +95,29 @@ public class MainApp extends Application {
         }
     }
     
+    /**
+     * Mostrar el login
+     */
+    public void mostrarCargayDescarga() {
+        try {
+            // Load login
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CargayDescarga.fxml"));
+            AnchorPane cargaydescarga = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(cargaydescarga);
+            
+            // Dar acceso al controlador
+            CargayDescargaController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void MostrarPedidos() {
     	try {
             // Load menu

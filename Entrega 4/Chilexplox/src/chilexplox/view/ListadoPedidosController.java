@@ -80,11 +80,6 @@ public class ListadoPedidosController {
 	
 	
 	/*
-	 * Variable auxiliar para almacenar encomiendas temporales (sin un pedido con id asociado)
-	 */
-	private Map<Integer, Encomienda> encomiendas_temp;
-	
-	/*
 	 * Tabla pedidos y sus columnas
 	 */
 	@FXML

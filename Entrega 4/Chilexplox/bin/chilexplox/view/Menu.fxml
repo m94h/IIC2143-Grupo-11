@@ -18,10 +18,10 @@
       <Label fx:id="nombre" layoutX="100.0" layoutY="81.0" text="Nombre" />
       <Label fx:id="sucursal" layoutX="100.0" layoutY="105.0" text="Sucursal" />
       <Button layoutX="126.0" layoutY="428.0" mnemonicParsing="false" onAction="#handleSalir" text="Salir" />
-      <Button fx:id="btnEnviarMensaje" disable="true" layoutX="96.0" layoutY="348.0" mnemonicParsing="false" onAction="#handleMensaje" text="Enviar Mensaje" />
+      <Button fx:id="btnEnviarMensaje" disable="true" layoutX="96.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleMensaje" text="Enviar Mensaje" />
       <Button fx:id="btnBandejaEntrada" disable="true" layoutX="86.0" layoutY="388.0" mnemonicParsing="false" text="Bandeja de Entrada" />
-      <Button disable="true" layoutX="58.0" layoutY="262.0" mnemonicParsing="false" text="Avisar Arribo o Salida Camiones" />
-      <Button disable="true" layoutX="62.0" layoutY="306.0" mnemonicParsing="false" text="Cargar o Descargar Camiones" />
+      <Button disable="true" layoutX="51.0" layoutY="265.0" mnemonicParsing="false" text="Avisar Arribo o Salida Camiones" />
+      <Button disable="true" layoutX="57.0" layoutY="306.0" mnemonicParsing="false" text="Cargar o Descargar Camiones" />
       <Label alignment="CENTER" layoutX="69.0" layoutY="14.0" prefHeight="49.0" prefWidth="153.0" text="Chilexplox">
          <font>
             <Font size="24.0" />
