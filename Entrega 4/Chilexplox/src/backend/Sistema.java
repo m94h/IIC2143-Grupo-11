@@ -509,7 +509,7 @@ public class Sistema {
  					} 
 					id_pedido = Integer.parseInt(parametros[2]); 
 
-					orden = new OrdenCompra(id_orden, monto);
+					orden = new OrdenCompra(monto, medio);
 					this.empresa.GetPedido(id_pedido).AgregarOrden(orden);
 				}
 				catch(Exception e) {
