@@ -5,25 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="640.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="640.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ListadoCamionesController">
    <children>
-      <TreeTableView layoutX="46.0" layoutY="73.0" prefHeight="384.0" prefWidth="470.0">
+      <TreeTableView fx:id="tabla_esperando" layoutX="46.0" layoutY="73.0" prefHeight="384.0" prefWidth="470.0">
         <columns>
-          <TreeTableColumn prefWidth="111.0" text="Patente" />
-          <TreeTableColumn prefWidth="120.0" text="Estado" />
-            <TreeTableColumn prefWidth="109.0" text="Capacidad" />
-            <TreeTableColumn prefWidth="129.0" text="Origen" />
+          <TreeTableColumn fx:id="patenteColumn" prefWidth="111.0" text="Patente" />
+          <TreeTableColumn fx:id="estadoColumn" prefWidth="120.0" text="Estado" />
+            <TreeTableColumn fx:id="capacidadColumn" prefWidth="109.0" text="Capacidad" />
+            <TreeTableColumn fx:id="origenColumn" prefWidth="129.0" text="Origen" />
         </columns>
       </TreeTableView>
       <Label layoutX="54.0" layoutY="32.0" text="Camiones listos para despachar" />
-      <Label layoutX="871.0" layoutY="32.0" text="Camiones listos para cargar" />
-      <TreeTableView layoutX="871.0" layoutY="73.0" prefHeight="384.0" prefWidth="470.0">
+      <Label layoutX="871.0" layoutY="32.0" text="Camiones listos para descargar" />
+      <TreeTableView fx:id="tabla_listo" layoutX="871.0" layoutY="73.0" prefHeight="384.0" prefWidth="470.0">
          <columns>
-            <TreeTableColumn prefWidth="88.0" text="Patente" />
-            <TreeTableColumn prefWidth="123.0" text="Estado" />
-            <TreeTableColumn prefWidth="117.0" text="Capacidad" />
-            <TreeTableColumn prefWidth="140.0" text="Destino" />
+            <TreeTableColumn fx:id="patente2Column" prefWidth="88.0" text="Patente" />
+            <TreeTableColumn fx:id="estado2Column" prefWidth="123.0" text="Estado" />
+            <TreeTableColumn fx:id="capacidad2Column" prefWidth="117.0" text="Capacidad" />
+            <TreeTableColumn fx:id="origen2Column" prefWidth="140.0" text="Destino" />
          </columns>
       </TreeTableView>
       <Button layoutX="640.0" layoutY="503.0" mnemonicParsing="false" text="Volver al Menu" />
