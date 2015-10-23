@@ -27,7 +27,7 @@ public class Sistema {
 	//private int id_orden_compra;
 
 	private Empresa empresa;
-	
+
 	//Valores de interaccion con usuario
 	private Empleado usuario_loged;
 	private Sucursal sucursal_loged;
@@ -46,30 +46,30 @@ public class Sistema {
 	public static Sistema GetInstance() {
 		return INSTANCE;
 	}
-	
+
 	/*
 	 * Getters de los precios por peso y volumen
 	 */
 	public int GetPrecioPorGr() {
 		return precioPorGr;
 	}
-	
+
 	public int GetPrecioPorCc() {
 		return precioPorCc;
 	}
-	
+
 	/*
 	 * Informacion sobre el usuario logeado y su sucursal
 	 */
 	public Sucursal GetSucursalLoged() {
 		return this.sucursal_loged;
 	}
-	
+
 	public Empleado GetUsuarioLoged() {
 		return this.usuario_loged;
 	}
 
-	/* 
+	/*
 	 * Informacion sobre el id de pedido y de encomienda cuando se crea uno nuevo
 	 */
 	public int Get_id_pedido() {
@@ -83,7 +83,7 @@ public class Sistema {
 		id_encomienda++;
 		return valor;
 	}
- 
+
  /*
 	public int Get_id_orden_compra() {
 		int valor = id_orden_compra;
@@ -98,7 +98,7 @@ public class Sistema {
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.empresa.GetSucursales();
 	}
-	
+
 	public Sucursal GetSucursal(int id) {
 		return this.empresa.GetSucursales().get(id);
 	}
@@ -111,11 +111,11 @@ public class Sistema {
 	public Map<Integer, Pedido> GetPedidos() {
 		return empresa.GetPedidos();
 	}
-	
+
 	public Pedido GetPedido (int id) {
 		return empresa.GetPedido(id);
 	}
-	
+
 	public void AgregarPedido(Pedido pedido) {
 		empresa.AgregarPedido(pedido);
 	}
@@ -132,11 +132,11 @@ public class Sistema {
 		empresa.AgregarTransporte(vehiculo);
 	}
 
-	public MedioDeTransporte GetVehiculo (String patente){
-		return empresa.GetTransporte(patente);
+	public Camion GetCamion (String patente){
+		return (Camion)empresa.GetTransporte(patente);
 	}
-	
-	
+
+
 	// Interaccion con usuario
 	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
 	    return vendedor.CrearPedido(cliente, origen, destino, urgencia, estado, fecha); // Retorna el id del pedido
@@ -154,11 +154,11 @@ public class Sistema {
 		Cliente c = new Cliente (rut, nombre, telefono, direccion);
 		empresa.AgregarCliente(c);
 	}
-	
+
 	public Cliente GetCliente (String rut) {
 		return this.empresa.GetCliente(rut);
 	}
-	
+
 	public void BorrarCliente (String rut) {
 		this.empresa.BorrarCliente(rut);
 	}
@@ -168,18 +168,18 @@ public class Sistema {
 		solicitador.PedirCamion();
 	}
 	*/
-		
+
 	/*
 	 * Login
 	 */
 	public boolean LogIn(String rut, String clave) {
 		if (this.empresa.GetEmpleados().get(rut) != null) {
-			Empleado empleado_loged = this.empresa.GetEmpleados().get(rut);			
+			Empleado empleado_loged = this.empresa.GetEmpleados().get(rut);
 			if (empleado_loged.CheckLogin(clave)) {
 				//login correcto
 				this.usuario_loged = empleado_loged;
 				this.sucursal_loged = empleado_loged.GetSucursal();
-				
+
 				//retornar que se logeo de manera correcta
 				return true;
 			}
@@ -217,7 +217,7 @@ public class Sistema {
 			this.id_encomienda = Integer.parseInt(parametros[5]);
 		}
 		catch(Exception e) {
-			// Error en el parseo	
+			// Error en el parseo
 		}
 	}
 
@@ -236,7 +236,7 @@ public class Sistema {
 		int telefono;
 		int capacidad;
 		Sucursal sucursal;
-		
+
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				parametros = sCurrentLine.split(";");
@@ -290,21 +290,21 @@ public class Sistema {
 					sueldo = Integer.parseInt(parametros[5]);
 					sucursal = this.empresa.GetSucursal(id_sucursal);
 					clave = parametros[6];
-					
+
 					if (tipo_empleado.equals("venta")) {
 						empleado = new OperarioVenta(nombre, empleado_id, telefono, sueldo, sucursal, clave);
-					} 
+					}
 					else if (tipo_empleado.equals("camion")) {
 						empleado = new OperarioCamion(nombre, empleado_id, telefono, sueldo, sucursal, clave);
-					} 
+					}
 					else if (tipo_empleado.equals("bodega")) {
 						empleado = new OperarioBodega(nombre, empleado_id, telefono, sueldo, sucursal, clave);
-					} 
+					}
 					else {
 						//error dato
 						continue;
 					}
-					
+
 					sucursal.AgregarEmpleado(empleado);
 					this.empresa.AgregarEmpleado(empleado);
 				}
@@ -312,7 +312,7 @@ public class Sistema {
 					System.out.println(""); // Error en el parseo
 					}
 			}
-		} 
+		}
 		catch (IOException e1) {
 			// Error en lectura
 		}
@@ -352,7 +352,7 @@ public class Sistema {
 					// Error en los archivos
 				}
 			}
-		} 
+		}
 		catch (IOException e) {
 			// Error en la lectura
 		}
@@ -383,7 +383,7 @@ public class Sistema {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
-					id_pedido = Integer.parseInt(parametros[0]); 
+					id_pedido = Integer.parseInt(parametros[0]);
 					cliente = this.empresa.GetCliente(parametros[1]);
 					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
@@ -400,7 +400,7 @@ public class Sistema {
 							break;
 					}
 					fecha = LocalDate.parse(parametros[6], formatter);
-					
+
 
 					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha);
 
@@ -412,7 +412,7 @@ public class Sistema {
 					// Error en los archivos
 				}
 			}
-		} 
+		}
 		catch (IOException e) {
 			// Error en la lectura
 		}
@@ -439,10 +439,10 @@ public class Sistema {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
-					id_encomienda = Integer.parseInt(parametros[0]); 
-					peso = Integer.parseInt(parametros[1]); 
-					volumen = Integer.parseInt(parametros[2]); 
-					id_pedido = Integer.parseInt(parametros[3]); 
+					id_encomienda = Integer.parseInt(parametros[0]);
+					peso = Integer.parseInt(parametros[1]);
+					volumen = Integer.parseInt(parametros[2]);
+					id_pedido = Integer.parseInt(parametros[3]);
 
 					encomienda = new Encomienda(id_encomienda, peso, volumen);
 					this.empresa.GetPedido(id_pedido).AgregarEncomienda(encomienda);
@@ -451,7 +451,7 @@ public class Sistema {
 					// Error en los archivos
 				}
 			}
-		} 
+		}
 		catch (IOException e) {
 			// Error en la lectura
 		}
@@ -479,11 +479,11 @@ public class Sistema {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
-					patente = parametros[0]; 
-					marca = parametros[1]; 
-					modelo = parametros[2]; 
+					patente = parametros[0];
+					marca = parametros[1];
+					modelo = parametros[2];
 					cap_maxima = Integer.parseInt(parametros[3]);
-					km = Integer.parseInt(parametros[4]);  
+					km = Integer.parseInt(parametros[4]);
 
 					camion = new Camion(patente, marca, modelo, cap_maxima, km);
 					this.empresa.AgregarTransporte((MedioDeTransporte)camion);
@@ -492,7 +492,7 @@ public class Sistema {
 					// Error en los archivos
 				}
 			}
-		} 
+		}
 		catch (IOException e) {
 			// Error en la lectura
 		}
@@ -530,7 +530,7 @@ public class Sistema {
 						case "cheque":
 							medio = MedioPago.CHEQUE;
 							break;
- 					} 
+ 					}
  					switch (parametros[2]){
 							case "pagado":
 								estado = true;
@@ -538,8 +538,8 @@ public class Sistema {
 							case "deuda":
 								estado = false;
 								break;
- 					} 
-					id_pedido = Integer.parseInt(parametros[3]); 
+ 					}
+					id_pedido = Integer.parseInt(parametros[3]);
 
 					orden = new OrdenCompra(monto, medio, estado);
 					this.empresa.GetPedido(id_pedido).AgregarOrden(orden);
@@ -548,7 +548,7 @@ public class Sistema {
 					// Error en los archivos
 				}
 			}
-		} 
+		}
 		catch (IOException e) {
 			// Error en la lectura
 		}
@@ -557,7 +557,7 @@ public class Sistema {
 	/*
 	 * Caller de Cargar los archivos
 	 */
-	private void CargarTodo() {		
+	private void CargarTodo() {
 		this.CargarEmpresa();
 		this.CargarSucursales();
 		this.CargarEmpleados();
@@ -567,12 +567,12 @@ public class Sistema {
 		this.CargarCamiones();
 		this.CargarOrdenes();
 	}
-	
+
 	/*
 	 * Para guardar los archivos (actualizar la info)
 	 */
 	private void GuardarTodo() {
-		
+
 		//Definir escritor
 		PrintWriter writer;
 
@@ -609,7 +609,7 @@ public class Sistema {
 				}
 
 			}
-			
+
 			writer_sucursales.close();
 			writer_empleados.close();
 
@@ -627,10 +627,10 @@ public class Sistema {
 				Cliente cliente = entry_clientes.getValue();
 				writer_clientes.println(cliente.GetRut() + ";" + cliente.GetNombre() + ";" + Integer.toString(cliente.GetTelefono()) + ";" + cliente.GetDireccion());
 			}
-			
+
 			writer_clientes.close();
 
-		} 
+		}
 		catch (FileNotFoundException | UnsupportedEncodingException e1) {
 			// Archivo no encontrado o enconding malo
 		}
@@ -645,9 +645,9 @@ public class Sistema {
 			for (Map.Entry<Integer, Pedido> entry_pedido : this.empresa.GetPedidos().entrySet())
 			{
 				Pedido pedido = entry_pedido.getValue();
-				
+
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));  
+				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
 
 				OrdenCompra orden = pedido.GetOrden();
 				String estado = "deuda";
@@ -656,7 +656,7 @@ public class Sistema {
 						estado = "pagado";
 					}
 					writer_ordenes.println(Integer.toString(orden.GetMonto()) + ";" + orden.GetMedio().toString() + ";" + estado + ";" + Integer.toString(pedido.GetId()));
-				}                       
+				}
 
 				//recorrer listado de empleados
 				for (Map.Entry<Integer, Encomienda> entry_encomienda : this.empresa.GetEncomiendas().entrySet())
@@ -665,7 +665,7 @@ public class Sistema {
 					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
 				}
 			}
-			
+
 			writer_pedidos.close();
 			writer_encomiendas.close();
 			writer_ordenes.close();
