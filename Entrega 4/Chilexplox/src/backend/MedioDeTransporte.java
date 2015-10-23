@@ -32,9 +32,9 @@ public abstract class MedioDeTransporte {
 		return (this.capacidadMax - this.capacidadActual);
 	}
 
-	public String GetPatente(){
-		return this.patente;
-	}
+	public String GetPatente() {return this.patente;}
+
+	public int GetCapacidadMax() {return this.capacidadMax;}
 
 	public void CargarPedido(Pedido pedido){
 		if(this.capacidadActual < this.capacidadMax){

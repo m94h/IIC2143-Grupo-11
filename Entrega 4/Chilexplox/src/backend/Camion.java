@@ -25,5 +25,11 @@ public class Camion extends MedioDeTransporte {
 	public boolean Disponible(){
 		return desocupado;
 	}
-	
+
+	public String GetMarca() {return marca;}
+
+	public String GetModelo() {return modelo;}
+
+	public int GetKm() {return km;}
+
 }

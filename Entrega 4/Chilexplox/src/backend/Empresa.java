@@ -95,6 +95,10 @@ public class Empresa {
 		return this.encomiendas.get(id);
 	}
 
+	public Map<String, MedioDeTransporte> GetTransportes() {
+	    return this.flota;
+	}
+
 	public void AgregarTransporte(MedioDeTransporte vehiculo){
 		this.flota.put(vehiculo.GetPatente(), vehiculo);
 	}

@@ -565,10 +565,24 @@ public class Sistema {
 			writer_pedidos.close();
 			writer_encomiendas.close();
 
-		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
-			// Archivo no encontrado o enconding malo
-		}
+			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
+				// Archivo no encontrado o enconding malo
+			}
 
+			//guardar archivo de camiones
+			try {
+				PrintWriter writer_camiones = new PrintWriter("archivos/camiones.data", "UTF-8");
+
+				//Iterar sobre los camiones
+				for (Map.Entry<String, MedioDeTransporte> entry : this.empresa.GetTransportes().entrySet())
+				{
+					Camion camion = (Camion)entry.getValue();
+
+					writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
+				}
+		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
+				// Archivo no encontrado o enconding malo
+		}
 	}
 	
 }
