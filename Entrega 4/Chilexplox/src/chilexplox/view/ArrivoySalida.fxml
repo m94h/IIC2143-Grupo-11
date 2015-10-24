@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArriboySalidaController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArrivoySalidaController">
    <children>
       <Button layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
       <Button layoutX="446.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAvisarArribo" text="Arribo" />

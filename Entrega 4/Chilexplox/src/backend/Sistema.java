@@ -30,7 +30,7 @@ public class Sistema {
 
 	private Empresa empresa;
 
-	private ArrayList<MedioDeTransporte> mediosEnTransito;
+	private ArrayList<MedioDeTransporte> mediosEnTransito = new ArrayList<MedioDeTransporte>();
 
 	//Valores de interaccion con usuario
 	private Empleado usuario_loged;

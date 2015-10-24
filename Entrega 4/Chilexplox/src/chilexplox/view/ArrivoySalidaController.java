@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 //backend
 import backend.*;
 
-public class ArriboySalidaController {
+public class ArrivoySalidaController {
 
 	private MainApp mainApp;
 
@@ -47,34 +47,41 @@ public class ArriboySalidaController {
 
 		// Lista medios para arrivar
 		ArrayList<MedioDeTransporte> mediosEnTransito = Sistema.GetInstance().GetMediosEnTransito();
-		for(int i = 0; i < mediosEnTransito.size(); i++){
-			MedioDeTransporte medio = mediosEnTransito.get(i);
-			this.patenteArribo.getItems().add(medio.GetPatente());
+		if(mediosEnTransito.size() > 0){
+			for(int i = 0; i < mediosEnTransito.size(); i++){
+				MedioDeTransporte medio = mediosEnTransito.get(i);
+				this.patenteArribo.getItems().add(medio.GetPatente());
+			}
 		}
 	}
 
 	@FXML
 	public void handleAvisarArribo() {
+		/*
 		if (this.patenteArribo.getSelectionModel().isEmpty()) {
+
 			this.ShowMessage("Seleccione un medio de transporte");
 			return;
 		}
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteArribo.getSelectionModel().getSelectedItem().toString());
-		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
+		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.AvisarArriboMedio(medio);
 		this.ShowMessage("El camion ha arribado");
+		*/
 	}
 
 	@FXML
 	public void handleAvisarSalida() {
+		/*
 		if (this.patenteSalida.getSelectionModel().isEmpty()) {
 			this.ShowMessage("Seleccione un medio de transporte");
 			return;
 		}
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteSalida.getSelectionModel().getSelectedItem().toString());
-		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
+		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.AvisarSalidaMedio(medio);
 		this.ShowMessage("El camion esta en tránsito");
+		*/
 	}
 
 

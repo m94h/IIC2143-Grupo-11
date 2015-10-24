@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 
 public class MainApp extends Application {
-	
+
 	private Stage primaryStage;
     private BorderPane ventanaPrincipal;
 
@@ -27,7 +27,7 @@ public class MainApp extends Application {
         // Iniciar la vista del login
         mostrarLogin();
 	}
-	
+
 	/**
      * Inicializar ventana principal
      */
@@ -41,12 +41,12 @@ public class MainApp extends Application {
             Scene scene = new Scene(ventanaPrincipal);
             primaryStage.setScene(scene);
             primaryStage.show();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Mostrar el login
      */
@@ -59,17 +59,17 @@ public class MainApp extends Application {
 
             // Poner la vista del login en el centro de la ventana principal
             ventanaPrincipal.setCenter(login);
-            
+
             // Dar acceso al controlador de login
             LoginController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     //se llama cuando se hizo login correcto
     public void IngresoCorrecto() {
     	this.MostrarMenu();
@@ -84,17 +84,17 @@ public class MainApp extends Application {
 
             // Poner la vista del menu en el centro de la ventana principal
             ventanaPrincipal.setCenter(menu);
-            
+
             // Dar acceso al controlador de menu
             MenuController controllerView = loader.getController();
             controllerView.setMainApp(this);
-            
-            
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Mostrar el Carga y descarga de medios de trnasporte
      */
@@ -107,17 +107,17 @@ public class MainApp extends Application {
 
             // Poner la vista en el centro de la ventana principal
             ventanaPrincipal.setCenter(cargaydescarga);
-            
+
             // Dar acceso al controlador
             CargayDescargaController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Mostrar el arrivo y salida de medios de trnasporte
      */
@@ -130,19 +130,19 @@ public class MainApp extends Application {
 
             // Poner la vista en el centro de la ventana principal
             ventanaPrincipal.setCenter(arrivosalida);
-            
+
             // Dar acceso al controlador
-            ListadoPedidosController controllerView = loader.getController();
+            ArrivoySalidaController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
+
+
     public void MostrarPedidos() {
     	try {
             // Load menu
@@ -152,17 +152,17 @@ public class MainApp extends Application {
 
             // Poner la vista en el centro de la ventana principal
             ventanaPrincipal.setCenter(pedidos);
-            
+
             // Dar acceso al controlador
             ListadoPedidosController controllerView = loader.getController();
             controllerView.setMainApp(this);
-            
-            
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void mostrarMensajes() {
     	try {
             // Load menu
@@ -172,15 +172,15 @@ public class MainApp extends Application {
 
             // Poner la vista en el centro de la ventana principal
             ventanaPrincipal.setCenter(mensaje);
-            
+
             // Dar acceso al controlador
             MensajeController controllerView = loader.getController();
             controllerView.setMainApp(this);
-            
-            
+
+
         } catch (IOException e) {
             e.printStackTrace();
-        }		
+        }
 	}
 
     @Override
@@ -188,7 +188,7 @@ public class MainApp extends Application {
         System.out.println("Stage is closing");
         Sistema.GetInstance().GuardarTodo();
     }
-    
+
 	public static void main(String[] args) {
 		launch(args);
 	}
