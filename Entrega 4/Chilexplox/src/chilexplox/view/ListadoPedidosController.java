@@ -201,7 +201,7 @@ public class ListadoPedidosController {
 	@FXML
 	private void handleNuevo() {
 		
-		if (this.id_pedido.getText() != null && Helper.GetInstance().ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. Esta seguro de querer crear uno nuevo?")) {
+		if (this.id_pedido.getText() != null && ViewHelper.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. Esta seguro de querer crear uno nuevo?")) {
 				
 			this.id_pedido.setText("nuevo");
 			this.origen.setDisable(false);
@@ -233,8 +233,10 @@ public class ListadoPedidosController {
 			this.encomiendasData.clear();
 			this.tabla_encomiendas.setItems(this.encomiendasData);
 			
+			this.nombreEncomienda.setDisable(false);
 			this.peso.setDisable(false);
 			this.volumen.setDisable(false);
+			this.nombreEncomienda.setText("");
 			this.peso.setText("");
 			this.volumen.setText("");
 			
@@ -252,11 +254,12 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleGenerarPresupuesto() {
-		if (this.id_pedido.getText() != null) {
+		if (!this.id_pedido.getText().isEmpty()) {
 			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
 				int valor = Encomienda.Presupuesto(Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
 				this.montoEncomienda.setText("$ " + Integer.toString(valor));
 			} else {
+				ViewHelper.ShowMessage("Ingrese un peso y un volumen. Ambos deben ser enteros.", AlertType.ERROR);
 				this.montoEncomienda.setText("$");
 			}
 		}
@@ -268,7 +271,7 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleBuscarCliente() {
-		if (this.id_pedido.getText() != null) {
+		if (!this.id_pedido.getText().isEmpty()) {
 			
 			if (!this.rut.getText().equals("")) {
 				Cliente cliente = Sistema.GetInstance().GetCliente(this.rut.getText());
@@ -276,15 +279,16 @@ public class ListadoPedidosController {
 					this.nombre.setText(cliente.GetNombre());
 					this.telefono.setText(Integer.toString(cliente.GetTelefono()));
 					this.direccion.setText(cliente.GetDireccion());
+					ViewHelper.ShowMessage("Cliente encontrado. Sus datos han sido cargados.", AlertType.INFORMATION);
 					return;
+				} else {
+					ViewHelper.ShowMessage("Cliente no encontrado, verifique el rut o ingrese manualmente.", AlertType.INFORMATION);
 				}
 			} else {
-				Helper.GetInstance().ShowMessage("Ingrese un Rut", AlertType.WARNING);
+				ViewHelper.ShowMessage("Ingrese un Rut para buscar.", AlertType.WARNING);
 				return;
 			}
-			
 		}
-		Helper.GetInstance().ShowMessage("Cliente no encontrado, verifique el rut o ingrese manualmente", AlertType.INFORMATION);
 	}
 	
 	/*
@@ -297,11 +301,11 @@ public class ListadoPedidosController {
 		
 		//Si hay un pedido agregar
 		if (!id.equals("")) {
-			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
+			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText()) && !this.nombreEncomienda.getText().isEmpty()) {
 				
 				if (this.id_pedido.getText().equals("nuevo")) {
 					//Se debe grabar la orden antes, para poder generar una id
-					Helper.GetInstance().ShowMessage("Grabe la orden antes de agregar encomiendas", AlertType.WARNING);
+					ViewHelper.ShowMessage("Grabe la orden antes de agregar encomiendas", AlertType.WARNING);
 					return;
 				}
 							
@@ -315,12 +319,15 @@ public class ListadoPedidosController {
 				
 				// Actualizar monto total
 				this.montoTotal.setText("$ " + Integer.toString(pedido.CalcularMonto()));
-
-			} else {
+				
 				//Borrar los input
+				this.nombreEncomienda.setText("");
 				this.peso.setText("");
 				this.volumen.setText("");
 				this.montoEncomienda.setText("$ ");
+
+			} else {
+				ViewHelper.ShowMessage("Debe ingresar un nombre, peso y volumen. El peso y volumen deben ser enteros", AlertType.ERROR);
 			}
 		}
 
@@ -341,10 +348,11 @@ public class ListadoPedidosController {
 			this.nombre.setDisable(false);
 			this.telefono.setDisable(false);
 			this.direccion.setDisable(false);
+			this.nombreEncomienda.setDisable(false);
 			this.peso.setDisable(false);
 			this.volumen.setDisable(false);
 			this.medioPago.setDisable(false);
-			this.estado.setDisable(false);
+			this.estadoPago.setDisable(false);
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
@@ -386,6 +394,8 @@ public class ListadoPedidosController {
 			if (orden != null) {
 				if (orden.GetMedio() != null) {
 					this.medioPago.getSelectionModel().select(orden.GetMedio().toString());
+				} else {
+					this.medioPago.getSelectionModel().clearSelection();
 				}
 				if (orden.GetEstado()){
 					this.estadoPago.getSelectionModel().select(1);
@@ -402,25 +412,54 @@ public class ListadoPedidosController {
 	public void handleGuardarCambios() {
 		
 		//Verificar que haya ingresado datos
-		if (this.id_pedido.getText().isEmpty())
+		if (this.id_pedido.getText().isEmpty()) {
+			ViewHelper.ShowMessage("No se esta editando o agregando ningun pedido que se pueda guardar.", AlertType.ERROR);
 			return;
-		if (this.estado.getSelectionModel().isEmpty())
+		}
+		if (this.estado.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un estado.", AlertType.ERROR);
 			return;
-		if (this.origen.getSelectionModel().isEmpty())
+		}
+		if (this.origen.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione una sucursal de origen.", AlertType.ERROR);
 			return;
-		if (this.destino.getSelectionModel().isEmpty())
+		}
+		if (this.destino.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione una sucursal de destino.", AlertType.ERROR);
 			return;
-		if (this.urgencia.getSelectionModel().isEmpty())
+		}
+		if (this.urgencia.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione una urgencia.", AlertType.ERROR);
 			return;
-		if (this.rut.getText().isEmpty())
+		}
+		if (this.rut.getText().isEmpty()) {
+			ViewHelper.ShowMessage("Ingrese un rut de cliente.", AlertType.ERROR);
 			return;
-		if (this.nombre.getText().isEmpty())
+		}
+		if (this.nombre.getText().isEmpty()) {
+			ViewHelper.ShowMessage("Ingrese un nombre de Cliente.", AlertType.ERROR);
 			return;
-		if (this.telefono.getText().isEmpty())
+		}
+		if (this.telefono.getText().isEmpty()) {
+			ViewHelper.ShowMessage("Ingrese un telefono de Cliente.", AlertType.ERROR);
 			return;
-		if (this.direccion.getText().isEmpty())
+		}
+		if (!Auxiliar.isInt(this.telefono.getText())){
+			ViewHelper.ShowMessage("Ingrese una telefono de Cliente valido (solo numeros).", AlertType.ERROR);
 			return;
-		
+		}
+		if (this.direccion.getText().isEmpty()){
+			ViewHelper.ShowMessage("Ingrese una direccion de Cliente.", AlertType.ERROR);
+			return;
+		}
+		if (this.estadoPago.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un estado del pago.", AlertType.ERROR);
+			return;
+		}
+		if (this.estadoPago.getSelectionModel().getSelectedItem().toString() == "Pagado" && this.medioPago.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("La orden no puede estar pagada sin un medio de pago seleccionado.", AlertType.ERROR);
+			return;
+		}
 		
 		//chequear cliente
 		if (Sistema.GetInstance().GetCliente(this.rut.getText()) == null) {
@@ -447,7 +486,17 @@ public class ListadoPedidosController {
 			this.tabla_pedidos.sort(); //sort
 			this.tabla_pedidos.getSelectionModel().select(pedidoModel); //seleccionar para que se actualice
 			
-			Helper.GetInstance().ShowMessage("Nuevo Pedido guardado correctamente", AlertType.INFORMATION);
+			OrdenCompra orden = pedido.GetOrden();
+			if (orden == null) {
+				pedido.GenerarOrden();
+				orden = pedido.GetOrden();
+			}
+			
+			if (this.estado.getSelectionModel().getSelectedItem().equals("Pagado")) {
+				orden.Pagar(MedioPago.valueOf(this.medioPago.getSelectionModel().getSelectedItem().toString()));
+			}
+			
+			ViewHelper.ShowMessage("Nuevo Pedido guardado correctamente", AlertType.INFORMATION);
 			
 		} else {
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
@@ -463,7 +512,7 @@ public class ListadoPedidosController {
 				orden.Pagar(MedioPago.valueOf(this.medioPago.getSelectionModel().getSelectedItem().toString()));
 			}
 			
-			Helper.GetInstance().ShowMessage("Pedido actualizado correctamente", AlertType.INFORMATION);
+			ViewHelper.ShowMessage("Pedido actualizado correctamente", AlertType.INFORMATION);
 		}
 	}
 	
@@ -472,7 +521,7 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleVolverMenu() {
-		if (Helper.GetInstance().ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
+		if (ViewHelper.ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
 			this.mainApp.MostrarMenu();
 	}
 

@@ -11,7 +11,7 @@ public class EncomiendaTableModel {
 	
 	public EncomiendaTableModel(String id, String nombre, String peso, String volumen, String precio) {
 		this.id = new SimpleStringProperty(id);
-		this.nombre = new SimpleStringProperty(id);
+		this.nombre = new SimpleStringProperty(nombre);
 		this.peso = new SimpleStringProperty(peso);
 		this.volumen = new SimpleStringProperty(volumen);
 		this.precio = new SimpleStringProperty(precio);

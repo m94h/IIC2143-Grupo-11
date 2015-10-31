@@ -61,22 +61,22 @@ public class CargayDescargaController {
 	@FXML
 	public void handleCargarPedido() {
 		if (this.id_pedido.getText().isEmpty() || this.patente_carga.getSelectionModel().isEmpty()) {
-			Helper.GetInstance().ShowMessage("Ingrese un id de pedido y seleccione un camion", AlertType.WARNING);
+			ViewHelper.ShowMessage("Ingrese un id de pedido y seleccione un camion", AlertType.WARNING);
 			return;
 		}
 
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
 		if (pedido != null) {
 			if (pedido.GetCargadoEn() != null) {
-				Helper.GetInstance().ShowMessage("Este pedido ya fue cargado a un camion", AlertType.ERROR);
+				ViewHelper.ShowMessage("Este pedido ya fue cargado a un camion", AlertType.ERROR);
 				return;
 			}
 			MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
 			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 			if (operario.CargarMedio(medio, pedido)) {
-				Helper.GetInstance().ShowMessage("Pedido cargado correctamente al medio de transporte", AlertType.INFORMATION);
+				ViewHelper.ShowMessage("Pedido cargado correctamente al medio de transporte", AlertType.INFORMATION);
 			} else {
-				Helper.GetInstance().ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido", AlertType.ERROR);
+				ViewHelper.ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido", AlertType.ERROR);
 			}
 		}
 	}
@@ -84,13 +84,13 @@ public class CargayDescargaController {
 	@FXML
 	public void handleDescargarMedio() {
 		if (this.patente_descarga.getSelectionModel().isEmpty()) {
-			Helper.GetInstance().ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
 		}
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DescargarMedio(medio);
-		Helper.GetInstance().ShowMessage("El camion seleccionado ha sido descargado", AlertType.INFORMATION);
+		ViewHelper.ShowMessage("El camion seleccionado ha sido descargado", AlertType.INFORMATION);
 	}
 
 	/*

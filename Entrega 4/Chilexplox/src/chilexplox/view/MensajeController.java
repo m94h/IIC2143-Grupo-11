@@ -57,7 +57,7 @@ public class MensajeController {
 			this.mensaje.setAccessibleText("");
 		}
 		else {
-			Helper.GetInstance().ShowMessage("Solo un operario de bodega puede enviar mensajes", AlertType.ERROR);
+			ViewHelper.ShowMessage("Solo un operario de bodega puede enviar mensajes", AlertType.ERROR);
 		}
 	}
 	

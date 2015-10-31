@@ -44,7 +44,7 @@ public class LoginController {
 		} else {
 			//Login incorrecto
 			//Avisar 
-			Helper.GetInstance().ShowMessage("Has ingresado datos incorrectos. Intentalo nuevamente.", AlertType.ERROR);
+			ViewHelper.ShowMessage("Has ingresado datos incorrectos. Intentalo nuevamente.", AlertType.ERROR);
 			//Limpiar campos
 			this.rut.setText("");
 			this.clave.setText("");
