@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArrivoySalidaController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArrivoySalidaController">
    <children>
       <Button layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
       <Button layoutX="446.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAvisarArribo" text="Arribo" />
@@ -31,5 +31,31 @@
       <Label layoutX="47.0" layoutY="267.0" text="Patente camion:" />
       <ChoiceBox fx:id="patenteArribo" layoutX="205.0" layoutY="130.0" prefWidth="150.0" />
       <ChoiceBox fx:id="patenteSalida" layoutX="205.0" layoutY="267.0" prefWidth="150.0" />
+      <TableView layoutX="627.0" layoutY="67.0" prefHeight="195.0" prefWidth="506.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Patente" />
+          <TableColumn prefWidth="102.0" text="Origen" />
+            <TableColumn prefWidth="107.0" text="Destino" />
+            <TableColumn prefWidth="101.0" text="Estado" />
+        </columns>
+      </TableView>
+      <Label layoutX="627.0" layoutY="32.0" text="Camiones en tránsito o cargando">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="627.0" layoutY="291.0" text="Camiones disponibles">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TableView layoutX="627.0" layoutY="342.0" prefHeight="195.0" prefWidth="506.0">
+         <columns>
+            <TableColumn prefWidth="89.0" text="Patente" />
+            <TableColumn prefWidth="108.0" text="Origen" />
+            <TableColumn prefWidth="105.0" text="Destino" />
+            <TableColumn prefWidth="112.0" text="Estado" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
