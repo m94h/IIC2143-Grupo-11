@@ -44,6 +44,9 @@ public class BandejaEntradaController {
         this.mensajesData = FXCollections.observableArrayList();
 		
         this.UpdateMensajes();
+        
+        tabla_mensajes.getSelectionModel().selectedItemProperty().addListener(
+        		(observable, oldValue, newValue) -> MostrarMensaje(newValue));
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -58,5 +61,9 @@ public class BandejaEntradaController {
 			mensaje = sucursal.GetUltimoMensaje();
 		}
 		this.tabla_mensajes.setItems(this.mensajesData);
+	}
+	
+	private void MostrarMensaje(MensajeTableModel mensaje) {
+		
 	}
 }

@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="306.0" prefWidth="560.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="chilexplox.view.BandejaEntradaController">
+<AnchorPane prefHeight="306.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
    <children>
       <TableView fx:id="tabla_mensajes" layoutX="14.0" layoutY="14.0" prefHeight="276.0" prefWidth="185.0">
         <columns>
@@ -14,6 +13,6 @@
           <TableColumn fx:id="sucursalOrigenColumn" prefWidth="98.0" text="Sucursal" />
         </columns>
       </TableView>
-      <TextArea fx:id="mensaje" layoutX="214.0" layoutY="14.0" prefHeight="276.0" prefWidth="328.0" />
+      <TextArea layoutX="214.0" layoutY="14.0" prefHeight="276.0" prefWidth="328.0" />
    </children>
 </AnchorPane>
