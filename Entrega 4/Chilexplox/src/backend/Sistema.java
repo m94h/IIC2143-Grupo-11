@@ -681,11 +681,15 @@ public class Sistema {
 
 				OrdenCompra orden = pedido.GetOrden();
 				String estado = "deuda";
+				String medio = "";
 				if (orden != null) {
 					if (orden.GetEstado()){
 						estado = "pagado";
 					}
-					writer_ordenes.println(Integer.toString(orden.GetMonto()) + ";" + orden.GetMedio().toString() + ";" + estado + ";" + Integer.toString(pedido.GetId()));
+					if (orden.GetMedio() != null) {
+						medio = orden.GetMedio().toString();
+					}
+					writer_ordenes.println(Integer.toString(orden.GetMonto()) + ";" + medio + ";" + estado + ";" + Integer.toString(pedido.GetId()));
 				}
 
 				//recorrer listado de empleados

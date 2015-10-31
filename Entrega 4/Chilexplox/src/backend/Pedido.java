@@ -48,7 +48,6 @@ public class Pedido {
         this.destino = destino;
         this.urgencia = urgencia;
         this.estado = estado;
-        this.encomiendas = new HashMap<Integer, Encomienda>();
         this.fecha = fecha;
     }
 
@@ -101,6 +100,7 @@ public class Pedido {
      */
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.put(encomienda.GetId(), encomienda);
+    	System.out.println("guardado");
   	}
 
   	public int CalcularMonto() {

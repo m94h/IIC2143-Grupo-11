@@ -397,7 +397,9 @@ public class ListadoPedidosController {
 			
 			OrdenCompra orden = pedido_b.GetOrden();
 			if (orden != null) {
-				this.medioPago.getSelectionModel().select(orden.GetMedio().toString());
+				if (orden.GetMedio() != null) {
+					this.medioPago.getSelectionModel().select(orden.GetMedio().toString());
+				}
 				if (orden.GetEstado()){
 					this.estadoPago.getSelectionModel().select(1);
 				} else {
