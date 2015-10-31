@@ -10,12 +10,12 @@ public class Pedido {
 	private int id;
 	private Cliente cliente;
 	private Sucursal origen;
-  	private Sucursal destino;
-  	public Estado estado;
-    private int urgencia;
-    private LocalDate fecha;
-    private MedioDeTransporte cargadoEn;
-    private int pesoTotal;
+	private Sucursal destino;
+	public Estado estado;
+  private int urgencia;
+  private LocalDate fecha;
+  private MedioDeTransporte cargadoEn;
+  private int pesoTotal;
 	private int volumenTotal;
 
   	private OrdenCompra orden_compra;

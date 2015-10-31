@@ -26,6 +26,7 @@ public class Sucursal {
 
 	/*private ArrayList<Pedido> pedidos;*/
 	private ArrayList<Mensaje> cola_mensajes;
+	private Map<Integer, Mensaje> mensajes;
 
 	public Sucursal(int id, String direccion, int telefono, int capacidad) {
 	    this.id = id;
@@ -119,17 +120,11 @@ public class Sucursal {
 	  }*/
 
 	public void RecibirMensaje(Mensaje mensaje) {
-		this.cola_mensajes.add(mensaje);
+		this.mensajes.put(mensaje.GetId(), mensaje);
 	}
 
-	public Mensaje GetUltimoMensaje() {
-		if (this.cola_mensajes.size() > 0) {
-			//Get el primer mensaje y luego removerlo de la lista
-			Mensaje ret = this.cola_mensajes.get(0);
-			this.cola_mensajes.remove(0);
-			return ret;
-		}
-		return null;
+	public Map<Integer, Mensaje> GetMensajes() {
+		return mensajes;
 	}
 
 }

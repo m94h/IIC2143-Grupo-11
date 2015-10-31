@@ -25,6 +25,7 @@ public class Mensaje {
 		this.creadoPor = creador;
 	}
 	
+	public int GetId() {return id;}
 	public String GetTexto() {return texto;}
 	public Sucursal GetOrigen() {return origen;}
 	public Sucursal GetDestino() {return destino;}	
