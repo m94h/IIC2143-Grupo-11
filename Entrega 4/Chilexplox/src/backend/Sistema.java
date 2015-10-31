@@ -621,7 +621,7 @@ public class Sistema {
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
 
-			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda));
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda) + ";" + Integer.toString(this.id_mensaje));
 
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
