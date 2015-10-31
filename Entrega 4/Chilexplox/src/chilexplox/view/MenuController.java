@@ -110,6 +110,11 @@ public class MenuController {
 	public void handleCargaDescarga() {
 		this.mainApp.mostrarCargayDescarga();
 	}
+	
+	@FXML
+	public void handleBandejaDeEntrada() {
+		this.mainApp.mostrarBandejaDeEntrada();
+	}
 
 
 }

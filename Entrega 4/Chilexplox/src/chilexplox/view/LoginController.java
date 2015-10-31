@@ -3,6 +3,7 @@ package chilexplox.view;
 import java.awt.EventQueue;
 import javax.swing.JOptionPane;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -32,15 +33,6 @@ public class LoginController {
         this.mainApp = mainApp;
     }
 	
-	private void ShowMessage(String message) {
-	    EventQueue.invokeLater(new Runnable() {
-	        @Override
-	        public void run() {
-	            JOptionPane.showMessageDialog(null, message);
-	        }
-	    });
-	}
-	
 	@FXML
 	private void handleIngresar() {
 		if (Sistema.GetInstance().LogIn(rut.getText(), clave.getText())) {
@@ -52,7 +44,7 @@ public class LoginController {
 		} else {
 			//Login incorrecto
 			//Avisar 
-			this.ShowMessage("Has ingresado datos incorrectos. Intentalo nuevamente.");
+			ViewHelper.ShowMessage("Has ingresado datos incorrectos. Intentalo nuevamente.", AlertType.ERROR);
 			//Limpiar campos
 			this.rut.setText("");
 			this.clave.setText("");

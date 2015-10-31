@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import backend.*;
 import chilexplox.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -60,22 +61,22 @@ public class CargayDescargaController {
 	@FXML
 	public void handleCargarPedido() {
 		if (this.id_pedido.getText().isEmpty() || this.patente_carga.getSelectionModel().isEmpty()) {
-			this.ShowMessage("Ingrese un id de pedido y seleccione un camion");
+			ViewHelper.ShowMessage("Ingrese un id de pedido y seleccione un camion", AlertType.WARNING);
 			return;
 		}
 
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
 		if (pedido != null) {
 			if (pedido.GetCargadoEn() != null) {
-				this.ShowMessage("Este pedido ya fue cargado a un camion");
+				ViewHelper.ShowMessage("Este pedido ya fue cargado a un camion", AlertType.ERROR);
 				return;
 			}
 			MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
 			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 			if (operario.CargarMedio(medio, pedido)) {
-				this.ShowMessage("Pedido cargado correctamente al medio de transporte");
+				ViewHelper.ShowMessage("Pedido cargado correctamente al medio de transporte", AlertType.INFORMATION);
 			} else {
-				this.ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido");
+				ViewHelper.ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido", AlertType.ERROR);
 			}
 		}
 	}
@@ -83,22 +84,14 @@ public class CargayDescargaController {
 	@FXML
 	public void handleDescargarMedio() {
 		if (this.patente_descarga.getSelectionModel().isEmpty()) {
-			this.ShowMessage("Seleccione un medio de transporte");
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
 		}
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DescargarMedio(medio);
-		this.ShowMessage("El camion seleccionado ha sido descargado");
+		ViewHelper.ShowMessage("El camion seleccionado ha sido descargado", AlertType.INFORMATION);
 	}
-
-	/*
-	 * Para mostrar alertas
-	 */
-	private void ShowMessage(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
-	}
-
 
 	/*
 	 * Para volver al menu principal

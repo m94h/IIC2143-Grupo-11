@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.Alert.AlertType;
 //Fachada del backend
 import backend.Sistema;
 import backend.Sucursal;
@@ -46,15 +46,6 @@ public class MensajeController {
         this.mainApp = mainApp;
     }
 	
-	private void ShowMessage(String message) {
-	    EventQueue.invokeLater(new Runnable() {
-	        @Override
-	        public void run() {
-	            JOptionPane.showMessageDialog(null, message);
-	        }
-	    });
-	}
-
 	@FXML
     private void handleEnviar() {
 		Sistema sistema = Sistema.GetInstance();
@@ -66,7 +57,7 @@ public class MensajeController {
 			this.mensaje.setAccessibleText("");
 		}
 		else {
-			this.ShowMessage("Solo un operario de bodega puede enviar mensajes");
+			ViewHelper.ShowMessage("Solo un operario de bodega puede enviar mensajes", AlertType.ERROR);
 		}
 	}
 	

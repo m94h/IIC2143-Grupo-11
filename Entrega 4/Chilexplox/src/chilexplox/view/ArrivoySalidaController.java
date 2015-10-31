@@ -84,14 +84,6 @@ public class ArrivoySalidaController {
 		*/
 	}
 
-
-	/*
-	 * Para mostrar alertas
-	 */
-	private void ShowMessage(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
-	}
-
 	@FXML
 	private void handleVolverMenu() {
 		this.mainApp.MostrarMenu();
