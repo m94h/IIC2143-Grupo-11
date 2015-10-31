@@ -59,13 +59,15 @@ public class BandejaEntradaController {
 		if (mensajes != null) { //Si hay mensajes
 			for (Map.Entry<Integer, Mensaje> entry : mensajes.entrySet()) {
 				Mensaje mensaje = entry.getValue();
-				this.mensajesData.add(new MensajeTableModel(mensaje.GetCreador(), mensaje.GetOrigen().GetDireccion()));
+				this.mensajesData.add(new MensajeTableModel(Integer.toString(mensaje.GetId()) , mensaje.GetCreador(), mensaje.GetOrigen().GetDireccion()));
 			}
 		}
 		this.tabla_mensajes.setItems(this.mensajesData);		
 	}
 	
 	private void MostrarMensaje(MensajeTableModel mensaje) {
+		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt((mensaje.idProperty().toString())));
 		
+		this.mensaje.setText(mensaje_b.GetTexto());
 	}
 }

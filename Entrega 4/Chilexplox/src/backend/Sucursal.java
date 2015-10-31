@@ -127,4 +127,8 @@ public class Sucursal {
 		return mensajes;
 	}
 
+		public Mensaje GetMensaje(int id) {
+		return this.mensajes.get(id);
+	}
+
 }
