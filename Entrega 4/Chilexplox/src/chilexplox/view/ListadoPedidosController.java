@@ -4,6 +4,7 @@ import chilexplox.MainApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -61,6 +62,9 @@ public class ListadoPedidosController {
 	private TextField direccion;
 	
 	@FXML
+	private TextField nombreEncomienda;
+	
+	@FXML
 	private TextField peso;
 	
 	@FXML
@@ -109,12 +113,15 @@ public class ListadoPedidosController {
 	
 	@FXML
     private TableColumn<EncomiendaTableModel, String> id_encomiendaColumn;
-    @FXML
+	@FXML
+    private TableColumn<EncomiendaTableModel, String> nombreEncomiendaColumn;
+	@FXML
     private TableColumn<EncomiendaTableModel, String> pesoColumn;
     @FXML
     private TableColumn<EncomiendaTableModel, String> volumenColumn;
     @FXML
     private TableColumn<EncomiendaTableModel, String> precioColumn;
+ 
     
     /*
      * Data de las encomiendas para la tabla
@@ -137,6 +144,7 @@ public class ListadoPedidosController {
         
         //Set properties de la tabla encomiendas
         this.id_encomiendaColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        this.nombreEncomiendaColumn.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         this.pesoColumn.setCellValueFactory(cellData -> cellData.getValue().pesoProperty());
         this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
         this.precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty());
@@ -193,7 +201,7 @@ public class ListadoPedidosController {
 	@FXML
 	private void handleNuevo() {
 		
-		if (this.id_pedido.getText() != null && this.ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. �Esta seguro de querer crear uno nuevo?")) {
+		if (this.id_pedido.getText() != null && Helper.GetInstance().ShowConfirm("Asegurese de guardar sus cambios antes de crear un nuevo pedido. Esta seguro de querer crear uno nuevo?")) {
 				
 			this.id_pedido.setText("nuevo");
 			this.origen.setDisable(false);
@@ -254,26 +262,6 @@ public class ListadoPedidosController {
 		}
 	}
 	
-	/*
-	 * Para mostrar alertas
-	 */
-	private void ShowMessage(String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje);
-	}
-	
-	/*
-	 * Para confirmar
-	 */
-	private boolean ShowConfirm(String mensaje) {
-		int dialogButton = JOptionPane.YES_NO_OPTION;
-		int dialogResult = JOptionPane.showConfirmDialog(null, mensaje, "Por favor Confirme una opcion", dialogButton);
-		if(dialogResult == 0) {
-			return true;
-		}
-		return false;
-	}
-	
-
 	
 	/*
 	 * Handle Para buscar cliente con el rut
@@ -291,12 +279,12 @@ public class ListadoPedidosController {
 					return;
 				}
 			} else {
-				this.ShowMessage("Ingrese un Rut");
+				Helper.GetInstance().ShowMessage("Ingrese un Rut", AlertType.WARNING);
 				return;
 			}
 			
 		}
-		this.ShowMessage("Cliente no encontrado, verifique el rut o ingrese manualmente");
+		Helper.GetInstance().ShowMessage("Cliente no encontrado, verifique el rut o ingrese manualmente", AlertType.INFORMATION);
 	}
 	
 	/*
@@ -307,23 +295,22 @@ public class ListadoPedidosController {
 		//get id del pedido
 		String id = this.id_pedido.getText();
 		
-		
 		//Si hay un pedido agregar
 		if (!id.equals("")) {
 			if (Auxiliar.isInt(this.peso.getText()) && Auxiliar.isInt(this.volumen.getText())) {
 				
 				if (this.id_pedido.getText().equals("nuevo")) {
 					//Se debe grabar la orden antes, para poder generar una id
-					this.ShowMessage("Grabe la orden antes de agregar encomiendas");
+					Helper.GetInstance().ShowMessage("Grabe la orden antes de agregar encomiendas", AlertType.WARNING);
 					return;
 				}
 							
 				Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(id));
-				int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
+				int id_encomienda = Sistema.GetInstance().CrearEncomienda((OperarioVenta) Sistema.GetInstance().GetUsuarioLoged(), pedido, this.nombreEncomienda.getText(), Integer.parseInt(this.peso.getText()), Integer.parseInt(this.volumen.getText()));
 				Encomienda encomienda = Sistema.GetInstance().GetEncomienda(id_encomienda);
 				pedido.AgregarEncomienda(encomienda);
 				
-				this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
+				this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), encomienda.GetNombre(), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
 				this.tabla_encomiendas.setItems(this.encomiendasData);
 				
 				// Actualizar monto total
@@ -386,7 +373,7 @@ public class ListadoPedidosController {
 			if (encomiendas != null) {
 				for (Map.Entry<Integer, Encomienda> entry : encomiendas.entrySet()) {
 					Encomienda encomienda = entry.getValue();
-					this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
+					this.encomiendasData.add(new EncomiendaTableModel(Integer.toString(encomienda.GetId()), encomienda.GetNombre(), Integer.toString(encomienda.GetPeso()), Integer.toString(encomienda.GetVolumen()), Integer.toString(encomienda.GenerarPresupuesto())));
 				}
 			}
 			this.tabla_encomiendas.setItems(this.encomiendasData);
@@ -460,7 +447,7 @@ public class ListadoPedidosController {
 			this.tabla_pedidos.sort(); //sort
 			this.tabla_pedidos.getSelectionModel().select(pedidoModel); //seleccionar para que se actualice
 			
-			this.ShowMessage("Nuevo Pedido guardado correctamente");
+			Helper.GetInstance().ShowMessage("Nuevo Pedido guardado correctamente", AlertType.INFORMATION);
 			
 		} else {
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
@@ -476,7 +463,7 @@ public class ListadoPedidosController {
 				orden.Pagar(MedioPago.valueOf(this.medioPago.getSelectionModel().getSelectedItem().toString()));
 			}
 			
-			this.ShowMessage("Pedido actualizado correctamente");
+			Helper.GetInstance().ShowMessage("Pedido actualizado correctamente", AlertType.INFORMATION);
 		}
 	}
 	
@@ -485,7 +472,7 @@ public class ListadoPedidosController {
 	 */
 	@FXML
 	private void handleVolverMenu() {
-		if (this.ShowConfirm("Guarde los cambios antes de salir. �Esta seguro de querer salir?"))
+		if (Helper.GetInstance().ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
 			this.mainApp.MostrarMenu();
 	}
 

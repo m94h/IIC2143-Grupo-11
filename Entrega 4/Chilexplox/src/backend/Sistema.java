@@ -161,8 +161,8 @@ public class Sistema {
 	    return vendedor.CrearPedido(cliente, origen, destino, urgencia, estado, fecha); // Retorna el id del pedido
 	}
 
-	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, int peso, int volumen) {
-	  	return vendedor.CrearEncomienda(pedido, peso, volumen); // Retorna el id de la encomienda
+	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, String nombre, int peso, int volumen) {
+	  	return vendedor.CrearEncomienda(pedido, nombre, peso, volumen); // Retorna el id de la encomienda
 	}
 
 	public void EnviarMensaje (OperarioBodega creador, String texto, Sucursal destino) {
@@ -450,6 +450,7 @@ public class Sistema {
 		Encomienda encomienda;
 
 		int id_encomienda;
+		String nombre;
 		int peso;
 		int volumen;
 		int id_pedido;
@@ -459,11 +460,12 @@ public class Sistema {
 				try {
 					parametros = sCurrentLine.split(";");
 					id_encomienda = Integer.parseInt(parametros[0]);
-					peso = Integer.parseInt(parametros[1]);
-					volumen = Integer.parseInt(parametros[2]);
-					id_pedido = Integer.parseInt(parametros[3]);
+					nombre = parametros[1];
+					peso = Integer.parseInt(parametros[2]);
+					volumen = Integer.parseInt(parametros[3]);
+					id_pedido = Integer.parseInt(parametros[4]);
 
-					encomienda = new Encomienda(id_encomienda, peso, volumen);
+					encomienda = new Encomienda(id_encomienda, nombre, peso, volumen);
 					this.empresa.GetPedido(id_pedido).AgregarEncomienda(encomienda);
 				}
 				catch(Exception e) {
@@ -696,7 +698,7 @@ public class Sistema {
 				for (Map.Entry<Integer, Encomienda> entry_encomienda : pedido.GetEncomiendas().entrySet())
 				{
 					Encomienda encomienda = entry_encomienda.getValue();
-					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
+					writer_encomiendas.println(Integer.toString(encomienda.GetId()) + ";" + encomienda.GetNombre() + ";" + Integer.toString(encomienda.GetPeso()) + ";" + Integer.toString(encomienda.GetVolumen()) + ";" + Integer.toString(pedido.GetId()));
 				}
 			}
 

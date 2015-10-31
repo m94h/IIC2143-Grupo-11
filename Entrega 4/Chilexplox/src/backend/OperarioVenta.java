@@ -15,8 +15,8 @@ public class OperarioVenta extends Empleado {
     return p.GetId();
   }
 
-  public int CrearEncomienda (Pedido pedido, int peso, int volumen) {
-  	Encomienda e = new Encomienda(peso, volumen);
+  public int CrearEncomienda (Pedido pedido, String nombre, int peso, int volumen) {
+  	Encomienda e = new Encomienda(nombre, peso, volumen);
   	Sistema.GetInstance().AgregarEncomienda (e);
   	return e.GetId();
   }
