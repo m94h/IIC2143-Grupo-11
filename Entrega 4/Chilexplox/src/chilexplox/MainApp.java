@@ -98,18 +98,38 @@ public class MainApp extends Application {
     /**
      * Mostrar el Carga y descarga de medios de trnasporte
      */
-    public void mostrarCargayDescarga() {
+    public void mostrarCarga() {
         try {
             // Load login
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/CargayDescarga.fxml"));
-            AnchorPane cargaydescarga = (AnchorPane) loader.load();
+            loader.setLocation(MainApp.class.getResource("view/Carga.fxml"));
+            AnchorPane carga = (AnchorPane) loader.load();
 
             // Poner la vista en el centro de la ventana principal
-            ventanaPrincipal.setCenter(cargaydescarga);
+            ventanaPrincipal.setCenter(carga);
 
             // Dar acceso al controlador
-            CargayDescargaController controllerView = loader.getController();
+            CargaController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarDescarga() {
+        try {
+            // Load login
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Descarga.fxml"));
+            AnchorPane descarga = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(descarga);
+
+            // Dar acceso al controlador
+            CargaController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
 
@@ -182,7 +202,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
 	}
-    
+
     public void mostrarBandejaDeEntrada() {
     	try {
             // Load menu

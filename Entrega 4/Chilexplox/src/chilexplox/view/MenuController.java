@@ -29,7 +29,10 @@ public class MenuController {
 	private Button btnArrivoSalida;
 
 	@FXML
-	private Button btnCargaDescarga;
+	private Button btnCarga;
+
+	@FXML
+	private Button btnDescarga;
 
 	@FXML
 	private Button btnEnviarMensaje;
@@ -59,13 +62,15 @@ public class MenuController {
 
 		//Por defecto, todos desactivados
 		this.btnPedidos.setDisable(true);
-		this.btnCargaDescarga.setDisable(true);
+		this.btnCarga.setDisable(true);
+		this.btnDescarga.setDisable(true);
 		this.btnEnviarMensaje.setDisable(true);
 		this.btnArrivoSalida.setDisable(true);
 		this.btnBandejaEntrada.setDisable(true);
 
 		if (usuario.GetTipo().equals("bodega")) {
-			this.btnCargaDescarga.setDisable(false);
+			this.btnCarga.setDisable(false);
+			this.btnDescarga.setDisable(false);
 			this.btnEnviarMensaje.setDisable(false);
 		}
 		if (usuario.GetTipo().equals("venta")) {
@@ -107,10 +112,17 @@ public class MenuController {
 	}
 
 	@FXML
-	public void handleCargaDescarga() {
-		this.mainApp.mostrarCargayDescarga();
+	public void handleCarga() {
+		this.mainApp.mostrarCarga();
 	}
-	
+
+	@FXML
+	public void handleDescarga() {
+		this.mainApp.mostrarDescarga();
+	}
+
+
+
 	@FXML
 	public void handleBandejaDeEntrada() {
 		this.mainApp.mostrarBandejaDeEntrada();

@@ -12,7 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
-public class CargayDescargaController {
+public class CargaController {
 
 	private MainApp mainApp;
 
@@ -26,32 +26,19 @@ public class CargayDescargaController {
 	private ChoiceBox patente_carga;
 
 	@FXML
-	private ChoiceBox patente_descarga;
-
-	@FXML
     private void initialize() {
 		// Poner la sucursal actual
 		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
 
-		//poner los valores
 		//medios disponibles para cargar
-		ArrayList<MedioDeTransporte> medioPorDescargar = Sistema.GetInstance().GetSucursalLoged().GetMediosArrivados();
-		for (int i = 0; i < medioPorDescargar.size(); i++) {
-			MedioDeTransporte medio = medioPorDescargar.get(i);
-			this.patente_descarga.getItems().add(medio.GetPatente());
-		}
-
-		//medios disponibles para descargar
 		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
 		for (int i = 0; i < medioPorCargar.size(); i++) {
 			MedioDeTransporte medio = medioPorCargar.get(i);
 			this.patente_carga.getItems().add(medio.GetPatente());
 		}
-
-
 	}
 
-	public CargayDescargaController() {
+	public CargaController() {
 
 	}
 
@@ -81,17 +68,6 @@ public class CargayDescargaController {
 		}
 	}
 
-	@FXML
-	public void handleDescargarMedio() {
-		if (this.patente_descarga.getSelectionModel().isEmpty()) {
-			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
-			return;
-		}
-		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
-		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
-		operario.DescargarMedio(medio);
-		ViewHelper.ShowMessage("El camion seleccionado ha sido descargado", AlertType.INFORMATION);
-	}
 
 	/*
 	 * Para volver al menu principal

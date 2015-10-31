@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.DescargaController">
    <children>
       <TextField layoutX="307.0" layoutY="295.0" />
       <TextField layoutX="307.0" layoutY="248.0" />
@@ -27,11 +26,11 @@
             <TableColumn prefWidth="75.0" text="Volumen" />
          </columns>
       </TableView>
-      <Button layoutX="258.0" layoutY="33.0" mnemonicParsing="false" text="Volver al menu" />
-      <ChoiceBox layoutX="307.0" layoutY="200.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button layoutX="258.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
+      <ChoiceBox fx:id="patente_descarga" layoutX="307.0" layoutY="200.0" prefHeight="31.0" prefWidth="187.0" />
       <Label layoutX="39.0" layoutY="205.0" text="Pantente camion:" />
-      <Button layoutX="420.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleCargarPedido" prefHeight="37.0" prefWidth="92.0" text="Cargar" />
-      <TextField layoutX="183.0" layoutY="108.0" />
+      <Button layoutX="420.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="37.0" prefWidth="92.0" text="Descargar" />
+      <TextField fx:id="id_pedido" layoutX="183.0" layoutY="108.0" />
       <Label fx:id="sucursal" layoutX="113.0" layoutY="36.0" text="sucursal" />
       <Label layoutX="39.0" layoutY="36.0" text="Sucursal:">
          <font>

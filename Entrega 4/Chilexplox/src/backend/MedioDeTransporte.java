@@ -6,6 +6,10 @@ public abstract class MedioDeTransporte {
 	protected String patente;
 	protected int capacidadMax;
 	protected int capacidadActual;
+	protected int pesoMax;
+	protected int pesoDisponible;
+	protected int volumenMax;
+	protected int volumenDisponible;
 	protected int enUso;
 	protected boolean desocupado;
 	protected Sucursal origen;
