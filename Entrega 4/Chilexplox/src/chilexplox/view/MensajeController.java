@@ -48,13 +48,27 @@ public class MensajeController {
 	
 	@FXML
     private void handleEnviar() {
+		
+		// Validacion
+		if (this.destino.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione una sucursal de destino", AlertType.ERROR);
+			return;
+		}
+		
+		if (this.mensaje.getText().isEmpty()) {
+			ViewHelper.ShowMessage("Escriba un mensaje", AlertType.ERROR);
+			return;
+		}
+		
 		Sistema sistema = Sistema.GetInstance();
 		Empleado usuario = sistema.GetUsuarioLoged();
 		String direccion = destino.getSelectionModel().getSelectedItem().toString();
 		
 		if (usuario.GetTipo().equals("bodega")) {
-			sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getText(), sucursales.get(direccion));        
+			sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getText(), sucursales.get(direccion));
+			ViewHelper.ShowMessage("Mensaje Enviado Correctamente", AlertType.INFORMATION);
 			this.mensaje.setText("");
+			this.destino.getSelectionModel().clearSelection();
 		}
 		else {
 			ViewHelper.ShowMessage("Solo un operario de bodega puede enviar mensajes", AlertType.ERROR);

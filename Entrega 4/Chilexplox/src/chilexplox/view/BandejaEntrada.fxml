@@ -5,14 +5,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="306.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
+<AnchorPane prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
    <children>
-      <TableView fx:id="tabla_mensajes" layoutX="14.0" layoutY="14.0" prefHeight="276.0" prefWidth="185.0">
+      <TableView fx:id="tabla_mensajes" layoutX="26.0" layoutY="55.0" prefHeight="482.0" prefWidth="282.0">
         <columns>
           <TableColumn fx:id="emisarioColumn" prefWidth="86.0" text="De" />
           <TableColumn fx:id="sucursalOrigenColumn" prefWidth="98.0" text="Sucursal" />
         </columns>
       </TableView>
-      <TextArea fx:id="mensaje" layoutX="214.0" layoutY="14.0" prefHeight="276.0" prefWidth="328.0" />
+      <TextArea fx:id="mensaje" layoutX="418.0" layoutY="55.0" prefHeight="482.0" prefWidth="554.0" />
+      <Button layoutX="26.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
    </children>
 </AnchorPane>

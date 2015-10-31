@@ -14,7 +14,7 @@ public class ViewHelper {
 	 */
 	public static void ShowMessage(String mensaje, AlertType tipo) {
 		Alert alert = new Alert(tipo);
-		alert.setTitle("Información");
+		alert.setTitle("Informacion");
 		alert.setHeaderText(null);
 		alert.setContentText(mensaje);
 		
@@ -26,7 +26,7 @@ public class ViewHelper {
 	 */
 	public static boolean ShowConfirm(String mensaje) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirme");
+		alert.setTitle("Confirmar");
 		alert.setHeaderText(null);
 		alert.setContentText(mensaje);
 

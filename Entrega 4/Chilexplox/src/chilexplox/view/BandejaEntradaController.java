@@ -53,6 +53,15 @@ public class BandejaEntradaController {
         this.mainApp = mainApp;
     }
 	
+	/*
+	 * Para volver al menu principal
+	 */
+	@FXML
+	private void handleVolverMenu() {
+		if (ViewHelper.ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
+			this.mainApp.MostrarMenu();
+	}
+	
 	private void UpdateMensajes() {
 		this.mensajesData.clear();
 		Map<Integer, Mensaje> mensajes = sucursal.GetMensajes();
@@ -65,7 +74,7 @@ public class BandejaEntradaController {
 		this.tabla_mensajes.setItems(this.mensajesData);		
 	}
 	
-	private 	void MostrarMensaje(MensajeTableModel mensaje) {
+	private void MostrarMensaje(MensajeTableModel mensaje) {
 		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt(mensaje.idProperty().getValue().toString()));
 		System.out.println(mensaje_b.GetTexto());
 		this.mensaje.setText(mensaje_b.GetTexto());
