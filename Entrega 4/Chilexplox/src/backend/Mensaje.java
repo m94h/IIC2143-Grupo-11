@@ -17,4 +17,7 @@ public class Mensaje {
 	public String GetTexto() {return texto;}
 	public Sucursal GetOrigen() {return origen;}
 	public Sucursal GetDestino() {return destino;}	
+	public String GetCreador() {
+		return creadoPor.GetNombre();
+	}
 }

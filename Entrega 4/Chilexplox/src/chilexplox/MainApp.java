@@ -182,6 +182,26 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
 	}
+    
+    public void mostrarBandejaDeEntrada() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/BandejaEntrada.fxml"));
+            AnchorPane mensaje = (AnchorPane) loader.load();
+
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(mensaje);
+
+            // Dar acceso al controlador
+            BandejaEntradaController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 
     @Override
     public void stop(){
