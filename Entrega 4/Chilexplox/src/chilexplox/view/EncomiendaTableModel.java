@@ -4,12 +4,14 @@ import javafx.beans.property.*;
 
 public class EncomiendaTableModel {
 	private final StringProperty id;
+	private final StringProperty nombre;
 	private final StringProperty peso;
 	private final StringProperty volumen;
 	private final StringProperty precio;
 	
-	public EncomiendaTableModel(String id, String peso, String volumen, String precio) {
+	public EncomiendaTableModel(String id, String nombre, String peso, String volumen, String precio) {
 		this.id = new SimpleStringProperty(id);
+		this.nombre = new SimpleStringProperty(id);
 		this.peso = new SimpleStringProperty(peso);
 		this.volumen = new SimpleStringProperty(volumen);
 		this.precio = new SimpleStringProperty(precio);
@@ -25,6 +27,9 @@ public class EncomiendaTableModel {
 	 */
 	public StringProperty idProperty() {
         return this.id;
+    }
+	public StringProperty nombreProperty() {
+        return this.nombre;
     }
 	public StringProperty pesoProperty() {
         return this.peso;
