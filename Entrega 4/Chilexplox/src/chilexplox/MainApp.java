@@ -129,7 +129,7 @@ public class MainApp extends Application {
             ventanaPrincipal.setCenter(descarga);
 
             // Dar acceso al controlador
-            CargaController controllerView = loader.getController();
+            DescargaController controllerView = loader.getController();
             controllerView.setMainApp(this);
 
 
