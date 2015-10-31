@@ -55,15 +55,19 @@ public class BandejaEntradaController {
 	
 	private void UpdateMensajes() {
 		this.mensajesData.clear();
-		Mensaje mensaje = sucursal.GetUltimoMensaje();
-		while (mensaje != null) {
-			this.mensajesData.add(new MensajeTableModel(mensaje.GetCreador(), mensaje.GetOrigen().GetDireccion()));
-			mensaje = sucursal.GetUltimoMensaje();
+		Map<Integer, Mensaje> mensajes = sucursal.GetMensajes();
+		if (mensajes != null) { //Si hay mensajes
+			for (Map.Entry<Integer, Mensaje> entry : mensajes.entrySet()) {
+				Mensaje mensaje = entry.getValue();
+				this.mensajesData.add(new MensajeTableModel(Integer.toString(mensaje.GetId()) , mensaje.GetCreador(), mensaje.GetOrigen().GetDireccion()));
+			}
 		}
-		this.tabla_mensajes.setItems(this.mensajesData);
+		this.tabla_mensajes.setItems(this.mensajesData);		
 	}
 	
 	private void MostrarMensaje(MensajeTableModel mensaje) {
+		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt((mensaje.idProperty().toString())));
 		
+		this.mensaje.setText(mensaje_b.GetTexto());
 	}
 }
