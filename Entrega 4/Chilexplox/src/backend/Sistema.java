@@ -110,6 +110,12 @@ public class Sistema {
 		return valor;
 	}
 
+	public int Get_id_mensaje() {
+		int valor = id_mensaje;
+		id_mensaje++;
+		return valor;
+	}
+
  /*
 	public int Get_id_orden_compra() {
 		int valor = id_orden_compra;
