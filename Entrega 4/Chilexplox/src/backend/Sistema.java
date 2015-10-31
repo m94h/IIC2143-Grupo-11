@@ -26,6 +26,7 @@ public class Sistema {
 	//Los id a continuacion son contadores para cuando se cree una nueva...
 	private int id_pedido;
 	private int id_encomienda;
+	private int id_mensaje;
 	//private int id_orden_compra;
 
 	private Empresa empresa;
@@ -100,6 +101,12 @@ public class Sistema {
 	public int Get_id_encomienda() {
 		int valor = id_encomienda;
 		id_encomienda++;
+		return valor;
+	}
+	
+	public int Get_id_mensaje() {
+		int valor = id_mensaje;
+		id_mensaje++;
 		return valor;
 	}
 
@@ -234,6 +241,7 @@ public class Sistema {
 			this.precioPorCc = Integer.parseInt(parametros[3]);
 			this.id_pedido = Integer.parseInt(parametros[4]);
 			this.id_encomienda = Integer.parseInt(parametros[5]);
+			this.id_mensaje = Integer.parseInt(parametros[6]);
 		}
 		catch(Exception e) {
 			// Error en el parseo
