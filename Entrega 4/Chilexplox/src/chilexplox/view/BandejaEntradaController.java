@@ -65,9 +65,9 @@ public class BandejaEntradaController {
 		this.tabla_mensajes.setItems(this.mensajesData);		
 	}
 	
-	private void MostrarMensaje(MensajeTableModel mensaje) {
-		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt((mensaje.idProperty().toString())));
-		
+	private 	void MostrarMensaje(MensajeTableModel mensaje) {
+		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt(mensaje.idProperty().getValue().toString()));
+		System.out.println(mensaje_b.GetTexto());
 		this.mensaje.setText(mensaje_b.GetTexto());
 	}
 }

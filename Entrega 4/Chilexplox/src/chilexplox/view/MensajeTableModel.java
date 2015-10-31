@@ -15,7 +15,7 @@ public class MensajeTableModel {
 	}
 	
 	public StringProperty idProperty() {
-        return this.emisario;
+        return this.id;
     }
 	
 	public StringProperty emisarioProperty() {

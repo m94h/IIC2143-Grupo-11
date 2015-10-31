@@ -53,8 +53,8 @@ public class MensajeController {
 		String direccion = destino.getSelectionModel().getSelectedItem().toString();
 		
 		if (usuario.GetTipo().equals("bodega")) {
-			sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getPromptText(), sucursales.get(direccion));        
-			this.mensaje.setAccessibleText("");
+			sistema.EnviarMensaje((OperarioBodega)usuario, mensaje.getText(), sucursales.get(direccion));        
+			this.mensaje.setText("");
 		}
 		else {
 			ViewHelper.ShowMessage("Solo un operario de bodega puede enviar mensajes", AlertType.ERROR);

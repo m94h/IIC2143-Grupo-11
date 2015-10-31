@@ -25,7 +25,6 @@ public class Sucursal {
 
 
 	/*private ArrayList<Pedido> pedidos;*/
-	private ArrayList<Mensaje> cola_mensajes;
 	private Map<Integer, Mensaje> mensajes;
 
 	public Sucursal(int id, String direccion, int telefono, int capacidad) {
@@ -40,7 +39,7 @@ public class Sucursal {
 	    this.empleados = new HashMap<String, Empleado>();
 	    this.mediosArrivados = new ArrayList<MedioDeTransporte>();
 	    this.mediosDisponibles = new ArrayList<MedioDeTransporte>();
-	    this.cola_mensajes = new ArrayList<Mensaje>();
+	    this.mensajes = new HashMap<Integer, Mensaje>();
 	}
 
 	public int GetId() {
