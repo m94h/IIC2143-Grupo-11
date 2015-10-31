@@ -10,16 +10,16 @@ public class Mensaje {
 	
 	public Mensaje (String texto, Sucursal destino, Empleado creador) {
 		this.id = Sistema.GetInstance().Get_id_mensaje();
-		this.Initialize();
+		this.Initialize(texto, destino, creador);
 	}
 
 	public Mensaje (int id, String texto, Sucursal destino, Empleado creador) {
 		this.id = id; 
-		this.Initialize()
+		this.Initialize(texto, destino, creador);
 	}
 
 	private void Initialize(String texto, Sucursal destino, Empleado creador) {
-		this.texto = texto ;
+		this.texto = texto;
 		this.origen = creador.GetSucursal();
 		this.destino = destino;
 		this.creadoPor = creador;

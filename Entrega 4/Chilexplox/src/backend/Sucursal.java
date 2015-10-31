@@ -97,6 +97,7 @@ public class Sucursal {
 
 	public void EnviarMedio(MedioDeTransporte medio){
 		this.mediosDisponibles.remove(medio);
+		medio.Viajar();
 	}
 	  /*
 	  public ArrayList<Pedido> GetPedidos() {

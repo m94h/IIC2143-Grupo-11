@@ -103,7 +103,7 @@ public class Sistema {
 		id_encomienda++;
 		return valor;
 	}
-
+	
 	public int Get_id_mensaje() {
 		int valor = id_mensaje;
 		id_mensaje++;

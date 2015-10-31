@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.CargayDescargaController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.CargayDescargaController">
    <children>
       <Label layoutX="29.0" layoutY="67.0" text="Carga de pedidos">
          <font>
@@ -21,17 +21,23 @@
       </Label>
       <Label fx:id="sucursal" layoutX="103.0" layoutY="26.0" text="sucursal" />
       <TextField fx:id="id_pedido" layoutX="173.0" layoutY="98.0" />
-      <Button layoutX="438.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleCargarPedido" prefHeight="45.0" prefWidth="92.0" text="Cargar" />
+      <Button layoutX="410.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleCargarPedido" prefHeight="37.0" prefWidth="92.0" text="Cargar" />
       <Label layoutX="29.0" layoutY="158.0" text="Pantente camion:" />
-      <Label layoutX="29.0" layoutY="219.0" text="Descarga de pedidos">
+      <ChoiceBox fx:id="patente_carga" layoutX="173.0" layoutY="153.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button layoutX="248.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
+      <TableView layoutX="600.0" layoutY="87.0" prefHeight="488.0" prefWidth="510.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="ID" />
+          <TableColumn prefWidth="175.0" text="Sucursal Destino" />
+            <TableColumn prefWidth="108.0" text="Prioridad" />
+            <TableColumn prefWidth="75.0" text="Peso" />
+            <TableColumn prefWidth="75.0" text="Volumen" />
+        </columns>
+      </TableView>
+      <Label layoutX="600.0" layoutY="47.0" text="Listado de pedidos disponibles para cargar:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="patente_carga" layoutX="173.0" layoutY="153.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="patente_descarga" layoutX="173.0" layoutY="254.0" prefWidth="150.0" />
-      <Label layoutX="29.0" layoutY="258.0" text="Pantente camion:" />
-      <Button layoutX="438.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="45.0" prefWidth="92.0" text="Descargar" />
-      <Button layoutX="248.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
    </children>
 </AnchorPane>
