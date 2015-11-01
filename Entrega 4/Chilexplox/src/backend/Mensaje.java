@@ -32,4 +32,8 @@ public class Mensaje {
 	public String GetCreador() {
 		return creadoPor.GetNombre();
 	}
+
+		public String GetCreadorRut() {
+		return creadoPor.GetRut();
+	}
 }

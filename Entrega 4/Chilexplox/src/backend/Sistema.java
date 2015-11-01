@@ -593,6 +593,44 @@ public class Sistema {
 		}
 	}
 
+	private void CargarMensajes() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/mensajes.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Mensaje mensaje;
+
+		int id;
+		Sucursal destino;
+		Empleado creador;
+		String texto = "";
+		
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					id = Integer.parseInt(parametros[0]);
+					destino = this.empresa.GetSucursal(Integer.parseInt(parametros[1]));
+					creador = this.empresa.GetEmpleado(parametros[2]);
+					for (int i = 3; i < parametros.length; i++) {
+						texto = texto + parametros[i]; // Esto se hace por si alguien usa ";" en el mensaje
+					}
+
+					mensaje = new Mensaje(id, texto, destino, creador);
+					destino.RecibirMensaje(mensaje);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		}
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
 	/*
 	 * Caller de Cargar los archivos
 	 */
@@ -605,6 +643,7 @@ public class Sistema {
 		this.CargarEncomiendas();
 		this.CargarCamiones();
 		this.CargarOrdenes();
+		this.CargarMensajes();
 	}
 
 	/*
@@ -632,6 +671,7 @@ public class Sistema {
 		try {
 			PrintWriter writer_sucursales = new PrintWriter("archivos/sucursales.data", "UTF-8");
 			PrintWriter writer_empleados = new PrintWriter("archivos/empleados.data", "UTF-8");
+			PrintWriter writer_mensajes = new PrintWriter("archivos/mensajes.data", "UTF-8");
 
 			//Iterar sobre las sucursales
 			//http://stackoverflow.com/questions/46898/iterate-over-each-entry-in-a-map
@@ -647,11 +687,18 @@ public class Sistema {
 					Empleado empleado = entry_empleado.getValue();
 					writer_empleados.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()) + ";" + empleado.GetClave());
 				}
+				
+				for (Map.Entry<Integer, Mensaje> entry_mensaje : sucursal.GetMensajes().entrySet())
+				{
+					Mensaje mensaje = entry_mensaje.getValue();
+					writer_mensajes.println(Integer.toString(mensaje.GetId()) + ";" + Integer.toString(sucursal.GetId()) + ";" + mensaje.GetCreadorRut() + ";" + mensaje.GetTexto());
+				}
 
 			}
 
 			writer_sucursales.close();
 			writer_empleados.close();
+			writer_mensajes.close();
 
 		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
 			// Archivo no encontrado o enconding malo

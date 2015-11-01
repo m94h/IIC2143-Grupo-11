@@ -67,6 +67,10 @@ public class Empresa {
 	    return this.empleados;
 	}
 
+	public Empleado GetEmpleado(String rut) {
+		return this.empleados.get(rut);
+	}
+
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.sucursales;
 	}
