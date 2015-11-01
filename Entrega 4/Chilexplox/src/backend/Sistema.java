@@ -605,17 +605,20 @@ public class Sistema {
 		int id;
 		Sucursal destino;
 		Empleado creador;
-		String texto = "";
 		
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
+					String texto = "";
 					parametros = sCurrentLine.split(";");
 					id = Integer.parseInt(parametros[0]);
 					destino = this.empresa.GetSucursal(Integer.parseInt(parametros[1]));
 					creador = this.empresa.GetEmpleado(parametros[2]);
 					for (int i = 3; i < parametros.length; i++) {
-						texto = texto + parametros[i]; // Esto se hace por si alguien usa ";" en el mensaje
+						if (i == 3)
+							texto = texto + parametros[i]; // Esto se hace por si alguien usa ";" en el mensaje
+						else
+							texto = texto + ";" + parametros[i];
 					}
 
 					mensaje = new Mensaje(id, texto, destino, creador);

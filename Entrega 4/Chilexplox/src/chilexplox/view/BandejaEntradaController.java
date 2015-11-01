@@ -23,6 +23,8 @@ public class BandejaEntradaController {
 	private TableView<MensajeTableModel> tabla_mensajes;
 
 	@FXML
+    private TableColumn<MensajeTableModel, String> idColumn;
+	@FXML
     private TableColumn<MensajeTableModel, String> emisarioColumn;
     @FXML
     private TableColumn<MensajeTableModel, String> sucursalOrigenColumn;
@@ -38,6 +40,7 @@ public class BandejaEntradaController {
     private void initialize() {
 		this.sucursal = Sistema.GetInstance().GetSucursalLoged();
 		
+		this.idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
 		this.emisarioColumn.setCellValueFactory(cellData -> cellData.getValue().emisarioProperty());
         this.sucursalOrigenColumn.setCellValueFactory(cellData -> cellData.getValue().sucursalOrigenProperty());
         
@@ -76,7 +79,6 @@ public class BandejaEntradaController {
 	
 	private void MostrarMensaje(MensajeTableModel mensaje) {
 		Mensaje mensaje_b = sucursal.GetMensaje(Integer.parseInt(mensaje.idProperty().getValue().toString()));
-		System.out.println(mensaje_b.GetTexto());
 		this.mensaje.setText(mensaje_b.GetTexto());
 	}
 }

@@ -7,10 +7,11 @@
 
 <AnchorPane prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
    <children>
-      <TableView fx:id="tabla_mensajes" layoutX="26.0" layoutY="55.0" prefHeight="482.0" prefWidth="282.0">
+      <TableView fx:id="tabla_mensajes" layoutX="26.0" layoutY="55.0" prefHeight="482.0" prefWidth="363.0">
         <columns>
-          <TableColumn fx:id="emisarioColumn" prefWidth="86.0" text="De" />
-          <TableColumn fx:id="sucursalOrigenColumn" prefWidth="98.0" text="Sucursal" />
+            <TableColumn fx:id="idColumn" prefWidth="51.0" text="Id" />
+          <TableColumn fx:id="emisarioColumn" prefWidth="158.0" text="De" />
+          <TableColumn fx:id="sucursalOrigenColumn" minWidth="6.0" prefWidth="153.0" text="Sucursal" />
         </columns>
       </TableView>
       <TextArea fx:id="mensaje" layoutX="418.0" layoutY="55.0" prefHeight="482.0" prefWidth="554.0" />
