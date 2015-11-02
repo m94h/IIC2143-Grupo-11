@@ -6,10 +6,13 @@ import javax.swing.JOptionPane;
 
 import backend.*;
 import chilexplox.MainApp;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class DescargaController {
@@ -20,10 +23,27 @@ public class DescargaController {
 	private Label sucursal;
 
 	@FXML
+	private Label volumen;
+
+	@FXML
 	private TextField id_pedido;
 
 	@FXML
 	private ChoiceBox patente_descarga;
+
+	@FXML
+	private TableView<DescargaTableModel> tabla_descargas;
+
+	@FXML
+    private TableColumn<DescargaTableModel, String> id_pedidoColumn;
+    @FXML
+    private TableColumn<DescargaTableModel, String> origenColumn;
+    @FXML
+    private TableColumn<DescargaTableModel, String> prioridadColumn;
+    @FXML
+    private TableColumn<DescargaTableModel, String> volumenColumn;
+
+    private ObservableList<DescargaTableModel> descargasData;
 
 	@FXML
     private void initialize() {

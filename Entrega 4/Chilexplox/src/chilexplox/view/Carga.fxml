@@ -22,16 +22,18 @@
       <Label fx:id="sucursal" layoutX="103.0" layoutY="26.0" text="sucursal" />
       <TextField fx:id="id_pedido" layoutX="173.0" layoutY="98.0" />
       <Button layoutX="410.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleCargarPedido" prefHeight="37.0" prefWidth="92.0" text="Cargar" />
-      <Label layoutX="29.0" layoutY="195.0" text="Pantente camion:" />
+      <Label layoutX="29.0" layoutY="195.0" text="Patente camion:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
       <ChoiceBox fx:id="patente_carga" layoutX="297.0" layoutY="190.0" prefHeight="31.0" prefWidth="187.0" />
       <Button layoutX="248.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
-      <TableView layoutX="600.0" layoutY="68.0" prefHeight="488.0" prefWidth="510.0">
+      <TableView fx:id="tabla_cargas" layoutX="600.0" layoutY="68.0" prefHeight="488.0" prefWidth="510.0">
         <columns>
-          <TableColumn prefWidth="97.0" text="ID" />
-          <TableColumn prefWidth="160.0" text="Sucursal Destino" />
-            <TableColumn prefWidth="101.0" text="Prioridad" />
-            <TableColumn prefWidth="75.0" text="Peso" />
-            <TableColumn prefWidth="75.0" text="Volumen" />
+          <TableColumn fx:id="id_pedidoColumn" prefWidth="128.0" text="ID" />
+          <TableColumn fx:id="destinoColumn" prefWidth="129.0" text="Destino" />
+            <TableColumn fx:id="prioridadColumn" prefWidth="121.0" text="Prioridad" />
+            <TableColumn fx:id="volumenColumn" prefWidth="131.0" text="Volumen" />
         </columns>
       </TableView>
       <Label layoutX="600.0" layoutY="30.0" text="Listado de pedidos disponibles para cargar:">
@@ -39,9 +41,11 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="29.0" layoutY="243.0" text="Peso disponible del camion:" />
-      <Label layoutX="26.0" layoutY="290.0" text="Volumen disponible del camion: " />
-      <TextField layoutX="297.0" layoutY="238.0" />
-      <TextField layoutX="297.0" layoutY="285.0" />
+      <Label fx:id="volumen" layoutX="297.0" layoutY="254.0" text="volumen" />
+      <Label layoutX="30.0" layoutY="254.0" text="Volumen disponible del camión:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
