@@ -31,8 +31,6 @@ public class Sistema {
 
 	private Empresa empresa;
 
-	private ArrayList<MedioDeTransporte> mediosEnTransito = new ArrayList<MedioDeTransporte>();
-
 	//Valores de interaccion con usuario
 	private Empleado usuario_loged;
 	private Sucursal sucursal_loged;
@@ -75,21 +73,6 @@ public class Sistema {
 	}
 
 	/*
-	 *  Agregar/eliminar de lista con camiones en transito
-	 */
-	public void AgregarMedioEnTransito(MedioDeTransporte medio){
-		this.mediosEnTransito.add(medio);
-	}
-
-	public void EliminarMedioEnTransito(MedioDeTransporte medio){
-		this.mediosEnTransito.remove(medio);
-	}
-
-	public ArrayList<MedioDeTransporte> GetMediosEnTransito() {
-		return this.mediosEnTransito;
-	}
-
-	/*
 	 * Informacion sobre el id de pedido y de encomienda cuando se crea uno nuevo
 	 */
 	public int Get_id_pedido() {
@@ -103,7 +86,7 @@ public class Sistema {
 		id_encomienda++;
 		return valor;
 	}
-	
+
 	public int Get_id_mensaje() {
 		int valor = id_mensaje;
 		id_mensaje++;
@@ -160,6 +143,18 @@ public class Sistema {
 
 	public MedioDeTransporte GetMedio (String patente){
 		return empresa.GetTransporte(patente);
+	}
+
+	public void AgregarMediosEnTransito(MedioDeTransporte medio){
+		empresa.AgregarMedioEnTransito(medio);
+	}
+
+	public void EliminarMediosEnTransito(MedioDeTransporte medio){
+		empresa.EliminarMedioEnTransito(medio);
+	}
+
+	public ArrayList<MedioDeTransporte> GetMediosEnTransito() {
+		return empresa.GetMediosEnTransito();
 	}
 
 
@@ -605,7 +600,7 @@ public class Sistema {
 		int id;
 		Sucursal destino;
 		Empleado creador;
-		
+
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
@@ -690,7 +685,7 @@ public class Sistema {
 					Empleado empleado = entry_empleado.getValue();
 					writer_empleados.println(Integer.toString(sucursal.GetId()) + ";" + empleado.GetRut() + ";" + empleado.GetTipo() + ";" + empleado.GetNombre() + ";" + Integer.toString(empleado.GetTelefono()) + ";" + Integer.toString(empleado.GetSueldo()) + ";" + empleado.GetClave());
 				}
-				
+
 				for (Map.Entry<Integer, Mensaje> entry_mensaje : sucursal.GetMensajes().entrySet())
 				{
 					Mensaje mensaje = entry_mensaje.getValue();

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public abstract class MedioDeTransporte {
 	protected String patente;
-	protected int capacidadMax;
+	protected int capacidadMax;  // Tiene que ser capacidad como cm3, hay que cambiar el valor del camión creado y los futuros camiones tienen que tener harta cap.
 	protected int capacidadActual;
-	protected int pesoMax;
-	protected int pesoDisponible;
-	protected int volumenMax;
-	protected int volumenDisponible;
+	// protected int pesoMax; Estamos analizando si ponerle el peso como variable, en gral no se envían un monton de pedidos pesados, eso es mas para carga industrial, no de correos
+	// protected int pesoDisponible;
 	protected int enUso;
 	protected boolean desocupado;
 	protected Sucursal origen;
@@ -54,6 +52,10 @@ public abstract class MedioDeTransporte {
 
 	public int GetCapacidadMax() {return this.capacidadMax;}
 
+	public int GetCapacidadActual() {return this.capacidadActual;}
+
+	public boolean GetDesocupado(){ return this.desocupado; }
+
 	public ArrayList<Pedido> GetPedidos(){
 		return this.listaPedidos;
 	}
@@ -63,7 +65,7 @@ public abstract class MedioDeTransporte {
 			listaPedidos.add(pedido);
 			//avisar al pedido que fue cargado
 			pedido.Cargado(this);
-			this.capacidadActual += 1;
+			this.capacidadActual += pedido.GetVolumen();
 			return true;
 		}
 		else{

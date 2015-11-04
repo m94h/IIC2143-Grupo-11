@@ -12,10 +12,10 @@ public class Pedido {
 	private Sucursal origen;
 	private Sucursal destino;
 	public Estado estado;
-  private int urgencia;
-  private LocalDate fecha;
-  private MedioDeTransporte cargadoEn;
-  private int pesoTotal;
+	private int urgencia;
+	private LocalDate fecha;
+	private MedioDeTransporte cargadoEn;
+	private int pesoTotal;
 	private int volumenTotal;
 
   	private OrdenCompra orden_compra;
@@ -93,6 +93,10 @@ public class Pedido {
     }
 
     public int GetVolumen(){
+    	this.volumenTotal = 0;
+    	for (Map.Entry<Integer, Encomienda> entry : this.encomiendas.entrySet()) {
+  			this.volumenTotal += entry.getValue().GetVolumen();
+  			}
     	return this.volumenTotal;
     }
 

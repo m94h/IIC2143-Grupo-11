@@ -14,6 +14,7 @@ public class Empresa {
 	private Map<String, MedioDeTransporte> flota;
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
+	private ArrayList<MedioDeTransporte> mediosEnTransito = new ArrayList<MedioDeTransporte>();
 
 
 	public Empresa (String nombre, String rut) {
@@ -112,15 +113,19 @@ public class Empresa {
 	}
 
 	/*
-	public Camion EntregarCamion(){
-		String auxPat;
-		for(Camion item:this.flota)
-		{
-			if(item.Disponible()){
-				auxPat = item.GetPatente();
-			}
-		}
-		return flota[auxPat];
+	 *  Agregar/eliminar de lista con camiones en transito
+	 */
+
+	public void AgregarMedioEnTransito(MedioDeTransporte medio){
+		this.mediosEnTransito.add(medio);
 	}
-	*/
+
+	public void EliminarMedioEnTransito(MedioDeTransporte medio){
+		this.mediosEnTransito.remove(medio);
+	}
+
+	public ArrayList<MedioDeTransporte> GetMediosEnTransito() {
+		return this.mediosEnTransito;
+	}
+
 }

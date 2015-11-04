@@ -22,20 +22,7 @@ public class OperarioBodega extends Empleado {
 		//Poner el medio como disponible
 		this.sucursal.SetMedioDisponible(medio);
 	}
-/*
- * Esto va en operario camion
-	public void AvisarSalidaMedio(MedioDeTransporte medio){
-		this.sucursal.EnviarMedio(medio);
-		medio.Viajar();
-		Sistema.GetInstance().AgregarMedioEnTransito(medio);
-	}
 
-	public void AvisarArriboMedio(MedioDeTransporte medio){
-		medio.estado = Estado.EnSucursalDestino;
-		this.sucursal.AgregarMedioArrivado(medio);
-		Sistema.GetInstance().EliminarMedioEnTransito(medio);
-	}
-*/
 	public void CrearMensaje(String mensaje, Sucursal destino) {
 		Mensaje m = new Mensaje(mensaje, destino, this);
 		//Enviar

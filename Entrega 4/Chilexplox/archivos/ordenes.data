@@ -1,4 +1,4 @@
 30000;CREDITO;pagado;1
 0;CREDITO;deuda;2
 0;CREDITO;deuda;3
-0;;deuda;4
+0;CREDITO;deuda;4
