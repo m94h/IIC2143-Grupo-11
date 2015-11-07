@@ -10,7 +10,7 @@
    <children>
       <Button layoutX="416.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
       <Button layoutX="446.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAvisarArribo" text="Arribo" />
-      <Button layoutX="446.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleAvisarSalida" text="Salida" />
+      <Button layoutX="446.0" layoutY="409.0" mnemonicParsing="false" onAction="#handleAvisarSalida" text="Salida" />
       <Label layoutX="49.0" layoutY="32.0" text="Sucursal:">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -22,39 +22,39 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="48.0" layoutY="238.0" text="Salida de camion">
+      <Label layoutX="48.0" layoutY="380.0" text="Salida de camion">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
       <Label layoutX="47.0" layoutY="135.0" text="Patente camion:" />
-      <Label layoutX="47.0" layoutY="267.0" text="Patente camion:" />
+      <Label layoutX="47.0" layoutY="409.0" text="Patente camion:" />
       <ChoiceBox fx:id="patenteArribo" layoutX="205.0" layoutY="130.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="patenteSalida" layoutX="205.0" layoutY="267.0" prefWidth="150.0" />
-      <TableView layoutX="627.0" layoutY="67.0" prefHeight="195.0" prefWidth="506.0">
+      <ChoiceBox fx:id="patenteSalida" layoutX="205.0" layoutY="409.0" prefWidth="150.0" />
+      <TableView fx:id="tabla_enTransito" layoutX="627.0" layoutY="67.0" prefHeight="195.0" prefWidth="506.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Patente" />
-          <TableColumn prefWidth="102.0" text="Origen" />
-            <TableColumn prefWidth="107.0" text="Destino" />
-            <TableColumn prefWidth="101.0" text="Estado" />
+          <TableColumn fx:id="patenteColumn" prefWidth="96.0" text="Patente" />
+          <TableColumn fx:id="origenColumn" prefWidth="125.0" text="Origen" />
+            <TableColumn fx:id="destinoColumn" prefWidth="134.0" text="Destino" />
+            <TableColumn fx:id="estadoColumn" prefWidth="150.0" text="Estado" />
         </columns>
       </TableView>
-      <Label layoutX="627.0" layoutY="32.0" text="Camiones en tránsito o cargando">
+      <Label layoutX="627.0" layoutY="32.0" text="Camiones en tránsito">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="627.0" layoutY="291.0" text="Camiones disponibles">
+      <Label layoutX="627.0" layoutY="300.0" text="Camiones disponibles o cargando">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TableView layoutX="627.0" layoutY="342.0" prefHeight="195.0" prefWidth="506.0">
+      <TableView fx:id="tabla_disponible" layoutX="627.0" layoutY="342.0" prefHeight="195.0" prefWidth="506.0">
          <columns>
-            <TableColumn prefWidth="89.0" text="Patente" />
-            <TableColumn prefWidth="108.0" text="Origen" />
-            <TableColumn prefWidth="105.0" text="Destino" />
-            <TableColumn prefWidth="112.0" text="Estado" />
+            <TableColumn fx:id="patente2Column" prefWidth="99.0" text="Patente" />
+            <TableColumn fx:id="origen2Column" prefWidth="125.0" text="Origen" />
+            <TableColumn fx:id="destino2Column" prefWidth="134.0" text="Destino" />
+            <TableColumn fx:id="estado2Column" prefWidth="146.0" text="Estado" />
          </columns>
       </TableView>
    </children>

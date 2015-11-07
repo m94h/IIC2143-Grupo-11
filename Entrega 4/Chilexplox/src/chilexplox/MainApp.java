@@ -223,21 +223,19 @@ public class MainApp extends Application {
         }
 	}
     
-    public void mostrarDetallePedido() {
+    public void mostrarDetallePedido(int id_pedido) {
     	try {
             // Load menu
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/DetallePedido.fxml"));
-            System.out.println("yy");
             AnchorPane detalle = (AnchorPane) loader.load();
-            System.out.println("xx");
             
             // Poner la vista en el centro de la ventana principal
             ventanaPrincipal.setCenter(detalle);
             
             // Dar acceso al controlador
             DetallePedidoController controllerView = loader.getController();
-            controllerView.setMainApp(this);
+            controllerView.setMainApp(this, id_pedido);
 
 
         } catch (IOException e) {

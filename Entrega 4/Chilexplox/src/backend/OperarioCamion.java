@@ -7,14 +7,14 @@ public class OperarioCamion extends Empleado {
 		this.tipo_empleado = "camion";
 	}
 
-	public void DespacharCamion(Camion camion, Sucursal origen){
-		origen.EnviarMedio(camion);
-		camion.setConductor((Empleado)this);
+	public void DespacharMedio(MedioDeTransporte medio, Sucursal origen){
+		origen.EnviarMedio(medio);
+		medio.setConductor((Empleado)this);
 	}
 
-	public void AvisarArrivoCamion(Camion camion, Sucursal destino){
-		destino.AgregarMedioArrivado(camion);
-		camion.estado = Estado.EnSucursalDestino;
+	public void AvisarArriboMedio(MedioDeTransporte medio, Sucursal destino){
+		destino.AgregarMedioArrivado(medio);
+		medio.estado = Estado.EnSucursalDestino;
 	}
 
 }
