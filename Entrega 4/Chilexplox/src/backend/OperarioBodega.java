@@ -15,6 +15,7 @@ public class OperarioBodega extends Empleado {
 		for(Pedido item:medio.listaPedidos)
 		{
 			item.estado = Estado.EnSucursalDestino;
+			item.Arrivado();
 		}
 		//Desocupar medio
 		medio.Desocupar();

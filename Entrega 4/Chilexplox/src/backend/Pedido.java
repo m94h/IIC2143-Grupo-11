@@ -13,7 +13,9 @@ public class Pedido {
 	private Sucursal destino;
 	public Estado estado;
 	private int urgencia;
-	private LocalDate fecha;
+	private LocalDate fechaCreacion;
+  private LocalDate fechaEnvio;
+  private LocalDate fechaLlegada;
 	private MedioDeTransporte cargadoEn;
 	private int pesoTotal;
 	private int volumenTotal;
@@ -42,7 +44,7 @@ public class Pedido {
       this.urgencia = urgencia;
       this.estado = estado;
       this.encomiendas = new HashMap<Integer, Encomienda>();
-      this.fecha = fecha;
+      this.fechaCreacion = fecha;
     }
 
     /*
@@ -54,7 +56,7 @@ public class Pedido {
         this.destino = destino;
         this.urgencia = urgencia;
         this.estado = estado;
-        this.fecha = fecha;
+        this.fechaCreacion = fecha;
     }
 
     /*
@@ -85,7 +87,7 @@ public class Pedido {
     }
 
     public LocalDate GetFecha() {
-    	return this.fecha;
+    	return this.fechaCreacion;
     }
 
     public int GetPeso(){
@@ -112,7 +114,14 @@ public class Pedido {
     	return this.cargadoEn;
     }
 
+    public void Enviado() {
+      fechaEnvio = LocalDate.now();
+    }
 
+    public void Arrivado() {
+      fechaLlegada = LocalDate.now();
+    }
+ 
     /*
      * Otras operaciones
      */

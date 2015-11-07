@@ -34,7 +34,9 @@ public abstract class MedioDeTransporte {
 	public void Viajar(){
 		this.estado = Estado.EnTransito;
 		for(int i = 0; i <= this.listaPedidos.size(); i++){
-			this.listaPedidos.get(i).SetEnTransito();
+			Pedido pedido = this.listaPedidos.get(i);
+			pedido.SetEnTransito();
+			pedido.Enviado();
 		}
 	}
 
