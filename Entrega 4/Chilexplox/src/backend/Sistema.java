@@ -102,7 +102,7 @@ public class Sistema {
 	*/
 
 	/*
-	 * Obtener Sucursales
+	 * Obtener Sucursales y cambiar
 	 */
 	public Map<Integer, Sucursal> GetSucursales() {
 		return this.empresa.GetSucursales();
@@ -111,7 +111,14 @@ public class Sistema {
 	public Sucursal GetSucursal(int id) {
 		return this.empresa.GetSucursales().get(id);
 	}
-
+	
+	public void CambiarSucursal(String cual){
+		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
+			if (entry.getValue().GetDireccion().equals(cual)) {
+				this.sucursal_loged = entry.getValue();
+			}
+		}
+	}
 
 
 	/*
@@ -263,7 +270,7 @@ public String[] GetDetallePedido(int id_pedido) {
 			Cliente cliente_loged = this.empresa.GetCliente(rut);
 			Pedido pedido_loged = this.empresa.GetPedido(codigoPedido);
 			
-			if (pedido_loged.GetCliente().GetRut() == cliente_loged.RUT) {
+			if (pedido_loged.GetCliente().GetRut().equals(cliente_loged.RUT)) {
 				//cliente correcto
 				return true;
 			}
