@@ -9,6 +9,7 @@ public class OperarioCamion extends Empleado {
 
 	public void DespacharCamion(Camion camion, Sucursal origen){
 		origen.EnviarMedio(camion);
+		camion.setConductor((Empleado)this);
 	}
 
 	public void AvisarArrivoCamion(Camion camion, Sucursal destino){

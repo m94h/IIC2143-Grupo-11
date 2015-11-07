@@ -17,6 +17,7 @@ public class Pedido {
   private LocalDate fechaEnvio;
   private LocalDate fechaLlegada;
 	private MedioDeTransporte cargadoEn;
+  private Empleado conductor;
 	private int pesoTotal;
 	private int volumenTotal;
 
@@ -90,6 +91,14 @@ public class Pedido {
     	return this.fechaCreacion;
     }
 
+    public LocalDate GetFechaEnvio() {
+      return this.fechaEnvio;
+    }
+
+    public LocalDate GetFechaLlegada() {
+      return this.fechaLlegada;
+    }
+
     public int GetPeso(){
     	return this.pesoTotal;
     }
@@ -112,6 +121,14 @@ public class Pedido {
 
     public MedioDeTransporte GetCargadoEn() {
     	return this.cargadoEn;
+    }
+
+    public void SetConductor(Empleado conductor) {
+      this.conductor = conductor;
+    }
+
+    public Empleado GetConductor() {
+      return this.conductor;
     }
 
     public void Enviado() {

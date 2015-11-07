@@ -5,12 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="356.0" prefWidth="524.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="356.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.DetallePedidoController">
    <children>
-      <Button layoutX="388.0" layoutY="24.0" mnemonicParsing="false" text="Ver Pedido" />
+      <Button fx:id="btnVer" layoutX="388.0" layoutY="24.0" mnemonicParsing="false" onAction="#HandleVerDetalle" text="Ver Pedido" />
       <Label layoutX="35.0" layoutY="29.0" text="Ingrese el id del pedido" />
-      <TextField layoutX="192.0" layoutY="24.0" prefHeight="26.0" prefWidth="175.0" />
+      <TextField fx:id="id_pedido" layoutX="192.0" layoutY="24.0" prefHeight="26.0" prefWidth="175.0" />
       <TabPane layoutX="27.0" layoutY="86.0" prefHeight="252.0" prefWidth="456.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="General">
@@ -19,11 +18,16 @@
                      <children>
                         <GridPane gridLinesVisible="true" prefHeight="219.0" prefWidth="456.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="206.0" text="Dueño:" />
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="240.0" text="Dueño:" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="227.0" text="Volumen:" GridPane.rowIndex="1" />
-                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="217.0" text="Peso:" GridPane.rowIndex="2" />
-                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="217.0" text="Urgencia:" GridPane.rowIndex="3" />
-                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="212.0" text="Estado:" GridPane.rowIndex="4" />
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="268.0" text="Peso:" GridPane.rowIndex="2" />
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="247.0" text="Urgencia:" GridPane.rowIndex="3" />
+                              <Label alignment="CENTER" prefHeight="16.0" prefWidth="267.0" text="Estado:" GridPane.rowIndex="4" />
+                              <Label fx:id="nombreDueno" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" />
+                              <Label fx:id="volumen" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="peso" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="urgencia" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="estado" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -51,14 +55,17 @@
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="163.0" minHeight="6.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="79.0" minHeight="0.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="163.0" minHeight="6.0" prefHeight="74.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="206.0" text="Fecha de Creación:" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="214.0" text="Nombre Sucursal:" GridPane.rowIndex="1" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="228.0" text="Operario de Venta:" GridPane.rowIndex="2" />
+                              <Label fx:id="fechaCreacion" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" />
+                              <Label fx:id="sucursalOrigen" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="nombreVendedor" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -83,6 +90,9 @@
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="214.0" text="Fecha de envío:" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="210.0" text="Patente del vehículo:" GridPane.rowIndex="1" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="224.0" text="Nombre del conductor:" GridPane.rowIndex="2" />
+                              <Label fx:id="fechaEnvio" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" />
+                              <Label fx:id="patente" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="conductor" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
@@ -98,6 +108,9 @@
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="214.0" text="Fecha de llegada:" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="210.0" text="Nombre Sucursal Destino:" GridPane.rowIndex="1" />
                               <Label alignment="CENTER" prefHeight="16.0" prefWidth="224.0" text="Llegada correcta:" GridPane.rowIndex="2" />
+                              <Label fx:id="fechaLlegada" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" />
+                              <Label fx:id="sucursalDestino" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="estadoLlegada" alignment="CENTER" prefHeight="16.0" prefWidth="241.0" text="Sin datos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

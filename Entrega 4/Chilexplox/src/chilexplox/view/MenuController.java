@@ -39,6 +39,9 @@ public class MenuController {
 
 	@FXML
 	private Button btnBandejaEntrada;
+	
+	@FXML
+	private Button btnDetallePedido;
 
 
 	private MainApp mainApp;
@@ -121,11 +124,14 @@ public class MenuController {
 		this.mainApp.mostrarDescarga();
 	}
 
-
-
 	@FXML
 	public void handleBandejaDeEntrada() {
 		this.mainApp.mostrarBandejaDeEntrada();
+	}
+	
+	@FXML
+	public void handleDetallePedidos() {
+		this.mainApp.mostrarDetallePedido();
 	}
 
 

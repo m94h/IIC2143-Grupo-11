@@ -184,6 +184,52 @@ public class Sistema {
 		this.empresa.BorrarCliente(rut);
 	}
 
+public String[] GetDetallePedido(int id_pedido) {
+	Pedido pedido = GetPedido(id_pedido);
+	String[] detalles = new String[14];
+	detalles[0] = pedido.GetCliente().GetNombre();
+	detalles[1] = Integer.toString(pedido.GetPeso());
+	detalles[2] = Integer.toString(pedido.GetVolumen());
+	detalles[3] = Integer.toString(pedido.GetUrgencia());
+	detalles[4] = pedido.GetEstado().toString();
+
+	LocalDate f = pedido.GetFecha();
+	detalles[5] = f.toString();
+
+	detalles[6] = pedido.GetOrigen().GetDireccion();
+	detalles[7] = "";
+
+	f = pedido.GetFechaEnvio();
+	if (f != null)
+		detalles[8] = f.toString();
+	else
+		detalles[8] = "";
+
+	MedioDeTransporte m = pedido.GetCargadoEn();
+	if (m != null) 
+		detalles[9] = m.GetPatente();
+	else 
+		detalles[9] = "";
+
+	Empleado e = pedido.GetConductor();
+	if (e != null)
+		detalles[10] = e.GetNombre();
+	else 
+		detalles[10] = "";
+
+	f = pedido.GetFechaLlegada();
+	if (f != null)
+		detalles[11] = f.toString();
+	else
+		detalles[11] = "";
+
+	detalles[12] = pedido.GetDestino().GetDireccion();
+	detalles[13] = "Aun no recibido";
+
+
+	return detalles;
+}
+
 	/*
 	public String SolicitarCamion(OperarioBodega solicitador){
 		solicitador.PedirCamion();

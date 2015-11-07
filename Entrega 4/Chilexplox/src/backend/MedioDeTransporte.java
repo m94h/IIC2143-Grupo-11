@@ -10,6 +10,7 @@ public abstract class MedioDeTransporte {
 	// protected int pesoDisponible;
 	protected int enUso;
 	protected boolean desocupado;
+	protected Empleado conductor;
 	protected Sucursal origen;
 	protected Sucursal destino;
 	protected Estado estado;
@@ -31,12 +32,17 @@ public abstract class MedioDeTransporte {
 		this.destino = destino;
 	}
 
+	public void setConductor(Empleado conductor){
+		this.conductor = conductor;
+	}
+
 	public void Viajar(){
 		this.estado = Estado.EnTransito;
 		for(int i = 0; i <= this.listaPedidos.size(); i++){
 			Pedido pedido = this.listaPedidos.get(i);
 			pedido.SetEnTransito();
 			pedido.Enviado();
+			pedido.SetConductor(conductor);
 		}
 	}
 
