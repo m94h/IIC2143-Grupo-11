@@ -152,7 +152,8 @@ public class MenuController {
 	
 	@FXML
 	public void handleDetallePedidos() {
-		this.mainApp.mostrarDetallePedido(1);
+		int id_pedido = Integer.parseInt(ViewHelper.PromptText("Ingrese el id del pedido que desea ver"));
+		this.mainApp.mostrarDetallePedido(id_pedido);
 	}
 	
 	@FXML
