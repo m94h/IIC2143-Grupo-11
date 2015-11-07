@@ -253,7 +253,23 @@ public String[] GetDetallePedido(int id_pedido) {
 		}
 		return false;
 	}
-
+	
+	/*
+	 * Login para empleados
+	 */
+	public boolean LogInCliente(String rut, int codigoPedido) {
+		if (this.empresa.GetCliente(rut) != null && this.empresa.GetPedido(codigoPedido) != null) {
+			Cliente cliente_loged = this.empresa.GetCliente(rut);
+			Pedido pedido_loged = this.empresa.GetPedido(codigoPedido);
+			
+			if (pedido_loged.GetCliente().GetRut() == cliente_loged.RUT) {
+				//cliente correcto
+				return true;
+			}
+		}
+		return false;
+	}
+	
 
 	/*
 	 * Metodos para cargar archivos
