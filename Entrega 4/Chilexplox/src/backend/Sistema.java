@@ -566,6 +566,8 @@ public String[] GetDetallePedido(int id_pedido) {
 		String patente;
 		String marca;
 		String modelo;
+		Sucursal origen;
+		Sucursal destino = null;
 		int cap_maxima;
 		int km;
 
@@ -577,8 +579,11 @@ public String[] GetDetallePedido(int id_pedido) {
 					patente = parametros[0];
 					marca = parametros[1];
 					modelo = parametros[2];
-					cap_maxima = Integer.parseInt(parametros[3]);
-					km = Integer.parseInt(parametros[4]);
+					origen = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
+					if (parametros[4] != "-")
+						destino = this.empresa.GetSucursal(Integer.parseInt(parametros[4]));
+					cap_maxima = Integer.parseInt(parametros[5]);
+					km = Integer.parseInt(parametros[6]);
 
 					camion = new Camion(patente, marca, modelo, cap_maxima, km);
 					this.empresa.AgregarTransporte(camion);
