@@ -192,6 +192,7 @@ public class Sistema {
 	}
 
 public String[] GetDetallePedido(int id_pedido) {
+	System.out.println(id_pedido);
 	Pedido pedido = GetPedido(id_pedido);
 	String[] detalles = new String[14];
 	detalles[0] = pedido.GetCliente().GetNombre();

@@ -56,9 +56,8 @@ public class LoginController {
 			
 			//Login correcto
 			
-			//Mostrar menu con opciones
-			//this.mainApp.IngresoCorrecto();
-			
+			this.mainApp.mostrarDetallePedido();
+
 		} else {
 			//Login incorrecto
 			//Avisar 
