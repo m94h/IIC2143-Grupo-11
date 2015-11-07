@@ -126,7 +126,11 @@ public class ArrivoySalidaController {
 		if(mediosDisponibles.size() > 0){
 			for (int i = 0; i < mediosDisponibles.size(); i++) {
 				MedioDeTransporte medio = mediosDisponibles.get(i);
-				this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), medio.GetDestino().GetDireccion(), medio.GetEstado().toString()));
+				String destino = "No hay destino";
+				if (medio.GetDestino() != null)
+					destino = medio.GetDestino().GetDireccion();
+				else
+				this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), destino, medio.GetEstado().toString()));
 			}
 		}
 		this.tabla_disponible.setItems(this.disponibleData);
@@ -154,7 +158,7 @@ public class ArrivoySalidaController {
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteSalida.getSelectionModel().getSelectedItem().toString());
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DespacharMedio(medio, medio.GetOrigen());
-		ViewHelper.ShowMessage("El camion esta en tránsito", AlertType.INFORMATION);
+		ViewHelper.ShowMessage("El camion esta en trï¿½nsito", AlertType.INFORMATION);
 	}
 
 	@FXML

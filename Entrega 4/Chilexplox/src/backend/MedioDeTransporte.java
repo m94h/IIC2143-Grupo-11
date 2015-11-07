@@ -23,6 +23,7 @@ public abstract class MedioDeTransporte {
 		this.origen = origen;
 		this.destino = destino;
 		this.desocupado = false;
+		this.estado = Estado.EnSucursalOrigen;
 	}
 
 	public void setOrigen(Sucursal origen){
