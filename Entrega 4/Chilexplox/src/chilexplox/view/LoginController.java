@@ -42,13 +42,13 @@ public class LoginController {
 	@FXML
 	private void handleIngresarClientes() {
 		
-		if (codigoPedido.getText().isEmpty() || !Auxiliar.isInt(codigoPedido.getText())) {
-			ViewHelper.ShowMessage("Ingresa un codigo correcto. Debe contener solo numeros.", AlertType.ERROR);
+		if (rutCliente.getText().isEmpty()) {
+			ViewHelper.ShowMessage("Ingresa tu rut.", AlertType.ERROR);
 			return;
 		}
 		
-		if (rutCliente.getText().isEmpty()) {
-			ViewHelper.ShowMessage("Ingresa tu rut.", AlertType.ERROR);
+		if (codigoPedido.getText().isEmpty() || !Auxiliar.isInt(codigoPedido.getText())) {
+			ViewHelper.ShowMessage("Ingresa un codigo correcto. Debe contener solo numeros.", AlertType.ERROR);
 			return;
 		}
 		
