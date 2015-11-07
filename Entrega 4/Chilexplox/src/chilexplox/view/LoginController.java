@@ -96,4 +96,9 @@ public class LoginController {
 			this.claveEmpleado.setText("");
 		}
 	}
+	
+	@FXML
+	private void handleSalir() {
+		this.mainApp.Salir();
+	}
 }

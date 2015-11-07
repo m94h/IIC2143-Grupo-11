@@ -16,12 +16,26 @@ public abstract class MedioDeTransporte {
 	protected Estado estado;
 	protected ArrayList<Pedido> listaPedidos = new ArrayList<Pedido>();
 
-	public MedioDeTransporte (String patente, int capacidadMax) {
+	/*
+	 * Constructor en caso de que este desocupado en origen
+	 */
+	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen) {
 		this.patente = patente;
 		this.capacidadMax = capacidadMax;
-		this.origen = null;
+		this.origen = origen;
 		this.destino = null;
 		this.desocupado = true;
+	}
+	
+	/*
+	 * Constructor en caso de estar viajando
+	 */
+	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino) {
+		this.patente = patente;
+		this.capacidadMax = capacidadMax;
+		this.origen = origen;
+		this.destino = destino;
+		this.desocupado = false;
 	}
 
 	public void setOrigen(Sucursal origen){
