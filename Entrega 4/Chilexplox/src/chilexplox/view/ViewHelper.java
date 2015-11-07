@@ -5,6 +5,7 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 
 //Helper
 public class ViewHelper {
@@ -35,6 +36,20 @@ public class ViewHelper {
 		    return true;
 		}
 		return false;
+	}
+	
+	public static String PromptText(String mensaje) {
+		TextInputDialog dialog = new TextInputDialog("");
+		dialog.setTitle("Ingrese");
+		dialog.setHeaderText(null);
+		dialog.setContentText(mensaje);
+		
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+		    return result.get();
+		}
+		return null;
 	}
 	
 }
