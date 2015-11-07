@@ -11,6 +11,7 @@ import chilexplox.MainApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -34,11 +35,16 @@ public class BandejaEntradaController {
 	@FXML
 	private TextArea mensaje;
 	
+	@FXML
+	private Label sucursalDisplay;
+	
 	private Sucursal sucursal;
 	
 	@FXML
     private void initialize() {
 		this.sucursal = Sistema.GetInstance().GetSucursalLoged();
+		
+		this.sucursalDisplay.setText(this.sucursal.GetDireccion());
 		
 		this.idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
 		this.emisarioColumn.setCellValueFactory(cellData -> cellData.getValue().emisarioProperty());
@@ -61,8 +67,7 @@ public class BandejaEntradaController {
 	 */
 	@FXML
 	private void handleVolverMenu() {
-		if (ViewHelper.ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
-			this.mainApp.MostrarMenu();
+		this.mainApp.MostrarMenu();
 	}
 	
 	private void UpdateMensajes() {
