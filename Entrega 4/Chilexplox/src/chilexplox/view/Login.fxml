@@ -8,49 +8,62 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.LoginController">
    <children>
-      <TextField fx:id="rutEmpleado" layoutX="224.0" layoutY="439.0" promptText="Rut" />
-      <PasswordField fx:id="claveEmpleado" layoutX="224.0" layoutY="490.0" promptText="Contraseña" />
-      <Button layoutX="213.0" layoutY="535.0" mnemonicParsing="false" onAction="#handleIngresarEmplaedos" text="Ingresar" />
-      <ImageView fitHeight="150.0" fitWidth="500.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="500.0" layoutX="239.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../archivos/chilexplox.png" />
          </image>
       </ImageView>
+      <Text layoutX="649.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso Empleados">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text layoutX="559.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="612.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TextField fx:id="rutEmpleado" layoutX="671.0" layoutY="197.0" promptText="Rut" />
+      <PasswordField fx:id="claveEmpleado" layoutX="671.0" layoutY="248.0" promptText="Contraseña" />
+      <Button layoutX="845.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleIngresarEmplaedos" prefHeight="76.0" prefWidth="102.0" text="Ingresar" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
       <Text layoutX="162.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Es Usted Cliente?">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Text layoutX="160.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut:">
+      <Text layoutX="127.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut:">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="84.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código Pedido:">
+      <Text layoutX="51.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código Pedido:">
          <font>
             <Font size="15.0" />
          </font>
       </Text>
-      <TextField fx:id="rutCliente" layoutX="215.0" layoutY="197.0" promptText="Rut" />
-      <TextField fx:id="codigoPedido" layoutX="215.0" layoutY="247.0" promptText="Codigo pedido" />
-      <Button layoutX="191.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleIngresarClientes" text="Tracking Pedido" />
-      <Line endX="350.0" layoutX="124.0" layoutY="361.0" startX="-100.0" />
-      <Text layoutX="163.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso Empleados">
+      <TextField fx:id="rutCliente" layoutX="182.0" layoutY="198.0" promptText="Rut" />
+      <TextField fx:id="codigoPedido" layoutX="182.0" layoutY="248.0" promptText="Codigo pedido" />
+      <Button layoutX="356.0" layoutY="198.0" mnemonicParsing="false" onAction="#handleIngresarClientes" prefHeight="76.0" prefWidth="102.0" text="Tracking Pedido" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="22.0" />
-         </font>
-      </Text>
-      <Text layoutX="112.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:">
+            <Font size="14.0" />
+         </font></Button>
+      <Separator layoutX="21.0" layoutY="135.0" prefHeight="4.0" prefWidth="951.0" />
+      <Separator layoutX="21.0" layoutY="319.0" prefHeight="4.0" prefWidth="951.0" />
+      <Button layoutX="465.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="61.0" prefWidth="102.0" text="Salir" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="15.0" />
+            <Font size="14.0" />
          </font>
-      </Text>
-      <Text layoutX="165.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut:">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
+      </Button>
+      <Line endY="150.0" layoutX="515.0" layoutY="155.0" />
    </children>
 </AnchorPane>
