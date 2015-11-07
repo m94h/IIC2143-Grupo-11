@@ -56,7 +56,7 @@ public class LoginController {
 			
 			//Login correcto
 			
-			this.mainApp.mostrarDetallePedido();
+			this.mainApp.mostrarDetallePedido(Integer.parseInt(codigoPedido.getText()));
 
 		} else {
 			//Login incorrecto

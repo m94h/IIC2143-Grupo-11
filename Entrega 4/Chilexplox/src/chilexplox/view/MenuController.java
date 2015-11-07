@@ -131,7 +131,7 @@ public class MenuController {
 	
 	@FXML
 	public void handleDetallePedidos() {
-		this.mainApp.mostrarDetallePedido();
+		this.mainApp.mostrarDetallePedido(1);
 	}
 
 
