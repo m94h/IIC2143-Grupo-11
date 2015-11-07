@@ -579,7 +579,7 @@ public String[] GetDetallePedido(int id_pedido) {
 					marca = parametros[1];
 					modelo = parametros[2];
 					origen = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
-					if (parametros[4] != "-")
+					if (Integer.parseInt(parametros[4]) != 0)
 						destino = this.empresa.GetSucursal(Integer.parseInt(parametros[4]));
 					cap_maxima = Integer.parseInt(parametros[5]);
 					km = Integer.parseInt(parametros[6]);
@@ -841,7 +841,7 @@ public String[] GetDetallePedido(int id_pedido) {
 					if (camion.GetDestino() != null)
 						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
 					else
-						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "-" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
+						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()));
 
 				}
 				writer_camiones.close();
