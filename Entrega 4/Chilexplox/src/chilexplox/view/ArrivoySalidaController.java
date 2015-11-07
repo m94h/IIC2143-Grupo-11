@@ -126,7 +126,10 @@ public class ArrivoySalidaController {
 		if(mediosDisponibles.size() > 0){
 			for (int i = 0; i < mediosDisponibles.size(); i++) {
 				MedioDeTransporte medio = mediosDisponibles.get(i);
-				this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), medio.GetDestino().GetDireccion(), medio.GetEstado().toString()));
+				if (medio.GetDestino() != null)
+					this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), medio.GetDestino().GetDireccion(), medio.GetEstado().toString()));
+				else
+					this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), "-", medio.GetEstado().toString()));
 			}
 		}
 		this.tabla_disponible.setItems(this.disponibleData);
