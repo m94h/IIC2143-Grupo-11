@@ -208,10 +208,10 @@ public class MainApp extends Application {
             // Load menu
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/BandejaEntrada.fxml"));
-            AnchorPane mensaje = (AnchorPane) loader.load();
+            AnchorPane bandeja = (AnchorPane) loader.load();
 
             // Poner la vista en el centro de la ventana principal
-            ventanaPrincipal.setCenter(mensaje);
+            ventanaPrincipal.setCenter(bandeja);
 
             // Dar acceso al controlador
             BandejaEntradaController controllerView = loader.getController();
@@ -223,19 +223,19 @@ public class MainApp extends Application {
         }
 	}
     
-    public void mostrarDetallePedido() {
+    public void mostrarDetallePedido(int id_pedido) {
     	try {
             // Load menu
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/DetallePedido.fxml"));
-            AnchorPane mensaje = (AnchorPane) loader.load();
-
+            AnchorPane detalle = (AnchorPane) loader.load();
+            
             // Poner la vista en el centro de la ventana principal
-            ventanaPrincipal.setCenter(mensaje);
-
+            ventanaPrincipal.setCenter(detalle);
+            
             // Dar acceso al controlador
             DetallePedidoController controllerView = loader.getController();
-            controllerView.setMainApp(this);
+            controllerView.setMainApp(this, id_pedido);
 
 
         } catch (IOException e) {

@@ -1,20 +1,26 @@
 package chilexplox.view;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
 
 //Fachada del backend
 import backend.Sistema;
 import backend.Sucursal;
+
+import java.util.Map;
+
 import backend.Empleado;
 import chilexplox.MainApp;
 
 public class MenuController {
 
 	@FXML
-	private Label sucursal;
+	private ChoiceBox sucursales;
 
 	@FXML
 	private Label nombre;
@@ -48,14 +54,29 @@ public class MenuController {
 
 	@FXML
     private void initialize() {
-		Sucursal sucursal = Sistema.GetInstance().GetSucursalLoged();
+		
+		//get sucursales
+		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
+			this.sucursales.getItems().add(entry.getValue().GetDireccion());
+		}
+		//Seleccionar la actual
+		this.sucursales.getSelectionModel().select(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
+		
 		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
-		this.sucursal.setText(sucursal.GetDireccion());
 		this.nombre.setText(usuario.GetNombre());
 		this.rol.setText(usuario.GetTipo());
 
 		//set permisos
 		this.setPermisos(usuario);
+		
+		//cambio de sucursal listener
+		this.sucursales.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+	      @Override
+	      public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+	    	  Sistema.GetInstance().CambiarSucursal(sucursales.getItems().get((Integer) number2).toString());
+	    	  System.out.println("Cambiado sucursal");
+	      }
+	    });
     }
 
 	/*
@@ -131,7 +152,13 @@ public class MenuController {
 	
 	@FXML
 	public void handleDetallePedidos() {
-		this.mainApp.mostrarDetallePedido();
+		int id_pedido = Integer.parseInt(ViewHelper.PromptText("Ingrese el id del pedido que desea ver"));
+		this.mainApp.mostrarDetallePedido(id_pedido);
+	}
+	
+	@FXML
+	public void handleCambiarSusursal() {
+		Sistema.GetInstance().CambiarSucursal(this.sucursales.getSelectionModel().getSelectedItem().toString());
 	}
 
 

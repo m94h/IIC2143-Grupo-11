@@ -14,12 +14,6 @@ import backend.Sistema;
 public class DetallePedidoController {
 	
 	private MainApp mainApp;
-
-	@FXML
-	private TextField id_pedido;
-	
-	@FXML
-	private Button btnVer;
 	
 	@FXML
 	private Label nombreDueno;
@@ -64,16 +58,17 @@ public class DetallePedidoController {
 	private Label estadoLlegada;
 	
 	@FXML
-    private void initialize() {
-    }
+	private void initialize() {
+	}
 
-	public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
+	public void setMainApp(MainApp mainApp, int id_pedido) {
+		this.mainApp = mainApp;
+		this.MostrarDetalle(id_pedido);
+	}
 	
-	public void HandleVerDetalle() {
-		int pedido_id = Integer.parseInt(id_pedido.getText());
-		String[] detalles = Sistema.GetInstance().GetDetallePedido(pedido_id);
+	
+	public void MostrarDetalle(int id_pedido) {
+		String[] detalles = Sistema.GetInstance().GetDetallePedido(id_pedido);
 		nombreDueno.setText(detalles[0]);
 		volumen.setText(detalles[1]);
 		peso.setText(detalles[2]);
@@ -89,6 +84,4 @@ public class DetallePedidoController {
 		sucursalDestino.setText(detalles[12]);
 		estadoLlegada.setText(detalles[13]);
 	}
-	
-
 }

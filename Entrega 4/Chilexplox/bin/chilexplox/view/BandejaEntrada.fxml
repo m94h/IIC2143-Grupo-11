@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="560.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.BandejaEntradaController">
    <children>
-      <TableView fx:id="tabla_mensajes" layoutX="26.0" layoutY="55.0" prefHeight="482.0" prefWidth="363.0">
+      <TableView fx:id="tabla_mensajes" layoutX="24.0" layoutY="142.0" prefHeight="429.0" prefWidth="363.0">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="51.0" text="Id" />
           <TableColumn fx:id="emisarioColumn" prefWidth="158.0" text="De" />
           <TableColumn fx:id="sucursalOrigenColumn" minWidth="6.0" prefWidth="153.0" text="Sucursal" />
         </columns>
       </TableView>
-      <TextArea fx:id="mensaje" layoutX="418.0" layoutY="55.0" prefHeight="482.0" prefWidth="554.0" />
-      <Button layoutX="26.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al Menu" />
+      <TextArea fx:id="mensaje" layoutX="418.0" layoutY="142.0" prefHeight="429.0" prefWidth="554.0" />
+      <Button layoutX="837.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="67.0" prefWidth="135.0" text="Volver al Menu" />
+      <ImageView fitHeight="120.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../archivos/chilexplox.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="549.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Viendo mensajes de Sucursal">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Label fx:id="sucursalDisplay" alignment="CENTER" layoutX="546.0" layoutY="61.0" prefHeight="20.0" prefWidth="185.0" text="Sucursal" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

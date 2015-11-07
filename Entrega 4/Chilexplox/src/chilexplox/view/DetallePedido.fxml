@@ -7,9 +7,6 @@
 
 <AnchorPane prefHeight="356.0" prefWidth="524.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.DetallePedidoController">
    <children>
-      <Button fx:id="btnVer" layoutX="388.0" layoutY="24.0" mnemonicParsing="false" onAction="#HandleVerDetalle" text="Ver Pedido" />
-      <Label layoutX="35.0" layoutY="29.0" text="Ingrese el id del pedido" />
-      <TextField fx:id="id_pedido" layoutX="192.0" layoutY="24.0" prefHeight="26.0" prefWidth="175.0" />
       <TabPane layoutX="27.0" layoutY="86.0" prefHeight="252.0" prefWidth="456.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="General">
