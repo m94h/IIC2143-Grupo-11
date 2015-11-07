@@ -24,7 +24,7 @@ public abstract class MedioDeTransporte {
 		this.desocupado = true;
 	}
 
-	public void setOrigen(Sucursal origen, Sucursal destino){
+	public void setOrigen(Sucursal origen){
 		this.origen = origen;
 	}
 
