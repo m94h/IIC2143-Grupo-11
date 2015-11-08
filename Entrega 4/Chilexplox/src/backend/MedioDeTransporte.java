@@ -1,12 +1,13 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MedioDeTransporte {
 	protected String patente;
-	protected int capacidadMax;  // Tiene que ser capacidad como cm3, hay que cambiar el valor del camión creado y los futuros camiones tienen que tener harta cap.
+	protected int capacidadMax;  // Tiene que ser capacidad como cm3, hay que cambiar el valor del camiï¿½n creado y los futuros camiones tienen que tener harta cap.
 	protected int capacidadActual;
-	// protected int pesoMax; Estamos analizando si ponerle el peso como variable, en gral no se envían un monton de pedidos pesados, eso es mas para carga industrial, no de correos
+	// protected int pesoMax; Estamos analizando si ponerle el peso como variable, en gral no se envï¿½an un monton de pedidos pesados, eso es mas para carga industrial, no de correos
 	// protected int pesoDisponible;
 	protected int enUso;
 	protected boolean desocupado;
@@ -89,10 +90,12 @@ public abstract class MedioDeTransporte {
 	}
 
 	public void CargarPedidos(List<Integer> pedidos) {
-		listaPedidos.add(pedido);
-			//avisar al pedido que fue cargado
+		for (Integer id: pedidos) {
+			Pedido pedido = Sistema.GetInstance().GetPedido(id);
+			listaPedidos.add(pedido);
 			pedido.Cargado(this);
-			this.desocupado = false;
+		}
+		this.desocupado = false;
 	}
 
 	public void Desocupar() {
