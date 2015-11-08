@@ -93,16 +93,20 @@ public class ArrivoySalidaController {
 
 		// Lista medios listos para salir
 		ArrayList<MedioDeTransporte> mediosDisponibles = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
-		for (int i = 0; i < mediosDisponibles.size(); i++) {
-			MedioDeTransporte medio = mediosDisponibles.get(i);
-			this.patenteSalida.getItems().add(medio.GetPatente());
+		if(mediosDisponibles.size() > 0){
+			for (int i = 0; i < mediosDisponibles.size(); i++) {
+				MedioDeTransporte medio = mediosDisponibles.get(i);
+				this.patenteSalida.getItems().add(medio.GetPatente());
+			}
 		}
 
 		// Lista medios para arrivar
 		ArrayList<MedioDeTransporte> mediosEnTransito = Sistema.GetInstance().GetMediosEnTransito();
-		for(int i = 0; i < mediosEnTransito.size(); i++){
-			MedioDeTransporte medio = mediosEnTransito.get(i);
-			this.patenteArribo.getItems().add(medio.GetPatente());
+		if(mediosEnTransito.size() > 0){
+			for(int i = 0; i < mediosEnTransito.size(); i++){
+				MedioDeTransporte medio = mediosEnTransito.get(i);
+				this.patenteArribo.getItems().add(medio.GetPatente());
+			}
 		}
 	}
 
@@ -113,7 +117,11 @@ public class ArrivoySalidaController {
 		if (mediosEnTransito.size() > 0) { //Si hay medios en transito
 			for (int i = 0; i < mediosEnTransito.size(); i++) {
 				MedioDeTransporte medio = mediosEnTransito.get(i);
-				this.enTransitoData.add(new EnTransitoTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), medio.GetDestino().GetDireccion(), medio.GetEstado().toString()));
+				String destino = "No hay destino";
+				if (medio.GetDestino() != null) {
+					destino = medio.GetDestino().GetDireccion();
+				}
+				this.enTransitoData.add(new EnTransitoTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), destino, medio.GetEstado().toString()));
 			}
 		}
 		this.tabla_enTransito.setItems(this.enTransitoData);
@@ -145,7 +153,12 @@ public class ArrivoySalidaController {
 		}
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteArribo.getSelectionModel().getSelectedItem().toString());
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
-		operario.AvisarArriboMedio(medio, medio.GetDestino());
+		if(medio.GetDestino() != null){
+			operario.AvisarArriboMedio(medio, medio.GetDestino());
+		}
+		else{
+			operario.AvisarArriboMedio(medio, medio.GetOrigen()); //Por mientras si un camion no tiene destino y se va en transito, puede arribar de vuelta en la sucursal origen
+		}
 		ViewHelper.ShowMessage("El camion ha arribado", AlertType.INFORMATION);
 	}
 
@@ -158,7 +171,8 @@ public class ArrivoySalidaController {
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteSalida.getSelectionModel().getSelectedItem().toString());
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DespacharMedio(medio, medio.GetOrigen());
-		ViewHelper.ShowMessage("El camion esta en tr�nsito", AlertType.INFORMATION);
+		//Sistema.GetInstance().AgregarMediosEnTransito(medio);
+		ViewHelper.ShowMessage("El camion esta en transito", AlertType.INFORMATION);
 	}
 
 	@FXML

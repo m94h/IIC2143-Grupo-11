@@ -14,7 +14,7 @@ public class Empresa {
 	private Map<String, MedioDeTransporte> flota;
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
-	private ArrayList<MedioDeTransporte> mediosEnTransito = new ArrayList<MedioDeTransporte>();
+	private ArrayList<MedioDeTransporte> mediosEnTransito;
 
 
 	public Empresa (String nombre, String rut) {
@@ -26,6 +26,7 @@ public class Empresa {
 		this.pedidos = new HashMap<Integer, Pedido>();
 		this.encomiendas = new HashMap<Integer, Encomienda>();
 		this.empleados = new HashMap<String, Empleado>();
+		this.mediosEnTransito = new ArrayList<MedioDeTransporte>();
 	}
 
 	public void AgregarSucursal (Sucursal newSucursal) {

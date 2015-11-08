@@ -14,9 +14,9 @@ public abstract class MedioDeTransporte {
 	protected Sucursal origen;
 	protected Sucursal destino;
 	protected Estado estado;
-	protected ArrayList<Pedido> listaPedidos = new ArrayList<Pedido>();
+	protected ArrayList<Pedido> listaPedidos;
 
-	
+
 	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino) {
 		this.patente = patente;
 		this.capacidadMax = capacidadMax;
@@ -24,6 +24,7 @@ public abstract class MedioDeTransporte {
 		this.destino = destino;
 		this.desocupado = false;
 		this.estado = Estado.EnSucursalOrigen;
+		this.listaPedidos = new ArrayList<Pedido>();
 	}
 
 	public void setOrigen(Sucursal origen){
@@ -40,11 +41,13 @@ public abstract class MedioDeTransporte {
 
 	public void Viajar(){
 		this.estado = Estado.EnTransito;
-		for(int i = 0; i <= this.listaPedidos.size(); i++){
-			Pedido pedido = this.listaPedidos.get(i);
-			pedido.SetEnTransito();
-			pedido.Enviado();
-			pedido.SetConductor(conductor);
+		if(this.listaPedidos.size() > 0){
+			for(int i = 0; i < this.listaPedidos.size(); i++){
+				Pedido pedido = this.listaPedidos.get(i);
+				pedido.SetEnTransito();
+				pedido.Enviado();
+				pedido.SetConductor(conductor);
+			}
 		}
 	}
 
