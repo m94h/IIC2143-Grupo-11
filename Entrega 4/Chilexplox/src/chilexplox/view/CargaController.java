@@ -34,6 +34,9 @@ public class CargaController {
 	private ChoiceBox patente_carga;
 
 	@FXML
+	private ChoiceBox sucursal_destino;
+
+	@FXML
 	private TableView<CargaTableModel> tabla_cargas;
 
 	@FXML
@@ -63,6 +66,13 @@ public class CargaController {
 		for (int i = 0; i < medioPorCargar.size(); i++) {
 			MedioDeTransporte medio = medioPorCargar.get(i);
 			this.patente_carga.getItems().add(medio.GetPatente());
+		}
+
+		//sucursales donde se puede enviar
+		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
+			if(this.sucursal.getText() != entry.getValue().GetDireccion()){
+				this.sucursal_destino.getItems().add(entry.getValue().GetDireccion());
+			}
 		}
 
 		//Inicializar observablearraylist
@@ -115,9 +125,9 @@ public class CargaController {
 			}
 		}
 	}
-	
+
 	public void handlePatenteCargaAction(){
-		
+
 	}
 
 
