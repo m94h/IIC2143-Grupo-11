@@ -115,6 +115,10 @@ public class CargaController {
 			}
 		}
 	}
+	
+	public void handlePatenteCargaAction(){
+		
+	}
 
 
 	/*

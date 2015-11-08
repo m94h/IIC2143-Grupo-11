@@ -13,7 +13,7 @@ public class Sucursal {
 	private Map<String, Empleado> empleados;
 
 	/*
-	 * Camiones disponibles para cargar pedidos
+	 * Camiones disponibles para despachar
 	 */
 	private ArrayList<MedioDeTransporte> mediosArrivados;
 
@@ -97,7 +97,6 @@ public class Sucursal {
 
 	public void EnviarMedio(MedioDeTransporte medio){
 		this.mediosDisponibles.remove(medio);
-		medio.Viajar();
 	}
 	  /*
 	  public ArrayList<Pedido> GetPedidos() {
