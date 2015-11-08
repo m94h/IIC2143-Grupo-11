@@ -14,15 +14,38 @@ public class OperarioBodega extends Empleado {
 		return medio.CargarPedido(pedido);
 	}
 
-	public void DescargarMedio(MedioDeTransporte medio){
+	/*
+	 * DescargarMedioCompleto para descargar todos los pedidos
+	 */
+	
+	public void DescargarMedioCompleto(MedioDeTransporte medio){
 		for(Pedido item:medio.listaPedidos)
 		{
-			item.estado = Estado.EnSucursalDestino;
 			item.Arrivado();
 		}
 		//Desocupar medio
 		medio.Desocupar();
 
+		//Poner el medio como disponible
+		this.sucursal.SetMedioDisponible(medio);
+	}
+	
+	/*
+	 * Descargar Pedido de medio 
+	 */
+	public void DescargarPedido(MedioDeTransporte medio, Pedido pedido) {
+		if (medio.listaPedidos.contains(pedido)) {
+			pedido.Arrivado();
+		}
+	}
+	
+	/*
+	 * Para cuando no hay mas pedidos en el medio, se avisa como descargado
+	 */
+	public void MedioDescargado(MedioDeTransporte medio) {
+		//Desocupar medio
+		medio.Desocupar();
+	
 		//Poner el medio como disponible
 		this.sucursal.SetMedioDisponible(medio);
 	}

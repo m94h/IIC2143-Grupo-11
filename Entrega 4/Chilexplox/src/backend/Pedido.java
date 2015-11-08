@@ -14,10 +14,10 @@ public class Pedido {
 	public Estado estado;
 	private int urgencia;
 	private LocalDate fechaCreacion;
-  private LocalDate fechaEnvio;
-  private LocalDate fechaLlegada;
+	private LocalDate fechaEnvio;
+	private LocalDate fechaLlegada;
 	private MedioDeTransporte cargadoEn;
-  private Empleado conductor;
+	private Empleado conductor;
 	private int pesoTotal;
 	private int volumenTotal;
 
@@ -124,19 +124,20 @@ public class Pedido {
     }
 
     public void SetConductor(Empleado conductor) {
-      this.conductor = conductor;
+    	this.conductor = conductor;
     }
 
     public Empleado GetConductor() {
-      return this.conductor;
+    	return this.conductor;
     }
 
     public void Enviado() {
-      fechaEnvio = LocalDate.now();
+    	fechaEnvio = LocalDate.now();
     }
 
     public void Arrivado() {
-      fechaLlegada = LocalDate.now();
+    	this.estado = Estado.EnSucursalDestino;
+    	fechaLlegada = LocalDate.now();
     }
  
     /*

@@ -120,7 +120,9 @@ public class ArrivoySalidaController {
 				if (medio.GetDestino() != null) {
 					destino = medio.GetDestino().GetDireccion();
 				}
-				this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), destino, medio.GetEstado().toString()));
+				//Mostrar solo si tiene algun pedido cargado
+				if (medio.GetPedidos().size() > 0)
+					this.disponibleData.add(new DisponibleTableModel(medio.GetPatente(), medio.GetOrigen().GetDireccion(), destino, medio.GetEstado().toString()));
 			}
 		}
 		this.tabla_disponible.setItems(this.disponibleData);

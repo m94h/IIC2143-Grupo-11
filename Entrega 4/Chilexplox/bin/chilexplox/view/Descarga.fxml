@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -8,37 +9,40 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.DescargaController">
    <children>
-      <Label layoutX="610.0" layoutY="40.0" text="Listado de pedidos cargados en camion:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TableView layoutX="610.0" layoutY="78.0" prefHeight="488.0" prefWidth="510.0">
+      <TableView fx:id="tabla_descargas" layoutX="643.0" layoutY="159.0" prefHeight="365.0" prefWidth="510.0">
          <columns>
-            <TableColumn prefWidth="114.0" text="ID" />
-            <TableColumn prefWidth="136.0" text="Origen" />
-            <TableColumn prefWidth="119.0" text="Prioridad" />
-            <TableColumn prefWidth="138.0" text="Volumen" />
+            <TableColumn fx:id="id_pedidoColumn" prefWidth="114.0" text="ID" />
+            <TableColumn fx:id="origenColumn" prefWidth="136.0" text="Origen" />
+            <TableColumn fx:id="prioridadColumn" prefWidth="119.0" text="Prioridad" />
+            <TableColumn fx:id="volumenColumn" prefWidth="138.0" text="Volumen" />
          </columns>
       </TableView>
-      <Button layoutX="258.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
-      <ChoiceBox fx:id="patente_descarga" layoutX="308.0" layoutY="85.0" prefHeight="31.0" prefWidth="187.0" />
-      <Label layoutX="40.0" layoutY="90.0" text="Patente camion:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font></Label>
-      <Button layoutX="199.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="37.0" prefWidth="92.0" text="Descargar" />
-      <Label fx:id="sucursal" layoutX="113.0" layoutY="36.0" text="sucursal" />
-      <Label layoutX="39.0" layoutY="36.0" text="Sucursal:">
+      <ChoiceBox fx:id="patente_descarga" layoutX="277.0" layoutY="152.0" prefHeight="31.0" prefWidth="187.0" />
+      <Button layoutX="115.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleCargarDatosCamion" prefHeight="72.0" prefWidth="119.0" text="Cargar Pedidos" />
+      <Label fx:id="sucursal" layoutX="902.0" layoutY="51.0" text="sucursal" />
+      <Label layoutX="828.0" layoutY="51.0" text="Sucursal:">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="39.0" layoutY="144.0" text="Volumen disponible del camion:">
+      <Separator layoutX="21.0" layoutY="108.0" prefHeight="0.0" prefWidth="1147.0" />
+      <ImageView fitHeight="100.0" fitWidth="500.0" layoutX="18.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../archivos/chilexplox.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="1057.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="56.0" prefWidth="96.0" text="Volver al Menu" />
+      <Text layoutX="643.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listado de pedidos restantes en camion" textAlignment="CENTER" wrappingWidth="510.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
-      </Label>
-      <Label layoutX="308.0" layoutY="144.0" text="volumen" />
+      </Text>
+      <Text layoutX="39.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seleccione un camion en espera para ser descargado" wrappingWidth="194.767578125">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button layoutX="845.0" layoutY="540.0" mnemonicParsing="false" onAction="#handleDescargarPedido" prefHeight="46.0" prefWidth="130.0" text="Descargar Pedido" />
+      <Button alignment="CENTER" layoutX="303.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleDescargarCamionCompleto" prefHeight="72.0" prefWidth="150.0" text="Descargar Camion Completo" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
