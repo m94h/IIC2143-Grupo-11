@@ -89,31 +89,25 @@ public class ArrivoySalidaController {
 
 		this.UpdateEnTransito();
 		this.UpdateDisponibles();
+		
+	}
 
-
-		// Lista medios listos para salir
-		ArrayList<MedioDeTransporte> mediosDisponibles = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
-		if(mediosDisponibles.size() > 0){
-			for (int i = 0; i < mediosDisponibles.size(); i++) {
-				MedioDeTransporte medio = mediosDisponibles.get(i);
-				this.patenteSalida.getItems().add(medio.GetPatente());
-			}
-		}
-
-		// Lista medios para arrivar
+	private void UpdateEnTransito() {
+		
+		//get medios en transito
 		ArrayList<MedioDeTransporte> mediosEnTransito = Sistema.GetInstance().GetMediosEnTransito();
+		
+		// Listar medios para arrivar en el ChoiceBox
+		this.patenteArribo.getItems().clear();
 		if(mediosEnTransito.size() > 0){
 			for(int i = 0; i < mediosEnTransito.size(); i++){
 				MedioDeTransporte medio = mediosEnTransito.get(i);
 				this.patenteArribo.getItems().add(medio.GetPatente());
 			}
 		}
-	}
-
-	private void UpdateEnTransito() {
-		//Get medio
+				
+		//Listar medios para arrivar en la tabla
 		this.enTransitoData.clear();
-		ArrayList<MedioDeTransporte> mediosEnTransito = Sistema.GetInstance().GetMediosEnTransito();
 		if (mediosEnTransito.size() > 0) { //Si hay medios en transito
 			for (int i = 0; i < mediosEnTransito.size(); i++) {
 				MedioDeTransporte medio = mediosEnTransito.get(i);
@@ -128,9 +122,21 @@ public class ArrivoySalidaController {
 	}
 
 	private void UpdateDisponibles() {
-		//Get medio
-		this.disponibleData.clear();
+		
+		//get medios disponibles
 		ArrayList<MedioDeTransporte> mediosDisponibles = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
+		
+		// Lista medios listos para salir en el ChoiceBox
+		this.patenteSalida.getItems().clear();
+		if(mediosDisponibles.size() > 0){
+			for (int i = 0; i < mediosDisponibles.size(); i++) {
+				MedioDeTransporte medio = mediosDisponibles.get(i);
+				this.patenteSalida.getItems().add(medio.GetPatente());
+			}
+		}
+		
+		//Lista medios listos para salir en la tabla
+		this.disponibleData.clear();
 		if(mediosDisponibles.size() > 0){
 			for (int i = 0; i < mediosDisponibles.size(); i++) {
 				MedioDeTransporte medio = mediosDisponibles.get(i);
@@ -159,6 +165,11 @@ public class ArrivoySalidaController {
 		else{
 			operario.AvisarArriboMedio(medio, medio.GetOrigen()); //Por mientras si un camion no tiene destino y se va en transito, puede arribar de vuelta en la sucursal origen
 		}
+		//actualizar tabla y choicebox
+		this.UpdateEnTransito();
+		this.UpdateDisponibles();
+		
+		//notificar al usuario
 		ViewHelper.ShowMessage("El camion ha arribado", AlertType.INFORMATION);
 	}
 
@@ -172,6 +183,12 @@ public class ArrivoySalidaController {
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DespacharMedio(medio, medio.GetOrigen());
 		//Sistema.GetInstance().AgregarMediosEnTransito(medio);
+		
+		//actualizar tabla y choicebox
+		this.UpdateDisponibles();
+		this.UpdateEnTransito();
+		
+		//notificar al usuario	
 		ViewHelper.ShowMessage("El camion esta en transito", AlertType.INFORMATION);
 	}
 
