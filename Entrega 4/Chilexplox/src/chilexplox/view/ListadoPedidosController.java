@@ -188,7 +188,10 @@ public class ListadoPedidosController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				this.pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia())));
+				//Mostrar solo si es de la sucursal correspondiente
+				if (pedido.GetOrigen().equals(Sistema.GetInstance().GetSucursalLoged()) || pedido.GetDestino().equals(Sistema.GetInstance().GetSucursalLoged())) {
+					this.pedidosData.add(new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia())));
+				}
 			}
 		}
 		this.tabla_pedidos.setItems(this.pedidosData);
