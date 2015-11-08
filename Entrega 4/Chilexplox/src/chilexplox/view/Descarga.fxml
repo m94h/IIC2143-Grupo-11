@@ -22,30 +22,23 @@
          </columns>
       </TableView>
       <Button layoutX="258.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleVolverMenu" text="Volver al menu" />
-      <ChoiceBox fx:id="patente_descarga" layoutX="307.0" layoutY="200.0" prefHeight="31.0" prefWidth="187.0" />
-      <Label layoutX="39.0" layoutY="205.0" text="Patente camion:">
+      <ChoiceBox fx:id="patente_descarga" layoutX="308.0" layoutY="85.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="40.0" layoutY="90.0" text="Patente camion:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <Button layoutX="420.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="37.0" prefWidth="92.0" text="Descargar" />
-      <TextField fx:id="id_pedido" layoutX="183.0" layoutY="108.0" />
+      <Button layoutX="199.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleDescargarMedio" prefHeight="37.0" prefWidth="92.0" text="Descargar" />
       <Label fx:id="sucursal" layoutX="113.0" layoutY="36.0" text="sucursal" />
       <Label layoutX="39.0" layoutY="36.0" text="Sucursal:">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="77.0" layoutY="113.0" text="Id pedido:" />
-      <Label layoutX="39.0" layoutY="77.0" text="Carga de pedidos">
+      <Label layoutX="39.0" layoutY="144.0" text="Volumen disponible del camion:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="259.0" text="Volumen disponible del camion:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="307.0" layoutY="259.0" text="volumen" />
+      <Label layoutX="308.0" layoutY="144.0" text="volumen" />
    </children>
 </AnchorPane>
