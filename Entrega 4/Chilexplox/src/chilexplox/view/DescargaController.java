@@ -26,9 +26,6 @@ public class DescargaController {
 	private Label volumen;
 
 	@FXML
-	private TextField id_pedido;
-
-	@FXML
 	private ChoiceBox patente_descarga;
 
 	@FXML
@@ -51,12 +48,12 @@ public class DescargaController {
 		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
 
 		//poner los valores
-				//medios disponibles para decargar
-				ArrayList<MedioDeTransporte> medioPorDescargar = Sistema.GetInstance().GetSucursalLoged().GetMediosArrivados();
-				for (int i = 0; i < medioPorDescargar.size(); i++) {
-					MedioDeTransporte medio = medioPorDescargar.get(i);
-					this.patente_descarga.getItems().add(medio.GetPatente());
-				}
+		//medios disponibles para decargar
+		ArrayList<MedioDeTransporte> medioPorDescargar = Sistema.GetInstance().GetSucursalLoged().GetMediosArrivados();
+		for (int i = 0; i < medioPorDescargar.size(); i++) {
+			MedioDeTransporte medio = medioPorDescargar.get(i);
+			this.patente_descarga.getItems().add(medio.GetPatente());
+		}
 	}
 
 	@FXML

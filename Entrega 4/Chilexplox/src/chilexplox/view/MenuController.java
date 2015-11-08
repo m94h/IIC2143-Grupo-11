@@ -45,7 +45,7 @@ public class MenuController {
 
 	@FXML
 	private Button btnBandejaEntrada;
-	
+
 	@FXML
 	private Button btnDetallePedido;
 
@@ -54,21 +54,21 @@ public class MenuController {
 
 	@FXML
     private void initialize() {
-		
+
 		//get sucursales
 		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
 			this.sucursales.getItems().add(entry.getValue().GetDireccion());
 		}
 		//Seleccionar la actual
 		this.sucursales.getSelectionModel().select(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
-		
+
 		Empleado usuario = Sistema.GetInstance().GetUsuarioLoged();
 		this.nombre.setText(usuario.GetNombre());
 		this.rol.setText(usuario.GetTipo());
 
 		//set permisos
 		this.setPermisos(usuario);
-		
+
 		//cambio de sucursal listener
 		this.sucursales.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 	      @Override
@@ -149,7 +149,7 @@ public class MenuController {
 	public void handleBandejaDeEntrada() {
 		this.mainApp.mostrarBandejaDeEntrada();
 	}
-	
+
 	@FXML
 	public void handleDetallePedidos() {
 		String id_pedido = ViewHelper.PromptText("Ingrese el id del pedido que desea ver");
@@ -157,7 +157,7 @@ public class MenuController {
 			this.mainApp.mostrarDetallePedido(Integer.parseInt((id_pedido)));
 		}
 	}
-	
+
 	@FXML
 	public void handleCambiarSusursal() {
 		Sistema.GetInstance().CambiarSucursal(this.sucursales.getSelectionModel().getSelectedItem().toString());
