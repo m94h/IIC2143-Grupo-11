@@ -594,7 +594,8 @@ public String[] GetDetallePedido(int id_pedido) {
 					/*
 					 * Si esta en transito, agregar a listado de en transito de empresa
 					 */
-					this.empresa.AgregarMedioEnTransito(camion);
+					if (estado.equals(Estado.EnTransito))
+						this.empresa.AgregarMedioEnTransito(camion);
 										
 					/*
 					 * Si esta en Sucursal origen es pq esta disponible para salir
