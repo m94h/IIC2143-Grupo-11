@@ -88,6 +88,13 @@ public abstract class MedioDeTransporte {
 		}
 	}
 
+	public void CargarPedidos(List<Integer> pedidos) {
+		listaPedidos.add(pedido);
+			//avisar al pedido que fue cargado
+			pedido.Cargado(this);
+			this.desocupado = false;
+	}
+
 	public void Desocupar() {
 		this.capacidadActual = 0;
 		this.desocupado = true;
