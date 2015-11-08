@@ -41,6 +41,10 @@ public abstract class MedioDeTransporte {
 		this.conductor = conductor;
 	}
 
+	/*
+	 * Para viajar, cambiamos todos los estados de los pedidos
+	 * y el estado del medio a entransito
+	 */
 	public void Viajar(){
 		this.estado = Estado.EnTransito;
 		if(this.listaPedidos.size() > 0){
@@ -51,6 +55,14 @@ public abstract class MedioDeTransporte {
 				pedido.SetConductor(conductor);
 			}
 		}
+	}
+	
+	/*
+	 * Agregado para arrivar y cambiar el estado
+	 */
+	public void ArribarMedio() {
+		this.estado = Estado.EnSucursalDestino;
+		System.out.println(this.estado.toString());
 	}
 
 	public int GetCapacidadDisponible(){

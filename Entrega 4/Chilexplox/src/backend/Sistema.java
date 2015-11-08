@@ -585,10 +585,17 @@ public String[] GetDetallePedido(int id_pedido) {
 					cap_maxima = Integer.parseInt(parametros[5]);
 					km = Integer.parseInt(parametros[6]);
 					estado = Estado.values()[Integer.parseInt(parametros[7])];
+					
+					System.out.println(estado.toString());
 
 					camion = new Camion(patente, marca, modelo, origen, destino, cap_maxima, km, estado);
 					this.empresa.AgregarTransporte(camion);
 					
+					/*
+					 * Si esta en transito, agregar a listado de en transito de empresa
+					 */
+					this.empresa.AgregarMedioEnTransito(camion);
+										
 					/*
 					 * Si esta en Sucursal origen es pq esta disponible para salir
 					 */

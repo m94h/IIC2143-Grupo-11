@@ -31,12 +31,6 @@ public class ArrivoySalidaController {
 	private Label sucursal;
 
 	@FXML
-	private ChoiceBox patenteArribo;
-
-	@FXML
-	private ChoiceBox patenteSalida;
-
-	@FXML
 	private TableView<EnTransitoTableModel> tabla_enTransito;
 
 	@FXML
@@ -97,15 +91,6 @@ public class ArrivoySalidaController {
 		//get medios en transito
 		ArrayList<MedioDeTransporte> mediosEnTransito = Sistema.GetInstance().GetMediosEnTransito();
 
-		// Listar medios para arrivar en el ChoiceBox
-		this.patenteArribo.getItems().clear();
-		if(mediosEnTransito.size() > 0){
-			for(int i = 0; i < mediosEnTransito.size(); i++){
-				MedioDeTransporte medio = mediosEnTransito.get(i);
-				this.patenteArribo.getItems().add(medio.GetPatente());
-			}
-		}
-
 		//Listar medios para arrivar en la tabla
 		this.enTransitoData.clear();
 		if (mediosEnTransito.size() > 0) { //Si hay medios en transito
@@ -126,15 +111,6 @@ public class ArrivoySalidaController {
 		//get medios disponibles
 		ArrayList<MedioDeTransporte> mediosDisponibles = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
 
-		// Lista medios listos para salir en el ChoiceBox
-		this.patenteSalida.getItems().clear();
-		if(mediosDisponibles.size() > 0){
-			for (int i = 0; i < mediosDisponibles.size(); i++) {
-				MedioDeTransporte medio = mediosDisponibles.get(i);
-				this.patenteSalida.getItems().add(medio.GetPatente());
-			}
-		}
-
 		//Lista medios listos para salir en la tabla
 		this.disponibleData.clear();
 		if(mediosDisponibles.size() > 0){
@@ -153,18 +129,16 @@ public class ArrivoySalidaController {
 
 	@FXML
 	public void handleAvisarArribo() {
-		if (this.patenteArribo.getSelectionModel().isEmpty()) {
+		if (this.tabla_enTransito.getSelectionModel().isEmpty()) {
 			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
 		}
-		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteArribo.getSelectionModel().getSelectedItem().toString());
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.tabla_enTransito.getSelectionModel().getSelectedItem().getId());
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		if(medio.GetDestino() != null){
 			operario.AvisarArriboMedio(medio, medio.GetDestino());
 		}
-		else{
-			operario.AvisarArriboMedio(medio, medio.GetOrigen()); //Por mientras si un camion no tiene destino y se va en transito, puede arribar de vuelta en la sucursal origen
-		}
+
 		//actualizar tabla y choicebox
 		this.UpdateEnTransito();
 		this.UpdateDisponibles();
@@ -175,11 +149,11 @@ public class ArrivoySalidaController {
 
 	@FXML
 	public void handleAvisarSalida() {
-		if (this.patenteSalida.getSelectionModel().isEmpty()) {
+		if (this.tabla_disponible.getSelectionModel().isEmpty()) {
 			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
 		}
-		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patenteSalida.getSelectionModel().getSelectedItem().toString());
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.tabla_disponible.getSelectionModel().getSelectedItem().getId());
 		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
 		operario.DespacharMedio(medio, medio.GetOrigen());
 

@@ -17,7 +17,9 @@ public class OperarioCamion extends Empleado {
 	public void AvisarArriboMedio(MedioDeTransporte medio, Sucursal destino){
 		destino.AgregarMedioArrivado(medio);
 		Sistema.GetInstance().EliminarMediosEnTransito(medio);
-		medio.estado = Estado.EnSucursalDestino;
+		//medio.estado = Estado.EnSucursalDestino;
+		//cambiado a medio
+		medio.ArribarMedio();
 	}
 
 }
