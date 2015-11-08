@@ -13,7 +13,7 @@ public class Sucursal {
 	private Map<String, Empleado> empleados;
 
 	/*
-	 * Camiones disponibles para despachar
+	 * Camiones disponibles para DESCARGAR!!!!
 	 */
 	private ArrayList<MedioDeTransporte> mediosArrivados;
 
