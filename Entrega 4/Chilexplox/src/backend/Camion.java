@@ -6,16 +6,16 @@ public class Camion extends MedioDeTransporte {
 	protected int km;
 
 
-	public Camion(String patente, String marca, String modelo,  Sucursal origen, Sucursal destino, int capacidadMax){
-		super(patente, capacidadMax, origen, destino);
+	public Camion(String patente, String marca, String modelo,  Sucursal origen, Sucursal destino, int capacidadMax, Estado estado){
+		super(patente, capacidadMax, origen, destino, estado);
 		this.modelo = modelo;
 		this.marca = marca;
 		this.km = 0;
 
 	}
 
-	public Camion(String patente, String marca, String modelo,  Sucursal origen, Sucursal destino, int capacidadMax, int km){
-		super(patente, capacidadMax, origen, destino);
+	public Camion(String patente, String marca, String modelo,  Sucursal origen, Sucursal destino, int capacidadMax, int km, Estado estado){
+		super(patente, capacidadMax, origen, destino, estado);
 		this.modelo = modelo;
 		this.marca = marca;
 		this.km = km;

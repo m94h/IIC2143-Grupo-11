@@ -17,13 +17,14 @@ public abstract class MedioDeTransporte {
 	protected ArrayList<Pedido> listaPedidos;
 
 
-	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino) {
+	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino, Estado estado) {
 		this.patente = patente;
 		this.capacidadMax = capacidadMax;
 		this.origen = origen;
 		this.destino = destino;
 		this.desocupado = false;
-		this.estado = Estado.EnSucursalOrigen;
+		this.estado = estado;
+		//this.estado = Estado.EnSucursalOrigen;
 		this.listaPedidos = new ArrayList<Pedido>();
 	}
 
