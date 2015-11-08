@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -125,5 +126,11 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Button layoutX="361.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="45.0" prefWidth="120.0" text="Volver al Menu" />
+      <Label fx:id="header" layoutX="26.0" layoutY="25.0" prefHeight="45.0" prefWidth="312.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

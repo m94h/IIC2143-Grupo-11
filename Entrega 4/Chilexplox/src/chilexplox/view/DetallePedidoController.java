@@ -5,6 +5,7 @@ import backend.Sistema;
 import backend.Sucursal;
 import chilexplox.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,6 +15,9 @@ import backend.Sistema;
 public class DetallePedidoController {
 	
 	private MainApp mainApp;
+	
+	@FXML
+	private Label header;
 	
 	@FXML
 	private Label nombreDueno;
@@ -68,20 +72,32 @@ public class DetallePedidoController {
 	
 	
 	public void MostrarDetalle(int id_pedido) {
-		String[] detalles = Sistema.GetInstance().GetDetallePedido(id_pedido);
-		nombreDueno.setText(detalles[0]);
-		volumen.setText(detalles[1]);
-		peso.setText(detalles[2]);
-		urgencia.setText(detalles[3]);
-		estado.setText(detalles[4]);
-		fechaCreacion.setText(detalles[5]);
-		sucursalOrigen.setText(detalles[6]);
-		nombreVendedor.setText(detalles[7]);
-		fechaEnvio.setText(detalles[8]);
-		patente.setText(detalles[9]);
-		conductor.setText(detalles[10]);
-		fechaLlegada.setText(detalles[11]);
-		sucursalDestino.setText(detalles[12]);
-		estadoLlegada.setText(detalles[13]);
+		if (Sistema.GetInstance().GetPedido(id_pedido) != null) {
+			String[] detalles = Sistema.GetInstance().GetDetallePedido(id_pedido);
+			nombreDueno.setText(detalles[0]);
+			volumen.setText(detalles[1]);
+			peso.setText(detalles[2]);
+			urgencia.setText(detalles[3]);
+			estado.setText(detalles[4]);
+			fechaCreacion.setText(detalles[5]);
+			sucursalOrigen.setText(detalles[6]);
+			nombreVendedor.setText(detalles[7]);
+			fechaEnvio.setText(detalles[8]);
+			patente.setText(detalles[9]);
+			conductor.setText(detalles[10]);
+			fechaLlegada.setText(detalles[11]);
+			sucursalDestino.setText(detalles[12]);
+			estadoLlegada.setText(detalles[13]);
+			header.setText("Mostrando pedido Id: " + id_pedido);
+		}
+		else {
+			ViewHelper.ShowMessage("No existe un pedido con Id: " + id_pedido, AlertType.ERROR);
+			this.mainApp.MostrarMenu();
+		}
+	}
+	
+	@FXML
+	private void handleVolverMenu() {
+		this.mainApp.MostrarMenu();
 	}
 }
