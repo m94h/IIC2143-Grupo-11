@@ -822,7 +822,6 @@ public String[] GetDetallePedido(int id_pedido) {
 			{
 				Pedido pedido = entry_pedido.getValue();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				System.out.println(pedido.GetCargadoEn().toString());
 				if (pedido.GetCargadoEn() != null)
 					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
 				else
