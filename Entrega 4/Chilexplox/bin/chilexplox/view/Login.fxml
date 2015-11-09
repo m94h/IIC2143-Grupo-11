@@ -32,7 +32,7 @@
       </Text>
       <TextField fx:id="rutEmpleado" layoutX="671.0" layoutY="197.0" promptText="Rut" />
       <PasswordField fx:id="claveEmpleado" layoutX="671.0" layoutY="248.0" promptText="Contraseña" />
-      <Button layoutX="845.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleIngresarEmplaedos" prefHeight="76.0" prefWidth="102.0" text="Ingresar" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="880.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleIngresarEmplaedos" prefHeight="76.0" prefWidth="92.0" text="Ingresar" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font></Button>
@@ -53,7 +53,7 @@
       </Text>
       <TextField fx:id="rutCliente" layoutX="182.0" layoutY="198.0" promptText="Rut" />
       <TextField fx:id="codigoPedido" layoutX="182.0" layoutY="248.0" promptText="Codigo pedido" />
-      <Button layoutX="356.0" layoutY="198.0" mnemonicParsing="false" onAction="#handleIngresarClientes" prefHeight="76.0" prefWidth="102.0" text="Tracking Pedido" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="405.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleIngresarClientes" prefHeight="76.0" prefWidth="92.0" text="Tracking Pedido" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="14.0" />
          </font></Button>
