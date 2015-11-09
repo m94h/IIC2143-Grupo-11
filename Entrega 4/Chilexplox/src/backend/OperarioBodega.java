@@ -7,11 +7,23 @@ public class OperarioBodega extends Empleado {
 		this.tipo_empleado = "bodega";
 	}
 
+	/*
+	 * Cargar Pedido en medio
+	 */
 	public boolean CargarMedio(MedioDeTransporte medio, Pedido pedido){
 		if(medio.GetPedidos().size() == 0){
 			medio.setDestino(pedido.GetDestino()); // El primer pedido que se cargue en el medio determina su destino
 		}
 		return medio.CargarPedido(pedido);
+	}
+	
+	/*
+	 * UndoCargarMedio (sacar pedido metido en camion)
+	 */
+	public void UndoCargarMedio(MedioDeTransporte medio, Pedido pedido){
+		if (medio.GetPedidos().contains(pedido)) {
+			medio.GetPedidos().remove(pedido);
+		}
 	}
 
 	/*

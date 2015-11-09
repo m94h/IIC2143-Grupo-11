@@ -27,7 +27,12 @@ public class CargaController {
 	private Label sucursal;
 
 	@FXML
-	private Label volumen;
+	private Label carga;
+	
+	private int carga_actual;
+	
+	@FXML
+	private Label sucursalDestino;
 
 	@FXML
 	private TextField id_pedido;
@@ -102,7 +107,7 @@ public class CargaController {
 	}
 	
 	@FXML
-	private void handleCargaIndividual() {
+	private void handleVerPedidos() {
 		if (this.patente_carga.getSelectionModel().isEmpty()) {
 			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
@@ -113,10 +118,14 @@ public class CargaController {
 			return;
 		}
 		
+		this.sucursalDestino.setText(this.sucursal_destino.getSelectionModel().getSelectedItem().toString());
+		
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		
-		this.pedidosPosiblesData.clear();
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
+		
+		//Get pedidos posibles
+		this.pedidosPosiblesData.clear();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
@@ -128,12 +137,34 @@ public class CargaController {
 		}
 		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
 		
+		//Get pedidos ya cargados
+		this.pedidosCargadosData.clear();
+		if (pedidos != null) { //Si hay pedidos
+			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
+				Pedido pedido = entry.getValue();
+				// Muestra solo los pedidos que salen de esa sucursal y que van a la sucursal seleccionada
+				if(pedido.GetCargadoEn() == medio){ 
+					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+				}
+			}
+		}
+		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
+		
+		//mostrar % carga
+		this.carga_actual = medio.GetCapacidadActual();
+		int porcentaje = carga_actual / medio.GetCapacidadMax();
+		
+		this.carga.setText(Integer.toString(porcentaje) + "%");
 	}
 	
 	@FXML
 	private void handleCargaOptima(){
 		if (this.patente_carga.getSelectionModel().isEmpty()) {
 			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+		
+		if (!ViewHelper.ShowConfirm("El optimizador removera todos los pedidos que ya se habia ingresado al camion. Desea continuar?")) {
 			return;
 		}
 		
@@ -144,17 +175,33 @@ public class CargaController {
 		int sucursal_opt = opt.keySet().iterator().next();
 		List<Integer> pedidos_opt = opt.get(sucursal_opt);
 		
+		this.sucursalDestino.setText(Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion());
+		//borrar el contenido de sucursal (choicebox)
+		this.sucursal_destino.getSelectionModel().clearSelection();
+		
+		//borrar el contenido de posibles
 		this.pedidosPosiblesData.clear();
+		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
+		
+		this.pedidosCargadosData.clear();
+		
+		carga_actual = 0;
+		
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
 				if (pedidos_opt.contains(pedido.GetId())) {
 					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+					carga_actual += pedido.GetVolumen();
 				}
 			}
 		}
 		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
+		
+		//mostrar % carga
+		int porcentaje = carga_actual / medio.GetCapacidadMax();
+		this.carga.setText(Integer.toString(porcentaje) + "%");
 		
 		ViewHelper.ShowMessage("Pedidos optimos cargados correctamente. El camion debe dirigirse a la sucursal " + Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion(), AlertType.WARNING);
 		
@@ -176,7 +223,14 @@ public class CargaController {
 			return;
 		}
 		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tablaPedidosPosibles.getSelectionModel().getSelectedItem().getId()));
+		
+		//ver si se puede meter
+		if (carga_actual + pedido.GetVolumen() > medio.GetCapacidadMax() - carga_actual) {
+			ViewHelper.ShowMessage("No hay suficiente espacio para cargar este pedido en el camion.", AlertType.WARNING);
+			return;
+		}
 		
 		this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
 		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
@@ -185,21 +239,74 @@ public class CargaController {
 		this.pedidosPosiblesData.remove(this.tablaPedidosPosibles.getSelectionModel().getSelectedIndex());
 		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
 		
+		//aumentar % carga
+		carga_actual += pedido.GetVolumen();
+		int porcentaje = carga_actual / medio.GetCapacidadMax();
+		this.carga.setText(Integer.toString(porcentaje) + "%");
+		
 		//Notificar
 		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.WARNING);
 		
 	}
 	
+	
+	@FXML
+	private void handleRemoverPedido() {
+		if (this.patente_carga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+		if (this.tablaPedidosCargados.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un pedido a remover", AlertType.WARNING);
+			return;
+		}
+		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tablaPedidosCargados.getSelectionModel().getSelectedItem().getId()));
+		
+		//Meter en posibles
+		this.pedidosPosiblesData.add(this.tablaPedidosCargados.getSelectionModel().getSelectedItem());
+		//Sacar de cargados
+		this.pedidosCargadosData.remove(this.tablaPedidosCargados.getSelectionModel().getSelectedIndex());
+		
+		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
+		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
+		
+		//disminuir % carga
+		carga_actual -= pedido.GetVolumen();
+		int porcentaje = carga_actual / medio.GetCapacidadMax();
+		this.carga.setText(Integer.toString(porcentaje) + "%");
+		
+		//Notificar
+		ViewHelper.ShowMessage("Pedido removido correctamente", AlertType.WARNING);
+				
+	}
+	
 	@FXML
 	private void handleGuardarCambios() {
+		if (this.patente_carga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
+		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
+		
+		//sacar todos los antiguos
+		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
+		if (pedidos != null) { //Si hay pedidos
+			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
+				Pedido pedido = entry.getValue();
+				if (pedido.GetCargadoEn() == medio) {
+					operario.UndoCargarMedio(medio, pedido);
+				}
+			}
+		}
+		
+		//meter todos los nuevos
 		if (this.pedidosCargadosData.size() > 0) {
-			
-			MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
-			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
-			
 			for (int i = 0; i < this.pedidosCargadosData.size(); i++) {
 				Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.pedidosCargadosData.get(i).getId()));
-				
 				operario.CargarMedio(medio, pedido);				
 			}
 		}
