@@ -27,8 +27,8 @@ public class ArrivoySalidaController {
 
 	private MainApp mainApp;
 
-	/*@FXML
-	private Label sucursal;*/
+	@FXML
+	private Label sucursal;
 
 	@FXML
 	private TableView<EnTransitoTableModel> tabla_enTransito;
@@ -62,7 +62,7 @@ public class ArrivoySalidaController {
 
 	@FXML
 	private void initialize() {
-		//this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
+		this.sucursal.setText(Sistema.GetInstance().GetSucursalLoged().GetDireccion());
 
 		// Set las properties para que se actualize la tabla en transito
 		this.patenteColumn.setCellValueFactory(cellData -> cellData.getValue().patenteProperty());
