@@ -50,6 +50,21 @@ public class CargaController {
 
     private ObservableList<CargaTableModel> cargasData;
 
+    @FXML
+    private TableView<PedidosCargadosTableModel> tabla_pedidos_camion;
+
+	@FXML
+    private TableColumn<PedidosCargadosTableModel, String> id_pedidoCargadoColumn;
+    @FXML
+    private TableColumn<PedidosCargadosTableModel, String> destinoCargadoColumn;
+    @FXML
+    private TableColumn<PedidosCargadosTableModel, String> urgenciaCargadoColumn;
+    @FXML
+    private TableColumn<PedidosCargadosTableModel, String> volumenCargadoColumn;
+
+    private ObservableList<PedidosCargadosTableModel> cargadosData;
+
+
 	@FXML
     private void initialize() {
 		// Poner la sucursal actual
@@ -60,6 +75,11 @@ public class CargaController {
         this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.prioridadColumn.setCellValueFactory(cellData -> cellData.getValue().prioridadProperty());
         this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
+
+        this.id_pedidoCargadoColumn.setCellValueFactory(cellData -> cellData.getValue().idCargadoProperty());
+        this.destinoCargadoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoCargadoProperty());
+        this.urgenciaCargadoColumn.setCellValueFactory(cellData -> cellData.getValue().urgenciaCargadoProperty());
+        this.volumenCargadoColumn.setCellValueFactory(cellData -> cellData.getValue().volumenCargadoProperty());
 
 		//medios disponibles para cargar
 		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
@@ -77,7 +97,7 @@ public class CargaController {
 
 		//Inicializar observablearraylist
         this.cargasData = FXCollections.observableArrayList();
-
+        this.cargadosData = FXCollections.observableArrayList();
         this.UpdateCargas();
 	}
 
@@ -94,6 +114,16 @@ public class CargaController {
 			}
 		}
 		this.tabla_cargas.setItems(this.cargasData);
+	}
+
+	public void UpdateCargadosCamion(){
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+		ArrayList<Pedido> pedidosCargados = medio.GetPedidos();
+		if(pedidosCargados.size() > 0){
+			for(int i = 0; i < pedidosCargados.size(); i++){
+
+			}
+		}
 	}
 
 	public CargaController() {
