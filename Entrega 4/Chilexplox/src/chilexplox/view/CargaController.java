@@ -203,7 +203,7 @@ public class CargaController {
 		float porcentaje = (float) carga_actual / medio.GetCapacidadMax() * 100;
 		this.carga.setText(Float.toString(porcentaje) + "%");
 		
-		ViewHelper.ShowMessage("Pedidos optimos cargados correctamente. El camion debe dirigirse a la sucursal " + Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion(), AlertType.WARNING);
+		ViewHelper.ShowMessage("Pedidos optimos cargados correctamente. El camion debe dirigirse a la sucursal " + Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion(), AlertType.INFORMATION);
 		
 	}
 	
@@ -245,7 +245,7 @@ public class CargaController {
 		this.carga.setText(Float.toString(porcentaje) + "%");
 		
 		//Notificar
-		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.WARNING);
+		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.INFORMATION);
 		
 	}
 	
@@ -278,7 +278,7 @@ public class CargaController {
 		this.carga.setText(Float.toString(porcentaje) + "%");
 		
 		//Notificar
-		ViewHelper.ShowMessage("Pedido removido correctamente", AlertType.WARNING);
+		ViewHelper.ShowMessage("Pedido removido correctamente", AlertType.INFORMATION);
 				
 	}
 	
@@ -310,6 +310,9 @@ public class CargaController {
 				operario.CargarMedio(medio, pedido);				
 			}
 		}
+		
+		//Notificar
+		ViewHelper.ShowMessage("Cambios guardados correctamente.", AlertType.INFORMATION);
 	}
 	
 

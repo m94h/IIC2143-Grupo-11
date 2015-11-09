@@ -129,6 +129,12 @@ public class DescargaController {
 		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tabla_descargas.getSelectionModel().getSelectedItem().getId()));
 		
+		if (pedido.GetDestino() != medio.GetDestino()) {
+			//error en el envio
+			//se debe enviar de vuelta.
+			operario.EnviarPedidoDeVuelta(medio, pedido); //este metodo lo devuelve y envia un mensaje
+		}
+		
 		//descargar pedido
 		operario.DescargarPedido(medio, pedido);
 		//actualizar la tabla
