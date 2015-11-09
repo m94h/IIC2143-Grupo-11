@@ -138,6 +138,7 @@ public class Pedido {
     public void Arrivado() {
     	this.estado = Estado.EnSucursalDestino;
     	fechaLlegada = LocalDate.now();
+      this.cargadoEn = null;
     }
     
     public void DeVuelta() {
