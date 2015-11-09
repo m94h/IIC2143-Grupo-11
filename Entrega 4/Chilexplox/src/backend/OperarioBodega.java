@@ -46,8 +46,9 @@ public class OperarioBodega extends Empleado {
 	 * Descargar Pedido de medio 
 	 */
 	public void DescargarPedido(MedioDeTransporte medio, Pedido pedido) {
-		if (medio.listaPedidos.contains(pedido)) {
+		if (medio.GetPedidos().contains(pedido)) {
 			pedido.Arrivado();
+			medio.GetPedidos().remove(pedido);
 		}
 	}
 	
@@ -60,6 +61,18 @@ public class OperarioBodega extends Empleado {
 	
 		//Poner el medio como disponible
 		this.sucursal.SetMedioDisponible(medio);
+	}
+	
+	/*
+	 * Enviar pedido de vuelta
+	 */
+	public void EnviarPedidoDeVuelta(MedioDeTransporte medio, Pedido pedido) {
+		if (medio.GetPedidos().contains(pedido)) {
+			medio.GetPedidos().remove(pedido);
+			pedido.DeVuelta();
+			//enviar mensaje
+			this.CrearMensaje("El pedido ID " + Integer.toString(pedido.GetId()) + " fue enviado de manera incorrecta. Se ha devuelto a sucursal origen.", pedido.GetOrigen());
+		}
 	}
 
 	public void CrearMensaje(String mensaje, Sucursal destino) {
