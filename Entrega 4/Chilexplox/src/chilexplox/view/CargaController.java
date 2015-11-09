@@ -182,8 +182,8 @@ public class CargaController {
 		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
 		
 		//sacar de la tabla de posibles
-		this.pedidosCargadosData.remove(this.tablaPedidosPosibles.getSelectionModel().getSelectedItem());
-		this.tablaPedidosPosibles.setItems(this.pedidosCargadosData);
+		this.pedidosPosiblesData.remove(this.tablaPedidosPosibles.getSelectionModel().getSelectedIndex());
+		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
 		
 		//Notificar
 		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.WARNING);
