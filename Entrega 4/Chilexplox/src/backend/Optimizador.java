@@ -36,28 +36,34 @@ public class Optimizador {
 		for(Entry<Integer, List<int[]>> entry : pedidosPorSucursal.entrySet()) {
 			List<int[]> pedidos = entry.getValue();
 			List<Integer> pedidosSeleccionados = new ArrayList<>();
+			int capacidadActual = medio.capacidadMax;
 			int urgencia = 0;
 			boolean iterando = true;
 			int[] pedido_posible = {0, 0, 0};
 			while (iterando) {
 				for (int[] pedido: pedidos) {
-					if (pedido_posible[0] == 0) {
-						pedido_posible = pedido;
-					}
-					else {
-						if (pedido[1] > pedido_posible[1]){
+					if (pedido[2] <= medio.capacidadActual){
+						if (pedido_posible[0] == 0) {
 							pedido_posible = pedido;
 						}
-						else if (pedido[1] == pedido_posible[1]) {
-							if (pedido[2] < pedido_posible[2]) {
+						else {
+							if (pedido[1] > pedido_posible[1]){
 								pedido_posible = pedido;
+							}
+							else if (pedido[1] == pedido_posible[1]) {
+								if (pedido[2] < pedido_posible[2]) {
+									pedido_posible = pedido;
+								}
 							}
 						}
 					}
 				}
 				pedidosSeleccionados.add(pedido_posible[0]);
+				capacidadActual -= pedido_posible[2];
 				urgencia += pedido_posible[1];
 				pedidos.remove(pedido_posible);
+				if (pedidos.size() == 0 || pedido_posible[0] == 0)
+					iterando = false;
 			}
 			urgenciaSucursal.put(entry.getKey(), urgencia);	
 			optimosSucursal.put(entry.getKey(), pedidosSeleccionados);
