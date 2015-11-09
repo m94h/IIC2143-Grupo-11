@@ -18,14 +18,16 @@ public class Optimizador {
 		// Se busca agrupar todos los pedidos que van a la misma sucursal dentro de un HashMap
 		for(Entry<Integer, Pedido> entry : Sistema.GetInstance().GetPedidos().entrySet()) {
 		    Pedido pedido = entry.getValue();
-		    if (pedido.GetOrigen() == origen) {
-		    	if (pedidosPorSucursal.get(pedido.GetDestino().GetId()) == null) {
-		    		List<int[]> pedidos = new ArrayList<int[]>();
-		    		pedidosPorSucursal.put(pedido.GetDestino().GetId(), pedidos);
-		    	}
-	    		List<int[]> pedidos = pedidosPorSucursal.get(pedido.GetDestino().GetId());
-	    		int[] datosPedido = {pedido.GetId(), pedido.GetUrgencia(), pedido.GetVolumen()};
-	    		pedidos.add(datosPedido);		    	
+		    if (pedido.GetCargadoEn() == null) {
+			    if (pedido.GetOrigen() == origen) {
+			    	if (pedidosPorSucursal.get(pedido.GetDestino().GetId()) == null) {
+			    		List<int[]> pedidos = new ArrayList<int[]>();
+			    		pedidosPorSucursal.put(pedido.GetDestino().GetId(), pedidos);
+			    	}
+		    		List<int[]> pedidos = pedidosPorSucursal.get(pedido.GetDestino().GetId());
+		    		int[] datosPedido = {pedido.GetId(), pedido.GetUrgencia(), pedido.GetVolumen()};
+		    		pedidos.add(datosPedido);		    	
+			    }
 		    }
 		}
 		
@@ -36,28 +38,36 @@ public class Optimizador {
 		for(Entry<Integer, List<int[]>> entry : pedidosPorSucursal.entrySet()) {
 			List<int[]> pedidos = entry.getValue();
 			List<Integer> pedidosSeleccionados = new ArrayList<>();
+			int capacidadActual = medio.capacidadMax;
 			int urgencia = 0;
 			boolean iterando = true;
-			int[] pedido_posible = {0, 0, 0};
 			while (iterando) {
+				int[] pedido_posible = {0, 0, 0};
 				for (int[] pedido: pedidos) {
-					if (pedido_posible[0] == 0) {
-						pedido_posible = pedido;
-					}
-					else {
-						if (pedido[1] > pedido_posible[1]){
+					if (pedido[2] <= capacidadActual){
+						if (pedido_posible[0] == 0) {
 							pedido_posible = pedido;
 						}
-						else if (pedido[1] == pedido_posible[1]) {
-							if (pedido[2] < pedido_posible[2]) {
+						else {
+							if (pedido[1] > pedido_posible[1]){
 								pedido_posible = pedido;
+							}
+							else if (pedido[1] == pedido_posible[1]) {
+								if (pedido[2] < pedido_posible[2]) {
+									pedido_posible = pedido;
+								}
 							}
 						}
 					}
 				}
 				pedidosSeleccionados.add(pedido_posible[0]);
+				capacidadActual -= pedido_posible[2];
 				urgencia += pedido_posible[1];
 				pedidos.remove(pedido_posible);
+				//System.out.println(Integer.toString(pedido_posible[0]) + " " + Integer.toString(pedido_posible[1]) + " " + Integer.toString(pedido_posible[2]));
+				if (pedidos.size() == 0 || pedido_posible[0] == 0) {
+					iterando = false;
+				}
 			}
 			urgenciaSucursal.put(entry.getKey(), urgencia);	
 			optimosSucursal.put(entry.getKey(), pedidosSeleccionados);
