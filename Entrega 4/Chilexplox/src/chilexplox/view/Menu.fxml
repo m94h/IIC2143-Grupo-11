@@ -45,7 +45,7 @@
       <Button fx:id="btnBandejaEntrada" disable="true" layoutX="423.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleBandejaDeEntrada" prefHeight="103.0" prefWidth="150.0" text="Bandeja de Entrada" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="btnArrivoSalida" disable="true" layoutX="51.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleArrivoSalida" prefHeight="103.0" prefWidth="150.0" text="Avisar Arribo o Salida Camiones" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="btnCarga" disable="true" layoutX="423.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleCarga" prefHeight="95.0" prefWidth="150.0" text="Cargar Camiones" />
-      <Button fx:id="btnDescarga" disable="true" layoutX="602.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleDescarga" prefHeight="95.0" prefWidth="150.0" text="Descargar Camiones" wrapText="true" />
+      <Button fx:id="btnDescarga" disable="true" layoutX="602.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleDescarga" prefHeight="95.0" prefWidth="150.0" text="Descargar Camiones" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="628.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="89.0" prefWidth="132.0" text="Salir" />
    </children>
 </AnchorPane>
