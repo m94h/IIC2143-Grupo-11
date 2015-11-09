@@ -152,9 +152,9 @@ public class CargaController {
 		
 		//mostrar % carga
 		this.carga_actual = medio.GetCapacidadActual();
-		int porcentaje = carga_actual / medio.GetCapacidadMax();
-		
-		this.carga.setText(Integer.toString(porcentaje) + "%");
+		float porcentaje = (float) carga_actual / medio.GetCapacidadMax() * 100;
+		this.carga.setText(Float.toString(porcentaje) + "%");
+
 	}
 	
 	@FXML
@@ -200,8 +200,8 @@ public class CargaController {
 		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
 		
 		//mostrar % carga
-		int porcentaje = carga_actual / medio.GetCapacidadMax();
-		this.carga.setText(Integer.toString(porcentaje) + "%");
+		float porcentaje = (float) carga_actual / medio.GetCapacidadMax() * 100;
+		this.carga.setText(Float.toString(porcentaje) + "%");
 		
 		ViewHelper.ShowMessage("Pedidos optimos cargados correctamente. El camion debe dirigirse a la sucursal " + Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion(), AlertType.WARNING);
 		
@@ -241,8 +241,8 @@ public class CargaController {
 		
 		//aumentar % carga
 		carga_actual += pedido.GetVolumen();
-		int porcentaje = carga_actual / medio.GetCapacidadMax();
-		this.carga.setText(Integer.toString(porcentaje) + "%");
+		float porcentaje = (float) carga_actual / medio.GetCapacidadMax() * 100;
+		this.carga.setText(Float.toString(porcentaje) + "%");
 		
 		//Notificar
 		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.WARNING);
@@ -274,8 +274,8 @@ public class CargaController {
 		
 		//disminuir % carga
 		carga_actual -= pedido.GetVolumen();
-		int porcentaje = carga_actual / medio.GetCapacidadMax();
-		this.carga.setText(Integer.toString(porcentaje) + "%");
+		float porcentaje = (float) carga_actual / medio.GetCapacidadMax() * 100;
+		this.carga.setText(Float.toString(porcentaje) + "%");
 		
 		//Notificar
 		ViewHelper.ShowMessage("Pedido removido correctamente", AlertType.WARNING);
