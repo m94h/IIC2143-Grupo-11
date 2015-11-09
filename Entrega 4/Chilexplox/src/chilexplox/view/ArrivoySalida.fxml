@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chilexplox.view.ArrivoySalidaController">
    <children>
-      <Button layoutX="1037.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="56.0" prefWidth="96.0" text="Volver al Menu" />
+      <Button layoutX="1037.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="56.0" prefWidth="96.0" text="Volver al Menu" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="211.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleAvisarArribo" prefHeight="65.0" prefWidth="129.0" text="Avisar Arribo" />
       <Button layoutX="832.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleAvisarSalida" prefHeight="65.0" prefWidth="115.0" text="Avisar Salida" />
       <TableView fx:id="tabla_enTransito" layoutX="27.0" layoutY="168.0" prefHeight="341.0" prefWidth="506.0">
