@@ -466,6 +466,7 @@ public String[] GetDetallePedido(int id_pedido) {
 		Cliente cliente;
 		Sucursal sucursal_origen;
 		Sucursal sucursal_destino;
+		MedioDeTransporte cargadoEn = null;
 		int urgencia;
 		Estado estado = null;
 		LocalDate fecha;
@@ -479,8 +480,10 @@ public String[] GetDetallePedido(int id_pedido) {
 					cliente = this.empresa.GetCliente(parametros[1]);
 					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
-					urgencia = Integer.parseInt(parametros[4]);
-					switch (parametros[5]) {
+					if (parametros[4] != "0")
+						cargadoEn =  GetMedio(parametros[4]);
+					urgencia = Integer.parseInt(parametros[5]);
+					switch (parametros[6]) {
 						case "Viajando":
 							estado = Estado.EnTransito;
 							break;
@@ -491,11 +494,13 @@ public String[] GetDetallePedido(int id_pedido) {
 							estado = Estado.EnSucursalDestino;
 							break;
 					}
-					fecha = LocalDate.parse(parametros[6], formatter);
+					fecha = LocalDate.parse(parametros[7], formatter);
 
 
 					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha);
-
+					pedido.Cargado(cargadoEn);
+					if (cargadoEn != null)
+						cargadoEn.CargarPedido(pedido);
 					this.empresa.AgregarPedido(pedido);
 
 				}
@@ -816,10 +821,11 @@ public String[] GetDetallePedido(int id_pedido) {
 			for (Map.Entry<Integer, Pedido> entry_pedido : this.empresa.GetPedidos().entrySet())
 			{
 				Pedido pedido = entry_pedido.getValue();
-
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-				writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
-
+				if (pedido.GetCargadoEn() != null)
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
+				else
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + "0" + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
 				OrdenCompra orden = pedido.GetOrden();
 				String estado = "deuda";
 				String medio = "";
