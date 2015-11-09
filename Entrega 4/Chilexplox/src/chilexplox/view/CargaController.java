@@ -1,6 +1,8 @@
 package chilexplox.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
@@ -37,7 +39,7 @@ public class CargaController {
 	private ChoiceBox sucursal_destino;
 
 	@FXML
-	private TableView<CargaTableModel> tabla_cargas;
+	private TableView<CargaTableModel> tablaPedidosCargados;
 
 	@FXML
     private TableColumn<CargaTableModel, String> id_pedidoColumn;
@@ -48,7 +50,21 @@ public class CargaController {
     @FXML
     private TableColumn<CargaTableModel, String> volumenColumn;
 
-    private ObservableList<CargaTableModel> cargasData;
+    private ObservableList<CargaTableModel> pedidosCargadosData;
+    
+    @FXML
+	private TableView<CargaTableModel> tablaPedidosPosibles;
+    
+    @FXML
+    private TableColumn<CargaTableModel, String> id_pedidoColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> destinoColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> prioridadColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> volumenColumn2;
+
+    private ObservableList<CargaTableModel> pedidosPosiblesData;
 
 	@FXML
     private void initialize() {
@@ -60,6 +76,10 @@ public class CargaController {
         this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.prioridadColumn.setCellValueFactory(cellData -> cellData.getValue().prioridadProperty());
         this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
+        this.id_pedidoColumn2.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        this.destinoColumn2.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
+        this.prioridadColumn2.setCellValueFactory(cellData -> cellData.getValue().prioridadProperty());
+        this.volumenColumn2.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
 
 		//medios disponibles para cargar
 		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
@@ -70,73 +90,129 @@ public class CargaController {
 
 		//sucursales donde se puede enviar
 		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
-			if(this.sucursal.getText() != entry.getValue().GetDireccion()){
+			if(!this.sucursal.getText().equals(entry.getValue().GetDireccion())){
 				this.sucursal_destino.getItems().add(entry.getValue().GetDireccion());
 			}
 		}
 
 		//Inicializar observablearraylist
-        this.cargasData = FXCollections.observableArrayList();
+        this.pedidosCargadosData = FXCollections.observableArrayList();
+        this.pedidosPosiblesData = FXCollections.observableArrayList();
 
-        this.UpdateCargas();
 	}
+	
+	@FXML
+	private void handleCargaIndividual() {
+		if (this.patente_carga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
 
-	private void UpdateCargas() {
-		//Get pedidos
-		this.cargasData.clear();
+		if (this.sucursal_destino.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un sucursal", AlertType.WARNING);
+			return;
+		}
+		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+		
+		this.pedidosPosiblesData.clear();
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				if(pedido.GetOrigen().GetDireccion() == Sistema.GetInstance().GetSucursalLoged().GetDireccion()){ // Muestra solo los pedidos que salen de esa sucursal
-					this.cargasData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+				// Muestra solo los pedidos que salen de esa sucursal y que van a la sucursal seleccionada
+				if(pedido.GetOrigen().GetDireccion().equals(Sistema.GetInstance().GetSucursalLoged().GetDireccion()) && pedido.GetDestino().GetDireccion().equals(this.sucursal_destino.getSelectionModel().getSelectedItem().toString()) && pedido.GetCargadoEn() == null){ 
+					this.pedidosPosiblesData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
 				}
 			}
 		}
-		this.tabla_cargas.setItems(this.cargasData);
+		this.tablaPedidosPosibles.setItems(this.pedidosPosiblesData);
+		
 	}
-
-	public CargaController() {
-
-	}
-
-	/*
-	 * Handle boton cargar
-	 */
+	
 	@FXML
-	public void handleCargarPedido() {
-		if (this.id_pedido.getText().isEmpty() || this.patente_carga.getSelectionModel().isEmpty()) {
-			ViewHelper.ShowMessage("Ingrese un id de pedido y seleccione un camion", AlertType.WARNING);
+	private void handleCargaOptima(){
+		if (this.patente_carga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
+
+		HashMap<Integer, List<Integer>> opt = Optimizador.Optimizar(medio);
+		
+		int sucursal_opt = opt.keySet().iterator().next();
+		List<Integer> pedidos_opt = opt.get(sucursal_opt);
+		
+		this.pedidosPosiblesData.clear();
+		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
+		if (pedidos != null) { //Si hay pedidos
+			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
+				Pedido pedido = entry.getValue();
+				if (pedidos_opt.contains(pedido.GetId())) {
+					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+				}
+			}
+		}
+		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
+		
+		ViewHelper.ShowMessage("Pedidos optimos cargados correctamente. El camion debe dirigirse a la sucursal " + Sistema.GetInstance().GetSucursal(sucursal_opt).GetDireccion(), AlertType.WARNING);
+		
+	}
+	
+	@FXML
+	private void handleCargaPedidoIndividual() {
+		if (this.patente_carga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
 			return;
 		}
 
-		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
-		if (pedido != null) {
-			if (pedido.GetCargadoEn() != null) {
-				ViewHelper.ShowMessage("Este pedido ya fue cargado a un camion", AlertType.ERROR);
-				return;
-			}
+		if (this.sucursal_destino.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un sucursal", AlertType.WARNING);
+			return;
+		}
+		if (this.tablaPedidosPosibles.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un pedido a cargar", AlertType.WARNING);
+			return;
+		}
+		
+		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tablaPedidosPosibles.getSelectionModel().getSelectedItem().getId()));
+		
+		this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
+		
+		//sacar de la tabla de posibles
+		this.pedidosCargadosData.remove(this.tablaPedidosPosibles.getSelectionModel().getSelectedItem());
+		this.tablaPedidosPosibles.setItems(this.pedidosCargadosData);
+		
+		//Notificar
+		ViewHelper.ShowMessage("Pedido cargado correctamente", AlertType.WARNING);
+		
+	}
+	
+	@FXML
+	private void handleGuardarCambios() {
+		if (this.pedidosCargadosData.size() > 0) {
+			
 			MedioDeTransporte medio = Sistema.GetInstance().GetMedio((this.patente_carga.getSelectionModel().getSelectedItem().toString()));
 			OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
-			if (operario.CargarMedio(medio, pedido)) {
-				ViewHelper.ShowMessage("Pedido cargado correctamente al medio de transporte", AlertType.INFORMATION);
-			} else {
-				ViewHelper.ShowMessage("El medio de transporte seleccionado no tiene capacidad para este pedido", AlertType.ERROR);
+			
+			for (int i = 0; i < this.pedidosCargadosData.size(); i++) {
+				Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.pedidosCargadosData.get(i).getId()));
+				
+				operario.CargarMedio(medio, pedido);				
 			}
 		}
 	}
-
-	public void handlePatenteCargaAction(){
-
-	}
-
+	
 
 	/*
 	 * Para volver al menu principal
 	 */
 	@FXML
 	private void handleVolverMenu() {
-		this.mainApp.MostrarMenu();
+		if (ViewHelper.ShowConfirm("Guarde los cambios antes de salir. Esta seguro de querer salir?"))
+			this.mainApp.MostrarMenu();
 	}
 
 	public void setMainApp(MainApp mainApp) {

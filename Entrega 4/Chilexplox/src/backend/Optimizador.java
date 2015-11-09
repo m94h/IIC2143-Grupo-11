@@ -1,13 +1,16 @@
 package backend;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Optimizador {
 	
-	public List<Integer> Optimizar(MedioDeTransporte medio) {
+	public static HashMap<Integer, List<Integer>> Optimizar(MedioDeTransporte medio) {
 		Sucursal origen = medio.GetOrigen();
 		// pedidosPorSucursal tiene como llave el id de la sucursal y la lista de pedidos
 		Map<Integer,List<int[]>> pedidosPorSucursal = new HashMap<Integer,List<int[]>>(); 
@@ -69,6 +72,9 @@ public class Optimizador {
 			}
 		}
 		
-		return optimosSucursal.get(id_sucursal_seleccionada);
+		HashMap<Integer, List<Integer>> rt = new HashMap<>();
+		rt.put(id_sucursal_seleccionada, optimosSucursal.get(id_sucursal_seleccionada));
+				
+		return rt;
 	}
 }
