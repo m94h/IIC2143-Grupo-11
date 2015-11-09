@@ -62,7 +62,6 @@ public abstract class MedioDeTransporte {
 	 */
 	public void ArribarMedio() {
 		this.estado = Estado.EnSucursalDestino;
-		System.out.println(this.estado.toString());
 	}
 
 	public int GetCapacidadDisponible(){
@@ -114,5 +113,10 @@ public abstract class MedioDeTransporte {
 		this.capacidadActual = 0;
 		this.desocupado = true;
 		this.listaPedidos.clear();
+		
+		//setear como disponible para partir
+		this.estado = Estado.EnSucursalOrigen;
+		this.origen = this.destino;
+		this.destino = null;
 	}
 }
