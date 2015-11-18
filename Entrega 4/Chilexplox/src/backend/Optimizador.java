@@ -25,35 +25,38 @@ public class Optimizador {
 			    		pedidosPorSucursal.put(pedido.GetDestino().GetId(), pedidos);
 			    	}
 		    		List<int[]> pedidos = pedidosPorSucursal.get(pedido.GetDestino().GetId());
-		    		int[] datosPedido = {pedido.GetId(), pedido.GetUrgencia(), pedido.GetVolumen()};
+		    		int[] datosPedido = {pedido.GetId(),pedido.GetPrioridad(), pedido.GetVolumen()};
 		    		pedidos.add(datosPedido);		    	
 			    }
 		    }
 		}
 		
 		// Optimizamos para cada sucursal
-		Map<Integer, Integer> urgenciaSucursal = new HashMap<Integer,Integer>();
+		Map<Integer, Integer> prioridadSucursal = new HashMap<Integer,Integer>();
 		Map<Integer, List<Integer>> optimosSucursal = new HashMap<Integer,List<Integer>>();
 		
 		for(Entry<Integer, List<int[]>> entry : pedidosPorSucursal.entrySet()) {
 			List<int[]> pedidos = entry.getValue();
 			List<Integer> pedidosSeleccionados = new ArrayList<>();
 			int capacidadActual = medio.capacidadMax;
-			int urgencia = 0;
+			int prioridad = 0;
 			boolean iterando = true;
 			while (iterando) {
-				int[] pedido_posible = {0, 0, 0};
+				int[] pedido_posible = {0, 0, 0};   // pedido[0]: id , pedido[1]: prioridad , pedido[2]: volumen  
 				for (int[] pedido: pedidos) {
 					if (pedido[2] <= capacidadActual){
 						if (pedido_posible[0] == 0) {
+							// Estamos en la primera iteracion
 							pedido_posible = pedido;
 						}
 						else {
 							if (pedido[1] > pedido_posible[1]){
+								// Elegimos el pedido con mayor prioridad
 								pedido_posible = pedido;
 							}
 							else if (pedido[1] == pedido_posible[1]) {
 								if (pedido[2] < pedido_posible[2]) {
+									// Si tienen la misma prioridad, se elige el de menor tamaño (el que tiene mayor urgencia)
 									pedido_posible = pedido;
 								}
 							}
@@ -62,22 +65,21 @@ public class Optimizador {
 				}
 				pedidosSeleccionados.add(pedido_posible[0]);
 				capacidadActual -= pedido_posible[2];
-				urgencia += pedido_posible[1];
+				prioridad += pedido_posible[1];
 				pedidos.remove(pedido_posible);
-				//System.out.println(Integer.toString(pedido_posible[0]) + " " + Integer.toString(pedido_posible[1]) + " " + Integer.toString(pedido_posible[2]));
 				if (pedidos.size() == 0 || pedido_posible[0] == 0) {
 					iterando = false;
 				}
 			}
-			urgenciaSucursal.put(entry.getKey(), urgencia);	
+			prioridadSucursal.put(entry.getKey(), prioridad);	
 			optimosSucursal.put(entry.getKey(), pedidosSeleccionados);
 		}
 		
 		int id_sucursal_seleccionada = 0;
-		int urgencia_sucursal_seleccionada = 0;
-		for(Entry<Integer, Integer> entry : urgenciaSucursal.entrySet()) {
-			if (entry.getValue() > urgencia_sucursal_seleccionada) {
-				urgencia_sucursal_seleccionada = entry.getValue();
+		int prioridad_sucursal_seleccionada = 0;
+		for(Entry<Integer, Integer> entry : prioridadSucursal.entrySet()) {
+			if (entry.getValue() > prioridad_sucursal_seleccionada) {
+				prioridad_sucursal_seleccionada = entry.getValue();
 				id_sucursal_seleccionada = entry.getKey();
 			}
 		}

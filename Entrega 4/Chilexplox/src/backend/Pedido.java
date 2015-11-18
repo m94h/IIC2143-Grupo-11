@@ -13,6 +13,7 @@ public class Pedido {
 	private Sucursal destino;
 	public Estado estado;
 	private int urgencia;
+  private int prioridad;
 	private LocalDate fechaCreacion;
 	private LocalDate fechaEnvio;
 	private LocalDate fechaLlegada;
@@ -46,6 +47,7 @@ public class Pedido {
       this.estado = estado;
       this.encomiendas = new HashMap<Integer, Encomienda>();
       this.fechaCreacion = fecha;
+      this.CalcularPrioridad();
     }
 
     /*
@@ -181,4 +183,19 @@ public class Pedido {
  	public void SetEnTransito(){
  		this.estado = Estado.EnTransito;
  	}
+
+  public void AumentarUrgencia() {
+    if (this.urgencia < 3) {
+      this.urgencia++;
+      this.CalcularPrioridad();
+    }
+  }
+
+  private void CalcularPrioridad() {
+    this.prioridad = (this.urgencia * 7) + (this.volumenTotal * 3);
+  }
+
+  public int GetPrioridad() {
+    return this.prioridad;
+  }
 }
