@@ -249,10 +249,16 @@ public String[] GetDetalleMedio(String patente) {
 		detalles[3] = medio.GetOrigen().GetDireccion();
 	if (medio.IsRadioactivo())
 		detalles[4] = "Si";
+	else
+		detalles[4] = "No";
 	if (medio.IsFragil())
 		detalles[5] = "Si";
+	else
+		detalles[5] = "No";
 	if (medio.IsRefrigerado())
 		detalles[6] = "Si";
+	else
+		detalles[6] = "No";
 	
 	return detalles;
 }

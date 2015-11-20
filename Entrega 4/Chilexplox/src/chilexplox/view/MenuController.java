@@ -49,6 +49,9 @@ public class MenuController {
 	@FXML
 	private Button btnDetallePedido;
 
+	@FXML
+	private Button btnDetalleCamion;
+
 
 	private MainApp mainApp;
 
@@ -91,6 +94,7 @@ public class MenuController {
 		this.btnEnviarMensaje.setDisable(true);
 		this.btnArrivoSalida.setDisable(true);
 		this.btnBandejaEntrada.setDisable(true);
+		this.btnDetalleCamion.setDisable(false);  // cambiar
 
 		if (usuario.GetTipo().equals("bodega")) {
 			this.btnCarga.setDisable(false);
@@ -155,6 +159,14 @@ public class MenuController {
 		String id_pedido = ViewHelper.PromptText("Ingrese el id del pedido que desea ver");
 		if (id_pedido != null) {
 			this.mainApp.mostrarDetallePedido(Integer.parseInt((id_pedido)));
+		}
+	}
+	
+	@FXML
+	public void handleDetalleCamion() {
+		String patente = ViewHelper.PromptText("Ingrese la patente del camion que desea ver");
+		if (patente != null) {
+			this.mainApp.mostrarDetalleCamion(patente);
 		}
 	}
 

@@ -47,5 +47,6 @@
       <Button fx:id="btnCarga" disable="true" layoutX="423.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleCarga" prefHeight="95.0" prefWidth="150.0" text="Cargar Camiones" />
       <Button fx:id="btnDescarga" disable="true" layoutX="602.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleDescarga" prefHeight="95.0" prefWidth="150.0" text="Descargar Camiones" textAlignment="CENTER" wrapText="true" />
       <Button layoutX="628.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="89.0" prefWidth="132.0" text="Salir" />
+      <Button fx:id="btnDetalleCamion" disable="true" layoutX="602.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleDetalleCamion" prefHeight="103.0" prefWidth="150.0" text="Ver Camion" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

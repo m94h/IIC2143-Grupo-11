@@ -243,6 +243,26 @@ public class MainApp extends Application {
         }
 	}
 
+    public void mostrarDetalleCamion(String patente) {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/CamionDetalle.fxml"));
+            AnchorPane detalle = (AnchorPane) loader.load();
+            
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(detalle);
+            
+            // Dar acceso al controlador
+            CamionDetalleController controllerView = loader.getController();
+            controllerView.setMainApp(this, patente);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+    
     @Override
     public void stop(){
         System.out.println("Stage is closing");

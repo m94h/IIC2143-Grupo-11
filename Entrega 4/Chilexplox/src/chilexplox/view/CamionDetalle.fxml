@@ -24,7 +24,7 @@
             <Label alignment="CENTER" prefHeight="16.0" prefWidth="230.0" text="Capacidad Máxima" GridPane.rowIndex="1" />
             <Label alignment="CENTER" prefHeight="16.0" prefWidth="230.0" text="Capacidad Disponible" GridPane.rowIndex="2" />
             <Label alignment="CENTER" prefHeight="16.0" prefWidth="230.0" text="Ubicación" GridPane.rowIndex="3" />
-            <Label fx:id="patente" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" />
+            <Label fx:id="Patente" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" />
             <Label fx:id="capacidadMax" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="capacidadDisponible" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="ubicacion" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
