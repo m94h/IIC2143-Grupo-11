@@ -16,6 +16,7 @@ public abstract class MedioDeTransporte {
 	protected Sucursal destino;
 	protected Estado estado;
 	protected ArrayList<Pedido> listaPedidos;
+	protected ArrayList<Advertencia> cualidades;
 
 
 	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino, Estado estado) {
@@ -27,6 +28,7 @@ public abstract class MedioDeTransporte {
 		this.estado = estado;
 		//this.estado = Estado.EnSucursalOrigen;
 		this.listaPedidos = new ArrayList<Pedido>();
+		this.cualidades = new ArrayList<Advertencia>();
 	}
 
 	public void setOrigen(Sucursal origen){
