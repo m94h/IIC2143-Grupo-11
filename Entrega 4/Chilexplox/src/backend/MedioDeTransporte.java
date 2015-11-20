@@ -88,6 +88,24 @@ public abstract class MedioDeTransporte {
 		return this.listaPedidos;
 	}
 
+	public boolean IsRadioactivo() {
+		if (this.cualidades.contains(Advertencia.Radioactivo))
+			return true;
+		return false;
+	}
+	
+	public boolean IsFragil() {
+		if (this.cualidades.contains(Advertencia.Fragil))
+			return true;
+		return false;
+	}
+	
+	public boolean IsRefrigerado() {
+		if (this.cualidades.contains(Advertencia.Refrigerado))
+			return true;
+		return false;
+	}
+
 	public boolean CargarPedido(Pedido pedido){
 		if(this.capacidadActual < this.capacidadMax){
 			listaPedidos.add(pedido);

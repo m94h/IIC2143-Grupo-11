@@ -192,7 +192,6 @@ public class Sistema {
 	}
 
 public String[] GetDetallePedido(int id_pedido) {
-	System.out.println(id_pedido);
 	Pedido pedido = GetPedido(id_pedido);
 	String[] detalles = new String[14];
 	detalles[0] = pedido.GetCliente().GetNombre();
@@ -235,6 +234,26 @@ public String[] GetDetallePedido(int id_pedido) {
 	detalles[13] = "Aun no recibido";
 
 
+	return detalles;
+}
+
+public String[] GetDetalleMedio(String patente) {
+	MedioDeTransporte medio = GetMedio(patente);
+	String[] detalles = new String[7];
+	detalles[0] = patente;
+	detalles[1] = Integer.toString(medio.GetCapacidadMax());
+	detalles[2] = Integer.toString(medio.GetCapacidadDisponible());
+	if (medio.GetEstado() == Estado.EnTransito)
+		detalles[3] = "En Tránsito";
+	else
+		detalles[3] = medio.GetOrigen().GetDireccion();
+	if (medio.IsRadioactivo())
+		detalles[4] = "Si";
+	if (medio.IsFragil())
+		detalles[5] = "Si";
+	if (medio.IsRefrigerado())
+		detalles[6] = "Si";
+	
 	return detalles;
 }
 
