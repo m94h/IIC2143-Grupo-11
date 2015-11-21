@@ -164,6 +164,10 @@ public class Sistema {
 		return empresa.GetMediosEnTransito();
 	}
 
+	public void AgregarViaje(Viaje viaje) {
+		empresa.AgregarViaje(viaje);
+	}
+
 
 	// Interaccion con usuario
 	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
@@ -191,6 +195,8 @@ public class Sistema {
 		this.empresa.BorrarCliente(rut);
 	}
 
+
+// Detalles de reportes
 public String[] GetDetallePedido(int id_pedido) {
 	Pedido pedido = GetPedido(id_pedido);
 	String[] detalles = new String[14];
@@ -761,6 +767,57 @@ public String[] GetDetalleViaje(String patente) {
 		}
 	}
 
+		/*
+	 * Cargar Viajes
+	 */
+	private void CargarViajes() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/viajes.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Viaje viaje;
+
+		String patente;
+		Empleado conductor;
+		Sucursal origen;
+		Sucursal destino;
+		LocalDate fechaSalida; 
+		LocalDate fechaLlegada; 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		
+
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					patente = parametros[0];
+					conductor = this.empresa.GetEmpleado(parametros[1]);
+					origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
+					destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
+					fechaSalida = LocalDate.parse(parametros[4], formatter);
+					if (parametros[5].equals("-")) {
+						viaje = new Viaje(patente, conductor, origen, destino, fechaSalida);
+						this.GetMedio(patente).setViaje(viaje);
+					}
+					else {
+						fechaLlegada = LocalDate.parse(parametros[5], formatter);
+						viaje = new Viaje(patente, conductor, origen, destino, fechaSalida, fechaLlegada);
+					}
+
+					this.AgregarViaje(viaje);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		}
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
 	/*
 	 * Caller de Cargar los archivos
 	 */
@@ -774,6 +831,7 @@ public String[] GetDetalleViaje(String patente) {
 		this.CargarEncomiendas();
 		this.CargarOrdenes();
 		this.CargarMensajes();
+		this.CargarViajes();
 	}
 
 	/*
@@ -911,6 +969,27 @@ public String[] GetDetalleViaje(String patente) {
 						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()));
 				}
 				writer_camiones.close();
+			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
+				// Archivo no encontrado o enconding malo
+			}
+
+				//guardar archivo de camiones
+			try {
+				PrintWriter writer_viajes = new PrintWriter("archivos/viajes.data", "UTF-8");
+
+				//Iterar sobre los viajes
+				for (Map.Entry<String, Viaje> entry : this.empresa.GetViajes().entrySet())
+				{	
+					Viaje viaje = entry.getValue();
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+					
+					if(viaje.GetFechaLlegada() == null)
+						writer_viajes.println(viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter));
+					else
+						writer_viajes.println(viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter) + ";" + viaje.GetFechaLlegada().format(formatter));
+
+					}
+				writer_viajes.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
 				// Archivo no encontrado o enconding malo
 		}

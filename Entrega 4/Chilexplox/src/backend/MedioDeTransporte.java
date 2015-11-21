@@ -2,6 +2,8 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+
 
 public abstract class MedioDeTransporte {
 	protected String patente;
@@ -15,6 +17,7 @@ public abstract class MedioDeTransporte {
 	protected Sucursal origen;
 	protected Sucursal destino;
 	protected Estado estado;
+	protected Viaje viaje;
 	protected ArrayList<Pedido> listaPedidos;
 	protected ArrayList<Advertencia> cualidades;
 
@@ -43,6 +46,10 @@ public abstract class MedioDeTransporte {
 		this.conductor = conductor;
 	}
 
+	public void setViaje(Viaje viaje){
+		this.viaje = viaje;
+	}
+
 	/*
 	 * Para viajar, cambiamos todos los estados de los pedidos
 	 * y el estado del medio a entransito
@@ -57,6 +64,8 @@ public abstract class MedioDeTransporte {
 				pedido.SetConductor(conductor);
 			}
 		}
+		this.viaje = new Viaje(this.patente, this.conductor, this.origen, this.destino, LocalDate.now());
+		Sistema.GetInstance().AgregarViaje(viaje);
 	}
 	
 	/*
@@ -64,6 +73,7 @@ public abstract class MedioDeTransporte {
 	 */
 	public void ArribarMedio() {
 		this.estado = Estado.EnSucursalDestino;
+		this.viaje.AvisarLlegada();
 	}
 
 	public int GetCapacidadDisponible(){

@@ -8,10 +8,10 @@ public class OperarioCamion extends Empleado {
 	}
 
 	public void DespacharMedio(MedioDeTransporte medio, Sucursal origen){
+		medio.setConductor((Empleado)this);
 		origen.EnviarMedio(medio);
 		medio.Viajar();
 		Sistema.GetInstance().AgregarMediosEnTransito(medio);
-		medio.setConductor((Empleado)this);
 	}
 
 	public void AvisarArriboMedio(MedioDeTransporte medio, Sucursal destino){
