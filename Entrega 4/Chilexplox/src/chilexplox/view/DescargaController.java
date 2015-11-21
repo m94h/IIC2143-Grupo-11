@@ -130,13 +130,49 @@ public class DescargaController {
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tabla_descargas.getSelectionModel().getSelectedItem().getId()));
 		
 		if (pedido.GetDestino() != medio.GetDestino()) {
-			//error en el envio
-			//se debe enviar de vuelta.
-			operario.EnviarPedidoDeVuelta(medio, pedido); //este metodo lo devuelve y envia un mensaje
+			if (!ViewHelper.ShowConfirm("Al parece el destino de este pedido no coincide con esta sucursal. Esta seguro que desea descargarlo? De lo contrario puede marcarlo como erroneo y retornarlo")) {
+				return;
+			}
 		}
 		
 		//descargar pedido
 		operario.DescargarPedido(medio, pedido);
+		//actualizar la tabla
+		this.ActualizarTablaPedidos();
+		
+		if (medio.GetPedidos().size() == 0) {
+			operario.MedioDescargado(medio);
+			ViewHelper.ShowMessage("Ya no quedan mas pedidos. El camion ha sido descargado completamente.", AlertType.INFORMATION);
+			this.UpdateMediosArrivados();
+		}
+		
+	}
+	
+	@FXML
+	public void handlePedidoErroneo() {
+		if (this.patente_descarga.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+
+		if (this.tabla_descargas.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un pedido", AlertType.WARNING);
+			return;
+		}
+		
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_descarga.getSelectionModel().getSelectedItem().toString());
+		OperarioBodega operario = (OperarioBodega) Sistema.GetInstance().GetUsuarioLoged();
+		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tabla_descargas.getSelectionModel().getSelectedItem().getId()));
+		
+		String mensaje = ViewHelper.PromptText("Ingrese el mensaje que explica el error de este pedido. Este mensaje sera destinado a un operario de ventas de la sucursal correspondiente para que arregle la situacion");
+		
+		if (mensaje.isEmpty()) {
+			ViewHelper.ShowMessage("Debe ingresar un mensaje", AlertType.ERROR);
+			return;
+		}
+		//se debe enviar de vuelta.
+		operario.EnviarPedidoDeVuelta(medio, pedido, mensaje); //este metodo lo devuelve y envia un mensaje
+		
 		//actualizar la tabla
 		this.ActualizarTablaPedidos();
 		

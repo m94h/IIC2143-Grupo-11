@@ -66,12 +66,12 @@ public class OperarioBodega extends Empleado {
 	/*
 	 * Enviar pedido de vuelta
 	 */
-	public void EnviarPedidoDeVuelta(MedioDeTransporte medio, Pedido pedido) {
+	public void EnviarPedidoDeVuelta(MedioDeTransporte medio, Pedido pedido, String mensaje) {
 		if (medio.GetPedidos().contains(pedido)) {
 			medio.GetPedidos().remove(pedido);
 			pedido.DeVuelta();
 			//enviar mensaje
-			this.CrearMensaje("El pedido ID " + Integer.toString(pedido.GetId()) + " fue enviado de manera incorrecta. Se ha devuelto a sucursal origen.", pedido.GetOrigen());
+			this.CrearMensaje("El pedido ID " + Integer.toString(pedido.GetId()) + " fue marcado como erroneo. El Operario de bodega escribio el siguiente mensaje: " + mensaje, pedido.GetOrigen());
 		}
 	}
 

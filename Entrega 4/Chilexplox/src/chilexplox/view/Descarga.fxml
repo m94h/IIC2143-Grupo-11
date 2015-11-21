@@ -42,7 +42,8 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <Button layoutX="816.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleDescargarPedido" prefHeight="47.0" prefWidth="172.0" text="Descargar Pedido" textAlignment="CENTER" />
+      <Button layoutX="711.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleDescargarPedido" prefHeight="47.0" prefWidth="172.0" text="Descargar Pedido" textAlignment="CENTER" />
       <Button alignment="CENTER" layoutX="303.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleDescargarCamionCompleto" prefHeight="72.0" prefWidth="150.0" text="Descargar Camion Completo" textAlignment="CENTER" wrapText="true" />
+      <Button layoutX="933.0" layoutY="539.0" mnemonicParsing="false" onAction="#handlePedidoErroneo" prefHeight="47.0" prefWidth="172.0" text="Pedido Erroneo, retornar al origen" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
