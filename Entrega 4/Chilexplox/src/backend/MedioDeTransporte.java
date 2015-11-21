@@ -76,6 +76,8 @@ public abstract class MedioDeTransporte {
 
 	public Sucursal GetDestino(){return this.destino;}
 
+	public Empleado GetConductor(){return this.conductor;}
+
 	public String GetPatente() {return this.patente;}
 
 	public int GetCapacidadMax() {return this.capacidadMax;}

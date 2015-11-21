@@ -30,8 +30,8 @@
             <Label fx:id="ubicacion" alignment="CENTER" prefHeight="16.0" prefWidth="295.0" text="Sin Datos" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <Button layoutX="288.0" layoutY="264.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="119.0" text="Volver al menu" />
-      <Button fx:id="btnViaje" layoutX="55.0" layoutY="264.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="119.0" text="Ver Viaje" />
+      <Button layoutX="288.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleVolver" prefHeight="45.0" prefWidth="119.0" text="Volver al menu" />
+      <Button fx:id="btnViaje" layoutX="55.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleVerViaje" prefHeight="45.0" prefWidth="119.0" text="Ver Viaje" />
       <GridPane gridLinesVisible="true" layoutX="43.0" layoutY="183.0" prefHeight="64.0" prefWidth="407.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="196.0" />

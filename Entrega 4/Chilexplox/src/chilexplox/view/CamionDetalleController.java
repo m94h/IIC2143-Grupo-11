@@ -11,6 +11,8 @@ public class CamionDetalleController {
 	
 	private MainApp mainApp;
 	
+	private String patente;
+	
 	@FXML
 	private Label Patente;
 	
@@ -37,12 +39,13 @@ public class CamionDetalleController {
 	
 	public void setMainApp(MainApp mainApp, String patente) {
         this.mainApp = mainApp;
-        this.MostrarDetalle(patente);
+        this.patente = patente;
+        this.MostrarDetalle();
     }
 	
-	public void MostrarDetalle(String patente) {
-		if (Sistema.GetInstance().GetMedio(patente) != null) {
-			String[] detalles = Sistema.GetInstance().GetDetalleMedio(patente);
+	public void MostrarDetalle() {
+		if (Sistema.GetInstance().GetMedio(this.patente) != null) {
+			String[] detalles = Sistema.GetInstance().GetDetalleMedio(this.patente);
 			Patente.setText(detalles[0]);
 			capacidadMax.setText(detalles[1]);
 			capacidadDisponible.setText(detalles[2]);
@@ -55,5 +58,15 @@ public class CamionDetalleController {
 			ViewHelper.ShowMessage("No existe un medio con patente: " + patente, AlertType.ERROR);
 			this.mainApp.MostrarMenu();
 		}
+	}
+	
+	@FXML
+	public void handleVerViaje() {
+		this.mainApp.mostrarDetalleViaje(patente);;
+	}
+	
+	@FXML
+    private void handleVolver() {
+		this.mainApp.MostrarMenu();
 	}
 }
