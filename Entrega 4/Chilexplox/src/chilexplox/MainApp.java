@@ -263,6 +263,26 @@ public class MainApp extends Application {
         }
 	}
     
+    public void mostrarDetalleViaje(String patente) {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/Viaje.fxml"));
+            AnchorPane detalle = (AnchorPane) loader.load();
+            
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(detalle);
+            
+            // Dar acceso al controlador
+            ViajeController controllerView = loader.getController();
+            controllerView.setMainApp(this, patente);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+    
     public void mostrarReporteGanancias() {
     	try {
             // Load menu

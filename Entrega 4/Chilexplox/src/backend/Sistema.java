@@ -263,6 +263,18 @@ public String[] GetDetalleMedio(String patente) {
 	return detalles;
 }
 
+public String[] GetDetalleViaje(String patente) {
+	MedioDeTransporte medio = GetMedio(patente);
+	String[] detalles = new String[5];
+	detalles[0] = medio.GetOrigen().GetDireccion();
+	detalles[1] = medio.GetDestino().GetDireccion();
+	detalles[2] = "Guardar el conductor"; //medio.GetConductor().GetNombre();
+	detalles[3] = patente;
+	detalles[4] = Integer.toString(medio.GetCapacidadActual());
+	
+	return detalles;
+}
+
 	/*
 	public String SolicitarCamion(OperarioBodega solicitador){
 		solicitador.PedirCamion();
