@@ -431,6 +431,11 @@ public class ListadoPedidosController {
 			ViewHelper.ShowMessage("Seleccione una sucursal de destino.", AlertType.ERROR);
 			return;
 		}
+		//origen distinto de destino
+		if (this.destino.getSelectionModel().getSelectedItem().equals(this.origen.getSelectionModel().getSelectedItem())) {
+			ViewHelper.ShowMessage("La Sucursal de origen debe ser distinta a la sucursal de destino.", AlertType.ERROR);
+			return;
+		}
 		if (this.urgencia.getSelectionModel().isEmpty()) {
 			ViewHelper.ShowMessage("Seleccione una urgencia.", AlertType.ERROR);
 			return;

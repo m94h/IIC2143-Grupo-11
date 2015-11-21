@@ -263,6 +263,26 @@ public class MainApp extends Application {
         }
 	}
     
+    public void mostrarReporteGanancias() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ReporteGanancias.fxml"));
+            AnchorPane reporte = (AnchorPane) loader.load();
+            
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(reporte);
+            
+            // Dar acceso al controlador
+            ReporteGananciasController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+    
     @Override
     public void stop(){
         System.out.println("Stage is closing");

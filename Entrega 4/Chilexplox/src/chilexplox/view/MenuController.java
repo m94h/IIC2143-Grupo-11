@@ -51,6 +51,9 @@ public class MenuController {
 
 	@FXML
 	private Button btnDetalleCamion;
+	
+	@FXML
+	private Button btnReportes;
 
 
 	private MainApp mainApp;
@@ -175,5 +178,9 @@ public class MenuController {
 		Sistema.GetInstance().CambiarSucursal(this.sucursales.getSelectionModel().getSelectedItem().toString());
 	}
 
+	@FXML
+	public void handleGenerarReporteGanancias() {
+		this.mainApp.mostrarReporteGanancias();
+	}
 
 }
