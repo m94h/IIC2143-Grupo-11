@@ -53,6 +53,8 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total Ingresos:" GridPane.rowIndex="1" />
             <Label fx:id="cantidadPedidos" text="0" GridPane.columnIndex="1" />
             <Label fx:id="totalIngresos" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad de Viajes:" GridPane.rowIndex="2" />
+            <Label text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Separator layoutX="34.0" layoutY="378.0" prefHeight="3.0" prefWidth="338.0" />
