@@ -488,7 +488,7 @@ public String[] GetDetalleViaje(String patente) {
 	}
 
 	/*
-	 * Cargar pedidos
+	 * Cargar Pedidos
 	 */
 	private void CargarPedidos() {
 		try {
@@ -503,7 +503,6 @@ public String[] GetDetalleViaje(String patente) {
 		Cliente cliente;
 		Sucursal sucursal_origen;
 		Sucursal sucursal_destino;
-		MedioDeTransporte cargadoEn = null;
 		int urgencia;
 		Estado estado = null;
 		LocalDate fecha;
@@ -511,17 +510,18 @@ public String[] GetDetalleViaje(String patente) {
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
+				MedioDeTransporte cargadoEn = null;
 				try {
 					parametros = sCurrentLine.split(";");
 					id_pedido = Integer.parseInt(parametros[0]);
 					cliente = this.empresa.GetCliente(parametros[1]);
 					sucursal_origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
 					sucursal_destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
-					if (parametros[4] != "0")
+					if (!parametros[4].equals("0")) 
 						cargadoEn =  GetMedio(parametros[4]);
 					urgencia = Integer.parseInt(parametros[5]);
 					switch (parametros[6]) {
-						case "Viajando":
+						case "EnTransito":
 							estado = Estado.EnTransito;
 							break;
 						case "EnSucursalOrigen":
@@ -628,8 +628,6 @@ public String[] GetDetalleViaje(String patente) {
 					km = Integer.parseInt(parametros[6]);
 					estado = Estado.values()[Integer.parseInt(parametros[7])];
 					
-					System.out.println(estado.toString());
-
 					camion = new Camion(patente, marca, modelo, origen, destino, cap_maxima, km, estado);
 					this.empresa.AgregarTransporte(camion);
 					
@@ -659,7 +657,10 @@ public String[] GetDetalleViaje(String patente) {
 			// Error en la lectura
 		}
 	}
-
+	
+	/*
+	 * Cargar Ordenes
+	 */
 	private void CargarOrdenes() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/ordenes.data"));
@@ -715,7 +716,10 @@ public String[] GetDetalleViaje(String patente) {
 			// Error en la lectura
 		}
 	}
-
+	
+	/*
+	 * Cargar Mensajes
+	 */
 	private void CargarMensajes() {
 		try {
 			br = new BufferedReader(new FileReader("archivos/mensajes.data"));
@@ -765,9 +769,9 @@ public String[] GetDetalleViaje(String patente) {
 		this.CargarSucursales();
 		this.CargarEmpleados();
 		this.CargarClientes();
+		this.CargarCamiones();
 		this.CargarPedidos();
 		this.CargarEncomiendas();
-		this.CargarCamiones();
 		this.CargarOrdenes();
 		this.CargarMensajes();
 	}
@@ -905,7 +909,6 @@ public String[] GetDetalleViaje(String patente) {
 						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()));
 					else
 						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()));
-					System.out.println(Estado.valueOf(camion.estado.toString()).ordinal());
 				}
 				writer_camiones.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e2) {

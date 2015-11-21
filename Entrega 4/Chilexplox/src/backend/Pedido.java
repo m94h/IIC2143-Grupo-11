@@ -153,7 +153,6 @@ public class Pedido {
      */
   	public void AgregarEncomienda (Encomienda encomienda) {
     	this.encomiendas.put(encomienda.GetId(), encomienda);
-    	System.out.println("guardado");
   	}
 
   	public int CalcularMonto() {
