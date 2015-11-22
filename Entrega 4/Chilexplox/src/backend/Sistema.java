@@ -179,8 +179,8 @@ public class Sistema {
 		return this.empresa.GetError(id);
 	}
 	
-	public void AgregarError(Empleado empleado, String mensaje) {
-		this.empresa.AgregarError(empleado, mensaje);
+	public void AgregarError(Error error) {
+		this.empresa.AgregarError(error);
 	}
 	
 	public Map<String, Empleado> GetEmpleados() {
@@ -849,6 +849,46 @@ public String[] GetDetalleViaje(String patente) {
 	}
 
 	/*
+	 * Cargar Viajes
+	 */
+	private void CargarErrores() {
+		try {
+			br = new BufferedReader(new FileReader("archivos/errores.data"));
+		} catch (FileNotFoundException e1) {
+			// Archivo no encontrado
+		}
+
+		Error error;
+
+		int id;
+		Empleado empleado;
+		String mensaje;
+		LocalDate fecha; 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");		
+
+		try {
+			while ((sCurrentLine = br.readLine()) != null) {
+				try {
+					parametros = sCurrentLine.split(";");
+					id = Integer.parseInt(parametros[0]);
+					empleado = this.empresa.GetEmpleado(parametros[1]);
+					mensaje = parametros[2];
+					fecha = LocalDate.parse(parametros[3], formatter);
+					
+					error = new Error(id, empleado, mensaje, fecha);
+					this.AgregarError(error);
+				}
+				catch(Exception e) {
+					// Error en los archivos
+				}
+			}
+		}
+		catch (IOException e) {
+			// Error en la lectura
+		}
+	}
+
+	/*
 	 * Caller de Cargar los archivos
 	 */
 	private void CargarTodo() {
@@ -935,8 +975,7 @@ public String[] GetDetalleViaje(String patente) {
 
 			writer_clientes.close();
 
-		}
-		catch (FileNotFoundException | UnsupportedEncodingException e1) {
+		} catch (FileNotFoundException | UnsupportedEncodingException e1) {
 			// Archivo no encontrado o enconding malo
 		}
 
@@ -1003,7 +1042,7 @@ public String[] GetDetalleViaje(String patente) {
 				// Archivo no encontrado o enconding malo
 			}
 
-				//guardar archivo de camiones
+				//guardar archivo de viajes
 			try {
 				PrintWriter writer_viajes = new PrintWriter("archivos/viajes.data", "UTF-8");
 
@@ -1020,8 +1059,25 @@ public String[] GetDetalleViaje(String patente) {
 
 					}
 				writer_viajes.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e2) {
-				// Archivo no encontrado o enconding malo
-		}
+			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
+					// Archivo no encontrado o enconding malo
+			}
+
+			//guardar archivo de errores
+			try {
+				PrintWriter writer_errores = new PrintWriter("archivos/errores.data", "UTF-8");
+
+				//Iterar sobre los viajes
+				for (Map.Entry<Integer, Error> entry : this.empresa.GetErrores().entrySet())
+				{	
+					Error error = entry.getValue();
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+					writer_errores.println(Integer.toString(error.GetID()) + ";" + error.GetEmpleado().GetRut() + ";" + error.GetMensaje() + ";" + error.GetFecha().format(formatter));
+					}
+				writer_errores.close();
+			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
+					// Archivo no encontrado o enconding malo
+			}
 	}
 }

@@ -82,8 +82,10 @@ public class OperarioBodega extends Empleado {
 			String mensajeError = "Pedido ID " + Integer.toString(pedido.GetId()) + " fue enviado de manera incorrecta a sucursal " + medio.GetDestino().GetDireccion();
 			
 			//agregar error
-			Sistema.GetInstance().AgregarError(pedido.GetCreadoPor(), mensajeError);
-			Sistema.GetInstance().AgregarError(pedido.GetCargadoPor(), mensajeError);
+			Error errorCreado = new Error(pedido.GetCreadoPor(), mensajeError);
+			Error errorCargado = new Error(pedido.GetCargadoPor(), mensajeError);
+			Sistema.GetInstance().AgregarError(errorCreado);
+			Sistema.GetInstance().AgregarError(errorCargado);
 		}
 	}
 

@@ -170,7 +170,8 @@ public class RegistroErroresController {
 		}
 		
 		// Agregar error
-		Sistema.GetInstance().AgregarError(empleado, this.agregar_mensaje.getText());
+		Error error = new Error(empleado, this.agregar_mensaje.getText());
+		Sistema.GetInstance().AgregarError(error);
 		
 		
 		// Informar

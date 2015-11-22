@@ -125,8 +125,7 @@ public class Empresa {
 		return this.errores.get(id);
 	}
 	
-	public void AgregarError(Empleado empleado, String mensaje) {
-		Error error = new Error(empleado, mensaje);
+	public void AgregarError(Error error) {
 		this.errores.put(error.GetID(), error);
 	}
 

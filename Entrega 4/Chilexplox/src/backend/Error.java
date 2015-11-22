@@ -19,11 +19,19 @@ public class Error {
 		this.fecha = LocalDate.now();
 	}
 	
+	/*
 	public Error(int id, Empleado empleado, String mensaje) {
 		this.ID = id;
 		this.empleado = empleado;
 		this.mensaje = mensaje;
 		this.fecha = LocalDate.now();
+	}*/
+
+	public Error(int id, Empleado empleado, String mensaje, LocalDate fecha) {
+		this.ID = id;
+		this.empleado = empleado;
+		this.mensaje = mensaje;
+		this.fecha = fecha;
 	}
 	
 	public int GetID() {
