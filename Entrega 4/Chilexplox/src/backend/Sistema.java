@@ -197,8 +197,8 @@ public class Sistema {
 
 
 	// Interaccion con usuario
-	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
-	    return vendedor.CrearPedido(cliente, origen, destino, urgencia, estado, fecha); // Retorna el id del pedido
+	public int CrearPedido (OperarioVenta vendedor, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha, String caracteristicasString) {
+	    return vendedor.CrearPedido(cliente, origen, destino, urgencia, estado, fecha, caracteristicasString); // Retorna el id del pedido
 	}
 
 	public int CrearEncomienda (OperarioVenta vendedor, Pedido pedido, String nombre, int peso, int volumen) {
@@ -280,15 +280,15 @@ public String[] GetDetalleMedio(String patente) {
 		detalles[3] = "En Tránsito";
 	else
 		detalles[3] = medio.GetOrigen().GetDireccion();
-	if (medio.IsRadioactivo())
+	if (medio.EsRadioactivo())
 		detalles[4] = "Si";
 	else
 		detalles[4] = "No";
-	if (medio.IsFragil())
+	if (medio.EsFragil())
 		detalles[5] = "Si";
 	else
 		detalles[5] = "No";
-	if (medio.IsRefrigerado())
+	if (medio.EsRefrigerado())
 		detalles[6] = "Si";
 	else
 		detalles[6] = "No";
@@ -541,6 +541,7 @@ public String[] GetDetalleViaje(String patente) {
 		Estado estado = null;
 		LocalDate fecha;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String caracteristicas;
 		Empleado creado_por;
 
 		try {
@@ -568,9 +569,10 @@ public String[] GetDetalleViaje(String patente) {
 					}
 					fecha = LocalDate.parse(parametros[7], formatter);
 					creado_por = this.empresa.GetEmpleado(parametros[8]);
+					caracteristicas = parametros[9];
 
 
-					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha, creado_por);
+					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha, caracteristicas, creado_por);
 					pedido.SetCargadoEn(cargadoEn);
 					if (cargadoEn != null)
 						cargadoEn.CargarPedido(pedido);
@@ -649,6 +651,7 @@ public String[] GetDetalleViaje(String patente) {
 		Estado estado;
 		int cap_maxima;
 		int km;
+		String cualidades;
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -663,8 +666,9 @@ public String[] GetDetalleViaje(String patente) {
 					cap_maxima = Integer.parseInt(parametros[5]);
 					km = Integer.parseInt(parametros[6]);
 					estado = Estado.values()[Integer.parseInt(parametros[7])];
+					cualidades = parametros[8];
 					
-					camion = new Camion(patente, marca, modelo, origen, destino, cap_maxima, km, estado);
+					camion = new Camion(patente, marca, modelo, origen, destino, cap_maxima, km, estado, cualidades);
 					this.empresa.AgregarTransporte(camion);
 					
 					/*
@@ -991,9 +995,9 @@ public String[] GetDetalleViaje(String patente) {
 				Pedido pedido = entry_pedido.getValue();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				if (pedido.GetCargadoEn() != null)
-					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut());
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut() + ";" + pedido.GetCaracteristicas());
 				else
-					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + "0" + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut());
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + "0" + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut() + ";" + pedido.GetCaracteristicas());
 				OrdenCompra orden = pedido.GetOrden();
 				String estado = "deuda";
 				String medio = "";
@@ -1033,9 +1037,9 @@ public String[] GetDetalleViaje(String patente) {
 					Camion camion = (Camion)entry.getValue();
 
 					if (camion.GetDestino() != null)
-						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()));
+						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades());
 					else
-						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()));
+						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades());
 				}
 				writer_camiones.close();
 			} catch (FileNotFoundException | UnsupportedEncodingException e2) {

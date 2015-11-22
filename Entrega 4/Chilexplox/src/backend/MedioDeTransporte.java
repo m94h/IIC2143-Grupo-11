@@ -20,18 +20,20 @@ public abstract class MedioDeTransporte {
 	protected Viaje viaje;
 	protected ArrayList<Pedido> listaPedidos;
 	protected ArrayList<Advertencia> cualidades;
+	protected String cualidadesString;
 
 
-	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino, Estado estado) {
+	public MedioDeTransporte (String patente, int capacidadMax, Sucursal origen, Sucursal destino, Estado estado, String cualidadesString) {
 		this.patente = patente;
 		this.capacidadMax = capacidadMax;
 		this.origen = origen;
 		this.destino = destino;
 		this.desocupado = false;
 		this.estado = estado;
+		this.cualidadesString = cualidadesString;
 		//this.estado = Estado.EnSucursalOrigen;
 		this.listaPedidos = new ArrayList<Pedido>();
-		this.cualidades = new ArrayList<Advertencia>();
+		this.setCualidades();
 	}
 
 	public void setOrigen(Sucursal origen){
@@ -48,6 +50,17 @@ public abstract class MedioDeTransporte {
 
 	public void setViaje(Viaje viaje){
 		this.viaje = viaje;
+	}
+
+	private void setCualidades(){
+		int cualidadesInt = Integer.parseInt(this.cualidadesString);
+		this.cualidades = new ArrayList<Advertencia>();
+		if (cualidadesInt == 1 || cualidadesInt == 3 || cualidadesInt == 5 || cualidadesInt == 7 )
+			this.cualidades.add(Advertencia.Radioactivo);
+		if (cualidadesInt == 2 || cualidadesInt == 3 || cualidadesInt == 6 || cualidadesInt == 7 )
+			this.cualidades.add(Advertencia.Fragil);
+		if (cualidadesInt == 4 || cualidadesInt == 5 || cualidadesInt == 6 || cualidadesInt == 7 )
+			this.cualidades.add(Advertencia.Refrigerado);
 	}
 
 	/*
@@ -100,23 +113,25 @@ public abstract class MedioDeTransporte {
 
 	public boolean GetDesocupado(){ return this.desocupado; }
 
+	public String GetCualidades(){ return this.cualidadesString; }
+
 	public ArrayList<Pedido> GetPedidos(){
 		return this.listaPedidos;
 	}
 
-	public boolean IsRadioactivo() {
+	public boolean EsRadioactivo() {
 		if (this.cualidades.contains(Advertencia.Radioactivo))
 			return true;
 		return false;
 	}
 	
-	public boolean IsFragil() {
+	public boolean EsFragil() {
 		if (this.cualidades.contains(Advertencia.Fragil))
 			return true;
 		return false;
 	}
 	
-	public boolean IsRefrigerado() {
+	public boolean EsRefrigerado() {
 		if (this.cualidades.contains(Advertencia.Refrigerado))
 			return true;
 		return false;

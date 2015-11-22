@@ -486,7 +486,7 @@ public class ListadoPedidosController {
 		Estado estado = Estado.valueOf(this.estado.getValue().toString());
 		
 		if (this.id_pedido.getText().equals("nuevo")) {
-			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia, estado, fecha.getValue());
+			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia, estado, fecha.getValue(), "0");
 			Pedido pedido = Sistema.GetInstance().GetPedido(id_nuevo);
 			PedidoTableModel pedidoModel = new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia()));
 			this.pedidosData.add(pedidoModel);
