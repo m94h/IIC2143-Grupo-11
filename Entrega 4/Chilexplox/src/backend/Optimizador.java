@@ -18,17 +18,20 @@ public class Optimizador {
 		// Se busca agrupar todos los pedidos que van a la misma sucursal dentro de un HashMap
 		for(Entry<Integer, Pedido> entry : Sistema.GetInstance().GetPedidos().entrySet()) {
 		    Pedido pedido = entry.getValue();
-		    if (pedido.GetCargadoEn() == null) {
-			    if (pedido.GetOrigen() == origen) {
-			    	if (pedidosPorSucursal.get(pedido.GetDestino().GetId()) == null) {
-			    		List<int[]> pedidos = new ArrayList<int[]>();
-			    		pedidosPorSucursal.put(pedido.GetDestino().GetId(), pedidos);
-			    	}
-		    		List<int[]> pedidos = pedidosPorSucursal.get(pedido.GetDestino().GetId());
-		    		int[] datosPedido = {pedido.GetId(),pedido.GetPrioridad(), pedido.GetVolumen()};
-		    		pedidos.add(datosPedido);		    	
+		    if (!((pedido.EsFragil() && !medio.EsFragil()) || (pedido.EsRadioactivo() && !medio.EsRadioactivo()) || (pedido.EsRefrigerado() && !medio.EsRefrigerado()))) {
+		    	if (pedido.GetCargadoEn() == null) {
+				    if (pedido.GetOrigen() == origen) {
+				    	if (pedidosPorSucursal.get(pedido.GetDestino().GetId()) == null) {
+				    		List<int[]> pedidos = new ArrayList<int[]>();
+				    		pedidosPorSucursal.put(pedido.GetDestino().GetId(), pedidos);
+				    	}
+			    		List<int[]> pedidos = pedidosPorSucursal.get(pedido.GetDestino().GetId());
+			    		int[] datosPedido = {pedido.GetId(),pedido.GetPrioridad(), pedido.GetVolumen()};
+			    		pedidos.add(datosPedido);		    	
+				    }
 			    }
 		    }
+		    
 		}
 		
 		// Optimizamos para cada sucursal
