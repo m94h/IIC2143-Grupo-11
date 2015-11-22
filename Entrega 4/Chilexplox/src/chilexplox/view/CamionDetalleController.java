@@ -40,6 +40,7 @@ public class CamionDetalleController {
 	public void setMainApp(MainApp mainApp, String patente) {
         this.mainApp = mainApp;
         this.patente = patente;
+        this.btnViaje.setDisable(true);
         this.MostrarDetalle();
     }
 	
@@ -50,6 +51,8 @@ public class CamionDetalleController {
 			capacidadMax.setText(detalles[1]);
 			capacidadDisponible.setText(detalles[2]);
 			ubicacion.setText(detalles[3]);
+			if (detalles[3].equals("En Tránsito"))
+				this.btnViaje.setDisable(false);
 			radioctivo.setText(detalles[4]);
 			fragil.setText(detalles[5]);
 			refrigerado.setText(detalles[6]);
