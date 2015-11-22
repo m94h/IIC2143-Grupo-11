@@ -65,6 +65,10 @@ public abstract class MedioDeTransporte {
 	public void ArribarMedio() {
 		this.estado = Estado.EnSucursalDestino;
 	}
+	
+	public void DevolverMedio() {
+		this.estado = Estado.EnSucursalOrigen;
+	}
 
 	public int GetCapacidadDisponible(){
 		return (this.capacidadMax - this.capacidadActual);

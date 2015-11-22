@@ -1,5 +1,6 @@
 package chilexplox.view;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,13 @@ public class ReporteGananciasController {
         
         //Inicializar observablearraylist
         this.pedidosData = FXCollections.observableArrayList();
+        
+        // Poner fechas desde hace 1 semana hoy
+        this.fechaDesde.setValue(LocalDate.now().minusWeeks(1));
+        this.fechaHasta.setValue(LocalDate.now());
+        
+        //Consulta inicial
+        this.CargarPedidos();
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -90,6 +98,10 @@ public class ReporteGananciasController {
 			return;
 		}
 		
+		this.CargarPedidos();
+	}
+	
+	private void CargarPedidos() {
 		//Cargar pedidos y totales
 		int totalPedidos = 0;
 		int totalMonto = 0;

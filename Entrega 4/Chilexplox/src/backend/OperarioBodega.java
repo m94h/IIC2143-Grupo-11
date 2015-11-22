@@ -64,7 +64,7 @@ public class OperarioBodega extends Empleado {
 	}
 	
 	/*
-	 * Enviar pedido de vuelta
+	 * Enviar pedido de vuelta (ERROR)
 	 */
 	public void EnviarPedidoDeVuelta(MedioDeTransporte medio, Pedido pedido, String mensaje) {
 		if (medio.GetPedidos().contains(pedido)) {
@@ -72,6 +72,13 @@ public class OperarioBodega extends Empleado {
 			pedido.DeVuelta();
 			//enviar mensaje
 			this.CrearMensaje("El pedido ID " + Integer.toString(pedido.GetId()) + " fue marcado como erroneo. El Operario de bodega escribio el siguiente mensaje: " + mensaje, pedido.GetOrigen());
+			
+			//mensaje error
+			String mensajeError = "Pedido ID " + Integer.toString(pedido.GetId()) + " fue enviado de manera incorrecta a sucursal " + medio.GetDestino().GetDireccion();
+			
+			//agregar error
+			Sistema.GetInstance().AgregarError(pedido.GetCreadoPor(), mensajeError);
+			Sistema.GetInstance().AgregarError(pedido.GetCargadoPor(), mensajeError);
 		}
 	}
 

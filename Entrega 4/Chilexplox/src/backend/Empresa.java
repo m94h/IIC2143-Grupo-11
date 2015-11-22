@@ -15,6 +15,7 @@ public class Empresa {
 	private Map<Integer, Pedido> pedidos;
 	private Map<Integer, Encomienda> encomiendas;
 	private ArrayList<MedioDeTransporte> mediosEnTransito;
+	private Map<Integer, Error> errores;
 
 
 	public Empresa (String nombre, String rut) {
@@ -26,6 +27,7 @@ public class Empresa {
 		this.pedidos = new HashMap<Integer, Pedido>();
 		this.encomiendas = new HashMap<Integer, Encomienda>();
 		this.empleados = new HashMap<String, Empleado>();
+		this.errores = new HashMap<Integer, Error>();
 		this.mediosEnTransito = new ArrayList<MedioDeTransporte>();
 	}
 
@@ -111,6 +113,19 @@ public class Empresa {
 
 	public MedioDeTransporte GetTransporte(String patente){
 		return this.flota.get(patente);
+	}
+	
+	public Map<Integer, Error> GetErrores() {
+		return this.errores;
+	}
+	
+	public Error GetError(int id) {
+		return this.errores.get(id);
+	}
+	
+	public void AgregarError(Empleado empleado, String mensaje) {
+		Error error = new Error(empleado, mensaje);
+		this.errores.put(error.GetID(), error);
 	}
 
 	/*

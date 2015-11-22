@@ -54,6 +54,9 @@ public class MenuController {
 	
 	@FXML
 	private Button btnReportes;
+	
+	@FXML
+	private Button btnErrores;
 
 
 	private MainApp mainApp;
@@ -181,6 +184,11 @@ public class MenuController {
 	@FXML
 	public void handleGenerarReporteGanancias() {
 		this.mainApp.mostrarReporteGanancias();
+	}
+	
+	@FXML
+	public void handleRegistroErrores() {
+		this.mainApp.mostrarRegistroErrores();
 	}
 
 }

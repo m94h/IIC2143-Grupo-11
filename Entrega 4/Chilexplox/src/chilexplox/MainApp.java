@@ -303,6 +303,26 @@ public class MainApp extends Application {
         }
 	}
     
+    public void mostrarRegistroErrores() {
+    	try {
+            // Load menu
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/RegistroErrores.fxml"));
+            AnchorPane errores = (AnchorPane) loader.load();
+            
+            // Poner la vista en el centro de la ventana principal
+            ventanaPrincipal.setCenter(errores);
+            
+            // Dar acceso al controlador
+            RegistroErroresController controllerView = loader.getController();
+            controllerView.setMainApp(this);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+    
     @Override
     public void stop(){
         System.out.println("Stage is closing");

@@ -27,6 +27,7 @@ public class Sistema {
 	private int id_pedido;
 	private int id_encomienda;
 	private int id_mensaje;
+	private int id_error;
 	//private int id_orden_compra;
 
 	private Empresa empresa;
@@ -90,6 +91,12 @@ public class Sistema {
 	public int Get_id_mensaje() {
 		int valor = id_mensaje;
 		id_mensaje++;
+		return valor;
+	}
+	
+	public int Get_id_error() {
+		int valor = id_error;
+		id_error++;
 		return valor;
 	}
 
@@ -162,6 +169,26 @@ public class Sistema {
 
 	public ArrayList<MedioDeTransporte> GetMediosEnTransito() {
 		return empresa.GetMediosEnTransito();
+	}
+	
+	public Map<Integer, Error> GetErrores() {
+		return this.empresa.GetErrores();
+	}
+	
+	public Error GetError(int id) {
+		return this.empresa.GetError(id);
+	}
+	
+	public void AgregarError(Empleado empleado, String mensaje) {
+		this.empresa.AgregarError(empleado, mensaje);
+	}
+	
+	public Map<String, Empleado> GetEmpleados() {
+		return this.empresa.GetEmpleados();
+	}
+	
+	public Empleado GetEmpleado(String rut) {
+		return this.empresa.GetEmpleado(rut);
 	}
 
 
@@ -344,6 +371,7 @@ public String[] GetDetalleViaje(String patente) {
 			this.id_pedido = Integer.parseInt(parametros[4]);
 			this.id_encomienda = Integer.parseInt(parametros[5]);
 			this.id_mensaje = Integer.parseInt(parametros[6]);
+			this.id_error = Integer.parseInt(parametros[7]);
 		}
 		catch(Exception e) {
 			// Error en el parseo
@@ -507,6 +535,7 @@ public String[] GetDetalleViaje(String patente) {
 		Estado estado = null;
 		LocalDate fecha;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		Empleado creado_por;
 
 		try {
 			while ((sCurrentLine = br.readLine()) != null) {
@@ -532,9 +561,10 @@ public String[] GetDetalleViaje(String patente) {
 							break;
 					}
 					fecha = LocalDate.parse(parametros[7], formatter);
+					creado_por = Sistema.GetInstance().GetEmpleado(parametros[8]);
 
 
-					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha);
+					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha, creado_por);
 					pedido.Cargado(cargadoEn);
 					if (cargadoEn != null)
 						cargadoEn.CargarPedido(pedido);
@@ -790,7 +820,7 @@ public String[] GetDetalleViaje(String patente) {
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
 
-			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda) + ";" + Integer.toString(this.id_mensaje));
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda) + ";" + Integer.toString(this.id_mensaje) + ";" + Integer.toString(this.id_error));
 
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -864,9 +894,9 @@ public String[] GetDetalleViaje(String patente) {
 				Pedido pedido = entry_pedido.getValue();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 				if (pedido.GetCargadoEn() != null)
-					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + pedido.GetCargadoEn().GetPatente() + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut());
 				else
-					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + "0" + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter));
+					writer_pedidos.println(Integer.toString(pedido.GetId()) + ";" + pedido.GetCliente().GetRut() + ";" + Integer.toString(pedido.GetOrigen().GetId()) + ";" + Integer.toString(pedido.GetDestino().GetId()) + ";" + "0" + ";" + Integer.toString(pedido.GetUrgencia()) + ";" + pedido.GetEstado().toString() + ";" + pedido.GetFecha().format(formatter) + ";" + pedido.GetCreadoPor().GetRut());
 				OrdenCompra orden = pedido.GetOrden();
 				String estado = "deuda";
 				String medio = "";

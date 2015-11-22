@@ -13,12 +13,14 @@ public class Pedido {
 	private Sucursal destino;
 	public Estado estado;
 	private int urgencia;
-  private int prioridad;
+	private int prioridad;
 	private LocalDate fechaCreacion;
 	private LocalDate fechaEnvio;
 	private LocalDate fechaLlegada;
 	private MedioDeTransporte cargadoEn;
 	private Empleado conductor;
+	private Empleado creadoPor;
+	private Empleado cargadoPor;
 	private int pesoTotal;
 	private int volumenTotal;
 
@@ -29,14 +31,16 @@ public class Pedido {
     	this.id = Sistema.GetInstance().Get_id_pedido();
     	this.pesoTotal = 0;
     	this.volumenTotal = 0;
+    	this.creadoPor = Sistema.GetInstance().GetUsuarioLoged();
       Initialize(cliente, origen, destino, urgencia, estado, fecha);
   	}
 
-    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
-      this.id = id;
-      this.pesoTotal = 0;
+    public Pedido(int id, Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha, Empleado creador) {
+    	this.id = id;
+      	this.pesoTotal = 0;
   		this.volumenTotal = 0;
-      Initialize(cliente, origen, destino, urgencia, estado, fecha);
+  		this.creadoPor = creador;
+  		Initialize(cliente, origen, destino, urgencia, estado, fecha);
     }
 
     private void Initialize(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
@@ -132,6 +136,18 @@ public class Pedido {
     public Empleado GetConductor() {
     	return this.conductor;
     }
+    
+    public void SetCargadoPor(Empleado empleado) {
+    	this.cargadoPor = empleado;
+    }
+    
+    public Empleado GetCargadoPor() {
+    	return this.cargadoPor;
+    }
+    
+    public Empleado GetCreadoPor() {
+    	return this.creadoPor;
+    }
 
     public void Enviado() {
     	fechaEnvio = LocalDate.now();
@@ -176,6 +192,7 @@ public class Pedido {
  	}
 
  	public void Cargado(MedioDeTransporte medio) {
+ 		this.cargadoPor = Sistema.GetInstance().GetUsuarioLoged();
  		this.cargadoEn = medio;
  	}
 

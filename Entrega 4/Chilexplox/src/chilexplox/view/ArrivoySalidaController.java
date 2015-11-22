@@ -148,6 +148,38 @@ public class ArrivoySalidaController {
 		//notificar al usuario
 		ViewHelper.ShowMessage("El camion ha arribado", AlertType.INFORMATION);
 	}
+	
+	@FXML
+	public void handleRetornoCamion() {
+		if (this.tabla_enTransito.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione un medio de transporte", AlertType.WARNING);
+			return;
+		}
+		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.tabla_enTransito.getSelectionModel().getSelectedItem().getId());
+		OperarioCamion operario = (OperarioCamion) Sistema.GetInstance().GetUsuarioLoged();
+		
+		if (!ViewHelper.ShowConfirm("Esta seguro que desea retornar el camion por problemas?")) {
+			return;
+		}
+		
+		//get mensaje
+		String mensaje = ViewHelper.PromptText("Ingrese el mensaje de explicacion de lo ocurrido");
+		
+		if (mensaje.isEmpty()) {
+			ViewHelper.ShowMessage("Debe ingresar un mensaje.", AlertType.WARNING);
+			return;
+		}
+					
+		//devolver camion (tambien se envia mensaje)
+		operario.RetornarMedio(medio, mensaje);
+
+		//actualizar tabla y choicebox
+		this.UpdateEnTransito();
+		this.UpdateDisponibles();
+
+		//notificar al usuario
+		ViewHelper.ShowMessage("El camion ha sido devuelto a la sucursal de origen. Se ha enviado un mensaje indicando el problema.", AlertType.INFORMATION);
+	}
 
 	@FXML
 	public void handleAvisarSalida() {

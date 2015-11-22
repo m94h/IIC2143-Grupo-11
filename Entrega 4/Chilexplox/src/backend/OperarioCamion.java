@@ -21,5 +21,24 @@ public class OperarioCamion extends Empleado {
 		//cambiado a medio
 		medio.ArribarMedio();
 	}
+	
+	public void RetornarMedio(MedioDeTransporte medio, String mensaje){
+		medio.origen.AgregarMedioDisponible(medio);
+		Sistema.GetInstance().EliminarMediosEnTransito(medio);
+		//enviar mensaje
+		this.CrearMensaje("Se ha retornado el medio de transporte patente " + medio.GetPatente() + " a su sucursal de origen " + medio.GetOrigen().GetDireccion() + ". El operario le envia el siguiente mensaje: " + mensaje, medio.GetOrigen());
 
+		String mensajeError = "Retorno medio patente " + medio.GetPatente() + " debido a " + mensaje;
+		// Agregar error
+		Sistema.GetInstance().AgregarError(Sistema.GetInstance().GetUsuarioLoged(), mensajeError);
+		
+		// Devolver medio
+		medio.DevolverMedio();
+	}
+
+	public void CrearMensaje(String mensaje, Sucursal destino) {
+		Mensaje m = new Mensaje(mensaje, destino, this);
+		//Enviar
+		destino.RecibirMensaje(m);
+	}
 }
