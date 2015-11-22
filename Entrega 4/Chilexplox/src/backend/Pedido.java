@@ -137,6 +137,10 @@ public class Pedido {
     	return this.conductor;
     }
     
+    public void SetCargadoEn(MedioDeTransporte medio) {
+    	this.cargadoEn = medio;
+    }
+    
     public void SetCargadoPor(Empleado empleado) {
     	this.cargadoPor = empleado;
     }
@@ -189,11 +193,6 @@ public class Pedido {
 
  	public void AgregarOrden(OrdenCompra orden) {
  		this.orden_compra = orden;
- 	}
-
- 	public void Cargado(MedioDeTransporte medio) {
- 		this.cargadoPor = Sistema.GetInstance().GetUsuarioLoged();
- 		this.cargadoEn = medio;
  	}
 
  	public void SetEnTransito(){

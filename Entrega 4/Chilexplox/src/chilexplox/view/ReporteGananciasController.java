@@ -68,11 +68,11 @@ public class ReporteGananciasController {
         this.pedidosData = FXCollections.observableArrayList();
         
         // Poner fechas desde hace 1 semana hoy
-        this.fechaDesde.setValue(LocalDate.now().minusWeeks(1));
+        this.fechaDesde.setValue(LocalDate.now().minusMonths(1));
         this.fechaHasta.setValue(LocalDate.now());
         
         //Consulta inicial
-        this.CargarPedidos();
+        this.CargarPedidos(false);
     }
 	
 	public void setMainApp(MainApp mainApp) {
@@ -98,10 +98,10 @@ public class ReporteGananciasController {
 			return;
 		}
 		
-		this.CargarPedidos();
+		this.CargarPedidos(true);
 	}
 	
-	private void CargarPedidos() {
+	private void CargarPedidos(boolean mostrarMensaje) {
 		//Cargar pedidos y totales
 		int totalPedidos = 0;
 		int totalMonto = 0;
@@ -125,7 +125,8 @@ public class ReporteGananciasController {
 		this.cantidadPedidos.setText(Integer.toString(totalPedidos));
 		this.totalIngresos.setText("$" + Integer.toString(totalMonto));
 		
-		ViewHelper.ShowMessage("Se ha cargado la informacion del reporte", AlertType.INFORMATION);
+		if (mostrarMensaje)
+			ViewHelper.ShowMessage("Se ha cargado la informacion del reporte", AlertType.INFORMATION);
 	}
 	
 	@FXML

@@ -14,7 +14,12 @@ public class OperarioBodega extends Empleado {
 		if(medio.GetPedidos().size() == 0){
 			medio.setDestino(pedido.GetDestino()); // El primer pedido que se cargue en el medio determina su destino
 		}
-		return medio.CargarPedido(pedido);
+		if (medio.CargarPedido(pedido)) {
+			pedido.SetCargadoEn(medio);
+			pedido.SetCargadoPor(this);
+			return true;
+		}
+		return false;
 	}
 	
 	/*

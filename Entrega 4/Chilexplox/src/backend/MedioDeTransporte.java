@@ -126,7 +126,7 @@ public abstract class MedioDeTransporte {
 		if(this.capacidadActual < this.capacidadMax){
 			listaPedidos.add(pedido);
 			//avisar al pedido que fue cargado
-			pedido.Cargado(this);
+			//pedido.Cargado(this); //Cambiado a operario
 			this.capacidadActual += pedido.GetVolumen();
 			return true;
 		}
@@ -135,15 +135,16 @@ public abstract class MedioDeTransporte {
 			return false;
 		}
 	}
-
+	/* No se usa...
 	public void CargarPedidos(List<Integer> pedidos) {
 		for (Integer id: pedidos) {
 			Pedido pedido = Sistema.GetInstance().GetPedido(id);
 			listaPedidos.add(pedido);
-			pedido.Cargado(this);
+			//pedido.Cargado(this); //Cambiado a operario
 		}
 		this.desocupado = false;
 	}
+	*/
 
 	public void Desocupar() {
 		this.capacidadActual = 0;

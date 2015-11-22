@@ -567,11 +567,11 @@ public String[] GetDetalleViaje(String patente) {
 							break;
 					}
 					fecha = LocalDate.parse(parametros[7], formatter);
-					creado_por = Sistema.GetInstance().GetEmpleado(parametros[8]);
+					creado_por = this.empresa.GetEmpleado(parametros[8]);
 
 
 					pedido = new Pedido(id_pedido, cliente, sucursal_origen, sucursal_destino, urgencia, estado, fecha, creado_por);
-					pedido.Cargado(cargadoEn);
+					pedido.SetCargadoEn(cargadoEn);
 					if (cargadoEn != null)
 						cargadoEn.CargarPedido(pedido);
 					this.empresa.AgregarPedido(pedido);

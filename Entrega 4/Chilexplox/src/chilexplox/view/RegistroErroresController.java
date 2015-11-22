@@ -74,10 +74,12 @@ public class RegistroErroresController {
         // Poner fechas desde hace 1 semana hoy
         this.fechaDesde.setValue(LocalDate.now().minusWeeks(1));
         this.fechaHasta.setValue(LocalDate.now());
+        
+        this.CargarErrores(false);
     }
 	
 	
-	private void CargarErrores() {
+	private void CargarErrores(boolean MostrarMensaje) {
 		//Cargar errores
 		
 		if (fechaDesde.getValue() == null) {
@@ -110,7 +112,8 @@ public class RegistroErroresController {
 		// Limpiar la info mensaje completo
 		this.mensajeCompleto.clear();
 		
-		ViewHelper.ShowMessage("Se ha cargado la informacion de los errores.", AlertType.INFORMATION);
+		if (MostrarMensaje)
+			ViewHelper.ShowMessage("Se ha cargado la informacion de los errores.", AlertType.INFORMATION);
 	}
 	
 	private void MostrarDetallesError() {
@@ -140,7 +143,7 @@ public class RegistroErroresController {
 			return;
 		}
 		
-		this.CargarErrores();
+		this.CargarErrores(true);
 		
 	}
 	
@@ -177,7 +180,7 @@ public class RegistroErroresController {
 		this.agregar_idEmpleado.clear();
 		this.agregar_mensaje.clear();
 		
-		this.CargarErrores();
+		this.CargarErrores(false);
 		
 	}
 	
