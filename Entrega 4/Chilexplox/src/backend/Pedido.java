@@ -23,8 +23,8 @@ public class Pedido {
 	private Empleado cargadoPor;
 	private int pesoTotal;
 	private int volumenTotal;
-  private ArrayList<Advertencia> caracteristicas;
-  private String caracteristicasString;
+	private ArrayList<Advertencia> caracteristicas;
+	private String caracteristicasString;
 
 
   	private OrdenCompra orden_compra;
@@ -62,13 +62,16 @@ public class Pedido {
     /*
      * Actualizar pedido
      */
-    public void Actualizar(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha) {
+    public void Actualizar(Cliente cliente, Sucursal origen, Sucursal destino, int urgencia, Estado estado, LocalDate fecha, String caracteriticas) {
         this.cliente = cliente;
         this.origen = origen;
         this.destino = destino;
         this.urgencia = urgencia;
         this.estado = estado;
         this.fechaCreacion = fecha;
+        this.caracteristicasString = caracteriticas;
+        
+        this.SetCaracteristicas();
     }
 
     /*
