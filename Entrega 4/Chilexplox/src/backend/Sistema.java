@@ -906,6 +906,7 @@ public String[] GetDetalleViaje(String patente) {
 		this.CargarOrdenes();
 		this.CargarMensajes();
 		this.CargarViajes();
+		this.CargarErrores();
 	}
 
 	/*
