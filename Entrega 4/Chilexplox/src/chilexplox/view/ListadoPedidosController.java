@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -81,6 +82,15 @@ public class ListadoPedidosController {
 	
 	@FXML
 	private ChoiceBox estadoPago;
+	
+	@FXML
+	private CheckBox radioactivo;
+	
+	@FXML
+	private CheckBox refrigerado;
+	
+	@FXML
+	private CheckBox fragil;
 	
 	
 	/*
@@ -170,7 +180,7 @@ public class ListadoPedidosController {
 		
 		//Agregar choices del pago
 		this.estadoPago.getItems().addAll("No pagado", "Pagado");
-		this.medioPago.getItems().addAll(MedioPago.values());
+		this.medioPago.getItems().addAll("CREDITO","DEBITO","EFECTIVO","CHEQUE");
 		
 		//Ordenar tabla por urgencia por defecto
 		this.tabla_pedidos.getSortOrder().add(this.urgenciaColumn);
@@ -231,6 +241,14 @@ public class ListadoPedidosController {
 			this.nombre.setText("");
 			this.telefono.setText("");
 			this.direccion.setText("");
+			
+			//borrar especiales
+			this.refrigerado.setDisable(false);
+			this.fragil.setDisable(false);
+			this.radioactivo.setDisable(false);
+			this.refrigerado.setSelected(false);
+			this.fragil.setSelected(false);
+			this.radioactivo.setSelected(false);
 			
 			//limpiar encomiendas
 			this.encomiendasData.clear();
@@ -356,6 +374,10 @@ public class ListadoPedidosController {
 			this.volumen.setDisable(false);
 			this.medioPago.setDisable(false);
 			this.estadoPago.setDisable(false);
+			//borrar especiales
+			this.refrigerado.setDisable(false);
+			this.fragil.setDisable(false);
+			this.radioactivo.setDisable(false);
 			
 			//Get los datos del pedido backend
 			Pedido pedido_b = Sistema.GetInstance().GetPedido(Integer.parseInt(pedido.getId()));
@@ -406,6 +428,20 @@ public class ListadoPedidosController {
 					this.estadoPago.getSelectionModel().select(0);
 				}
 			}
+			
+			// especiales
+			if (pedido_b.EsFragil())
+				this.fragil.setSelected(true);
+			else
+				this.fragil.setSelected(false);
+			if (pedido_b.EsRefrigerado())
+				this.refrigerado.setSelected(true);
+			else
+				this.refrigerado.setSelected(false);
+			if (pedido_b.EsRadioactivo())
+				this.radioactivo.setSelected(true);
+			else
+				this.radioactivo.setSelected(false);
 			
 		}
 	}
@@ -485,8 +521,18 @@ public class ListadoPedidosController {
 		int urgencia = Integer.parseInt(this.urgencia.getSelectionModel().getSelectedItem().toString());
 		Estado estado = Estado.valueOf(this.estado.getValue().toString());
 		
+		//calcular
+		int especialPedido = 0;
+		if (this.radioactivo.isSelected())
+			especialPedido += 1;
+		if (this.fragil.isSelected())
+			especialPedido += 2;
+		if (this.refrigerado.isSelected())
+			especialPedido += 4;
+				
 		if (this.id_pedido.getText().equals("nuevo")) {
-			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia, estado, fecha.getValue());
+			
+			int id_nuevo = Sistema.GetInstance().CrearPedido((OperarioVenta)Sistema.GetInstance().GetUsuarioLoged(), cliente, origen, destino, urgencia, estado, fecha.getValue(), Integer.toString(especialPedido));
 			Pedido pedido = Sistema.GetInstance().GetPedido(id_nuevo);
 			PedidoTableModel pedidoModel = new PedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), pedido.GetEstado().toString(), Integer.toString(pedido.GetUrgencia()));
 			this.pedidosData.add(pedidoModel);
@@ -507,8 +553,9 @@ public class ListadoPedidosController {
 			ViewHelper.ShowMessage("Nuevo Pedido guardado correctamente", AlertType.INFORMATION);
 			
 		} else {
+			
 			Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.id_pedido.getText()));
-			pedido.Actualizar(cliente, origen, destino, urgencia, estado, fecha.getValue());
+			pedido.Actualizar(cliente, origen, destino, urgencia, estado, fecha.getValue(), Integer.toString(especialPedido));
 			
 			OrdenCompra orden = pedido.GetOrden();
 			if (orden == null) {
