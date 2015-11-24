@@ -49,6 +49,6 @@
       <Button layoutX="785.0" layoutY="474.0" mnemonicParsing="false" onAction="#handleSalir" prefHeight="95.0" prefWidth="142.0" text="Salir" />
       <Button fx:id="btnDetalleCamion" disable="true" layoutX="785.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleDetalleCamion" prefHeight="95.0" prefWidth="142.0" text="Consultar Estado Camión" textAlignment="CENTER" wrapText="true" />
       <Button fx:id="btnReportes" layoutX="602.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleGenerarReporteGanancias" prefHeight="95.0" prefWidth="142.0" text="Generar Reporte de Ganancias" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="btnErrores" layoutX="785.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleRegistroErrores" prefHeight="95.0" prefWidth="142.0" text="Ver Registro de Errores" />
+      <Button fx:id="btnErrores" layoutX="785.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleRegistroErrores" prefHeight="95.0" prefWidth="142.0" text="Ver Registro de Errores" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
