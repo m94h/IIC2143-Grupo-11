@@ -164,7 +164,9 @@ public class MenuController {
 	public void handleDetallePedidos() {
 		String id_pedido = ViewHelper.PromptText("Ingrese el id del pedido que desea ver");
 		if (id_pedido != null) {
-			this.mainApp.mostrarDetallePedido(Integer.parseInt((id_pedido)));
+			if (!id_pedido.isEmpty()) {
+				this.mainApp.mostrarDetallePedido(Integer.parseInt((id_pedido)));
+			}
 		}
 	}
 	
@@ -172,7 +174,9 @@ public class MenuController {
 	public void handleDetalleCamion() {
 		String patente = ViewHelper.PromptText("Ingrese la patente del camion que desea ver");
 		if (patente != null) {
-			this.mainApp.mostrarDetalleCamion(patente);
+			if (!patente.isEmpty()) {
+				this.mainApp.mostrarDetalleCamion(patente);
+			}
 		}
 	}
 

@@ -28,6 +28,7 @@ public class Sistema {
 	private int id_encomienda;
 	private int id_mensaje;
 	private int id_error;
+	private int id_viaje;
 	//private int id_orden_compra;
 
 	private Empresa empresa;
@@ -91,6 +92,12 @@ public class Sistema {
 	public int Get_id_mensaje() {
 		int valor = id_mensaje;
 		id_mensaje++;
+		return valor;
+	}
+	
+	public int Get_id_viaje() {
+		int valor = id_viaje;
+		id_viaje++;
 		return valor;
 	}
 	
@@ -189,6 +196,10 @@ public class Sistema {
 	
 	public Empleado GetEmpleado(String rut) {
 		return this.empresa.GetEmpleado(rut);
+	}
+	
+	public Map<Integer, Viaje> GetViajes() {
+		return this.empresa.GetViajes();
 	}
 
 	public void AgregarViaje(Viaje viaje) {
@@ -378,6 +389,7 @@ public String[] GetDetalleViaje(String patente) {
 			this.id_encomienda = Integer.parseInt(parametros[5]);
 			this.id_mensaje = Integer.parseInt(parametros[6]);
 			this.id_error = Integer.parseInt(parametros[7]);
+			this.id_viaje = Integer.parseInt(parametros[8]);
 		}
 		catch(Exception e) {
 			// Error en el parseo
@@ -812,7 +824,7 @@ public String[] GetDetalleViaje(String patente) {
 		}
 
 		Viaje viaje;
-
+		int id_viaje;
 		String patente;
 		Empleado conductor;
 		Sucursal origen;
@@ -826,18 +838,19 @@ public String[] GetDetalleViaje(String patente) {
 			while ((sCurrentLine = br.readLine()) != null) {
 				try {
 					parametros = sCurrentLine.split(";");
-					patente = parametros[0];
-					conductor = this.empresa.GetEmpleado(parametros[1]);
-					origen = this.empresa.GetSucursal(Integer.parseInt(parametros[2]));
-					destino = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
-					fechaSalida = LocalDate.parse(parametros[4], formatter);
-					if (parametros[5].equals("-")) {
-						viaje = new Viaje(patente, conductor, origen, destino, fechaSalida);
+					id_viaje = Integer.parseInt(parametros[0]);
+					patente = parametros[1];
+					conductor = this.empresa.GetEmpleado(parametros[2]);
+					origen = this.empresa.GetSucursal(Integer.parseInt(parametros[3]));
+					destino = this.empresa.GetSucursal(Integer.parseInt(parametros[4]));
+					fechaSalida = LocalDate.parse(parametros[5], formatter);
+					if (parametros[6].equals("-")) {
+						viaje = new Viaje(id_viaje, patente, conductor, origen, destino, fechaSalida);
 						this.GetMedio(patente).setViaje(viaje);
 					}
 					else {
-						fechaLlegada = LocalDate.parse(parametros[5], formatter);
-						viaje = new Viaje(patente, conductor, origen, destino, fechaSalida, fechaLlegada);
+						fechaLlegada = LocalDate.parse(parametros[6], formatter);
+						viaje = new Viaje(id_viaje, patente, conductor, origen, destino, fechaSalida, fechaLlegada);
 					}
 
 					this.AgregarViaje(viaje);
@@ -923,7 +936,7 @@ public String[] GetDetalleViaje(String patente) {
 		try {
 			writer = new PrintWriter("archivos/empresa.data", "UTF-8");
 
-			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda) + ";" + Integer.toString(this.id_mensaje) + ";" + Integer.toString(this.id_error));
+			writer.println(this.empresa.GetNombre() + ";" + this.empresa.GetRut() + ";" +  Integer.toString(this.precioPorGr) + ";" +  Integer.toString(this.precioPorCc) + ";" + Integer.toString(this.id_pedido)+ ";" + Integer.toString(this.id_encomienda) + ";" + Integer.toString(this.id_mensaje) + ";" + Integer.toString(this.id_error) + ";" + Integer.toString(this.id_viaje));
 
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -1052,15 +1065,15 @@ public String[] GetDetalleViaje(String patente) {
 				PrintWriter writer_viajes = new PrintWriter("archivos/viajes.data", "UTF-8");
 
 				//Iterar sobre los viajes
-				for (Map.Entry<String, Viaje> entry : this.empresa.GetViajes().entrySet())
+				for (Map.Entry<Integer, Viaje> entry : this.empresa.GetViajes().entrySet())
 				{	
 					Viaje viaje = entry.getValue();
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 					
 					if(viaje.GetFechaLlegada() == null)
-						writer_viajes.println(viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter));
+						writer_viajes.println(Integer.toString(viaje.GetId()) + ";" + viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter));
 					else
-						writer_viajes.println(viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter) + ";" + viaje.GetFechaLlegada().format(formatter));
+						writer_viajes.println(Integer.toString(viaje.GetId()) + ";" + viaje.GetPatente() + ";" + viaje.GetConductor().GetRut() + ";" + Integer.toString(viaje.GetOrigen().GetId()) + ";" + Integer.toString(viaje.GetDestino().GetId()) + ";" + viaje.GetFechaSalida().format(formatter) + ";" + viaje.GetFechaLlegada().format(formatter));
 
 					}
 				writer_viajes.close();

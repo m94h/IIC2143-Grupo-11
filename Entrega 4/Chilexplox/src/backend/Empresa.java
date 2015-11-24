@@ -16,7 +16,7 @@ public class Empresa {
 	private Map<Integer, Encomienda> encomiendas;
 	private ArrayList<MedioDeTransporte> mediosEnTransito;
 	private Map<Integer, Error> errores;
-	private Map<String, Viaje> viajes;
+	private Map<Integer, Viaje> viajes;
 
 
 	public Empresa (String nombre, String rut) {
@@ -30,7 +30,7 @@ public class Empresa {
 		this.empleados = new HashMap<String, Empleado>();
 		this.errores = new HashMap<Integer, Error>();
 		this.mediosEnTransito = new ArrayList<MedioDeTransporte>();
-		this.viajes = new HashMap<String, Viaje>();
+		this.viajes = new HashMap<Integer, Viaje>();
 	}
 
 	public void AgregarSucursal (Sucursal newSucursal) {
@@ -146,10 +146,10 @@ public class Empresa {
 	}
 
 	public void AgregarViaje(Viaje viaje) {
-		this.viajes.put(viaje.GetPatente(), viaje);
+		this.viajes.put(viaje.GetId(), viaje);
 	}
 
-	public Map<String, Viaje> GetViajes() {
+	public Map<Integer, Viaje> GetViajes() {
 	    return this.viajes;
 	}
 

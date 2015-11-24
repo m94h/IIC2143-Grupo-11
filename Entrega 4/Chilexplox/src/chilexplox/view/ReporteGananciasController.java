@@ -7,6 +7,7 @@ import java.util.Map;
 import backend.Pedido;
 import backend.Sistema;
 import backend.Sucursal;
+import backend.Viaje;
 import chilexplox.MainApp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +49,9 @@ public class ReporteGananciasController {
 	
 	@FXML
 	private Label totalIngresos;
+	
+	@FXML
+	private Label totalViajes;
 	
 	@FXML
 	private DatePicker fechaDesde;
@@ -105,6 +109,7 @@ public class ReporteGananciasController {
 		//Cargar pedidos y totales
 		int totalPedidos = 0;
 		int totalMonto = 0;
+		int totalViajes = 0;
 		
 		this.pedidosData.clear();
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
@@ -121,9 +126,22 @@ public class ReporteGananciasController {
 		}
 		this.tabla_pedidos.setItems(this.pedidosData);
 		
+		//calcular viajes
+		Map<Integer, Viaje> viajes = Sistema.GetInstance().GetViajes();
+		if (viajes != null) { //Si hay pedidos
+			for (Map.Entry<Integer, Viaje> entry : viajes.entrySet()) {
+				Viaje viaje = entry.getValue();
+				//Mostrar solo si es del periodo correspondiente
+				if ( ( viaje.GetFechaSalida().isAfter(fechaDesde.getValue()) || viaje.GetFechaSalida().isEqual(fechaDesde.getValue()) ) && ( viaje.GetFechaSalida().isBefore(fechaHasta.getValue()) || viaje.GetFechaSalida().isEqual(fechaHasta.getValue()) ) ) {
+					totalViajes++;
+				}
+			}
+		}
+		
 		//setear total
 		this.cantidadPedidos.setText(Integer.toString(totalPedidos));
 		this.totalIngresos.setText("$" + Integer.toString(totalMonto));
+		this.totalViajes.setText(Integer.toString(totalViajes));
 		
 		if (mostrarMensaje)
 			ViewHelper.ShowMessage("Se ha cargado la informacion del reporte", AlertType.INFORMATION);
