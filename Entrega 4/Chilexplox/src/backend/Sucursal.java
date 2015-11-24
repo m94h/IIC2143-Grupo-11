@@ -91,7 +91,9 @@ public class Sucursal {
 	}
 
 	public void SetMedioDisponible(MedioDeTransporte medio){
-		this.mediosArrivados.remove(medio);
+		if(this.mediosArrivados.contains(medio)){
+			this.mediosArrivados.remove(medio);
+		}
 		this.mediosDisponibles.add(medio);
 	}
 
