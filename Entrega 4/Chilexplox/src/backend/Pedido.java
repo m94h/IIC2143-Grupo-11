@@ -215,7 +215,7 @@ public class Pedido {
   }
 
   private void CalcularPrioridad() {
-    this.prioridad = (this.urgencia * 7) + (this.volumenTotal * 3);
+    this.prioridad = (this.urgencia * 7000) + (this.volumenTotal * 3);
   }
 
   public int GetPrioridad() {
