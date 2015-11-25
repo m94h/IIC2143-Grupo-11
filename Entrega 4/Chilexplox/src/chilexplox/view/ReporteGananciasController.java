@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -60,6 +61,9 @@ public class ReporteGananciasController {
 	private DatePicker fechaHasta; 
 	
 	@FXML
+	private ChoiceBox sucursal;
+	
+	@FXML
     private void initialize() {
 		// Set las properties para que se actualice la tabla pedidos
 		this.id_pedidoColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
@@ -74,6 +78,15 @@ public class ReporteGananciasController {
         // Poner fechas desde hace 1 semana hoy
         this.fechaDesde.setValue(LocalDate.now().minusMonths(1));
         this.fechaHasta.setValue(LocalDate.now());
+        
+        // Poner sucursales
+        HashMap<String, Sucursal> sucursales = new HashMap<String, Sucursal>(); 
+        this.sucursal.getItems().add("Todas");
+        this.sucursal.getSelectionModel().select(0);
+		for (Map.Entry<Integer, Sucursal> entry : Sistema.GetInstance().GetSucursales().entrySet()) {
+			Sucursal s = entry.getValue();
+			this.sucursal.getItems().add(s.GetDireccion());
+		}
         
         //Consulta inicial
         this.CargarPedidos(false);
@@ -102,6 +115,11 @@ public class ReporteGananciasController {
 			return;
 		}
 		
+		if (sucursal.getSelectionModel().isEmpty()) {
+			ViewHelper.ShowMessage("Seleccione una sucursal.", AlertType.ERROR);
+			return;
+		}
+		
 		this.CargarPedidos(true);
 	}
 	
@@ -116,11 +134,19 @@ public class ReporteGananciasController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				//Mostrar solo si es del periodo correspondiente
+				//Mostrar solo si es del periodo correspondiente y de la sucursal
 				if ( ( pedido.GetFecha().isAfter(fechaDesde.getValue()) || pedido.GetFecha().isEqual(fechaDesde.getValue()) ) && ( pedido.GetFecha().isBefore(fechaHasta.getValue()) || pedido.GetFecha().isEqual(fechaHasta.getValue()) ) ) {
-					this.pedidosData.add(new ReportePedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetFecha().toString(), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), "$" + Integer.toString(pedido.CalcularMonto())));
-					totalPedidos++;
-					totalMonto += pedido.CalcularMonto();
+					if (!this.sucursal.getSelectionModel().getSelectedItem().toString().equals("Todas")) {
+						if (this.sucursal.getSelectionModel().getSelectedItem().toString().equals(pedido.GetOrigen().GetDireccion())) {
+							this.pedidosData.add(new ReportePedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetFecha().toString(), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), "$" + Integer.toString(pedido.CalcularMonto())));
+							totalPedidos++;
+							totalMonto += pedido.CalcularMonto();
+						}		
+					} else {
+						this.pedidosData.add(new ReportePedidoTableModel(Integer.toString(pedido.GetId()), pedido.GetFecha().toString(), pedido.GetOrigen().GetDireccion(), pedido.GetDestino().GetDireccion(), "$" + Integer.toString(pedido.CalcularMonto())));
+						totalPedidos++;
+						totalMonto += pedido.CalcularMonto();
+					}
 				}
 			}
 		}
@@ -128,12 +154,18 @@ public class ReporteGananciasController {
 		
 		//calcular viajes
 		Map<Integer, Viaje> viajes = Sistema.GetInstance().GetViajes();
-		if (viajes != null) { //Si hay pedidos
+		if (viajes != null) { //Si hay viajes
 			for (Map.Entry<Integer, Viaje> entry : viajes.entrySet()) {
 				Viaje viaje = entry.getValue();
 				//Mostrar solo si es del periodo correspondiente
 				if ( ( viaje.GetFechaSalida().isAfter(fechaDesde.getValue()) || viaje.GetFechaSalida().isEqual(fechaDesde.getValue()) ) && ( viaje.GetFechaSalida().isBefore(fechaHasta.getValue()) || viaje.GetFechaSalida().isEqual(fechaHasta.getValue()) ) ) {
-					totalViajes++;
+					if (!this.sucursal.getSelectionModel().getSelectedItem().toString().equals("Todas")) {
+						if (this.sucursal.getSelectionModel().getSelectedItem().toString().equals(viaje.GetOrigen().GetDireccion())) {
+							totalViajes++;
+						}
+					} else {
+						totalViajes++;
+					}
 				}
 			}
 		}
