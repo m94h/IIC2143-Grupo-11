@@ -91,6 +91,12 @@ public abstract class MedioDeTransporte {
 	
 	public void DevolverMedio() {
 		this.estado = Estado.EnSucursalOrigen;
+		if(this.listaPedidos.size() > 0){
+			for(int i = 0; i < this.listaPedidos.size(); i++){
+				Pedido pedido = this.listaPedidos.get(i);
+				pedido.SetEnOrigen();
+			}
+		}
 	}
 
 	public int GetCapacidadDisponible(){

@@ -170,7 +170,7 @@ public class Pedido {
     	fechaLlegada = LocalDate.now();
       this.cargadoEn = null;
     }
-    
+        
     public void DeVuelta() {
     	this.estado = Estado.EnSucursalOrigen;
     	this.cargadoEn = null;
@@ -205,6 +205,10 @@ public class Pedido {
 
  	public void SetEnTransito(){
  		this.estado = Estado.EnTransito;
+ 	}
+ 	
+ 	public void SetEnOrigen(){
+ 		this.estado = Estado.EnSucursalOrigen;
  	}
 
   public void AumentarUrgencia() {
