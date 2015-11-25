@@ -60,7 +60,7 @@
          </font>
       </Text>
       <Text layoutX="195.0" layoutY="589.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Haga click en el error para ver el mensaje completo" />
-      <TextArea fx:id="mensajeCompleto" editable="false" layoutX="653.0" layoutY="177.0" prefHeight="129.0" prefWidth="329.0" />
+      <TextArea fx:id="mensajeCompleto" editable="false" layoutX="653.0" layoutY="177.0" prefHeight="129.0" prefWidth="329.0" wrapText="true" />
       <Separator layoutX="643.0" layoutY="322.0" prefHeight="3.0" prefWidth="329.0" />
       <Text layoutX="653.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mensaje completo del error:">
          <font>

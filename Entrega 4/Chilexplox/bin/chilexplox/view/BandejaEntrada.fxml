@@ -16,7 +16,7 @@
           <TableColumn fx:id="sucursalOrigenColumn" minWidth="6.0" prefWidth="153.0" text="Sucursal" />
         </columns>
       </TableView>
-      <TextArea fx:id="mensaje" layoutX="418.0" layoutY="142.0" prefHeight="429.0" prefWidth="554.0" />
+      <TextArea fx:id="mensaje" layoutX="418.0" layoutY="142.0" prefHeight="429.0" prefWidth="554.0" wrapText="true" />
       <Button layoutX="837.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleVolverMenu" prefHeight="67.0" prefWidth="135.0" text="Volver al Menu" />
       <ImageView fitHeight="120.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
