@@ -292,7 +292,7 @@ public String[] GetDetalleMedio(String patente) {
 	detalles[1] = Integer.toString(medio.GetCapacidadMax());
 	detalles[2] = Integer.toString(medio.GetCapacidadDisponible());
 	if (medio.GetEstado() == Estado.EnTransito)
-		detalles[3] = "En Tránsito";
+		detalles[3] = "En Transito";
 	else
 		detalles[3] = medio.GetOrigen().GetDireccion();
 	if (medio.EsRadioactivo())
