@@ -165,6 +165,10 @@ public class Sistema {
 	public MedioDeTransporte GetMedio (String patente){
 		return empresa.GetTransporte(patente);
 	}
+	
+	public Map<String, MedioDeTransporte> GetMedios() {
+		return empresa.GetTransportes();
+	}
 
 	public void AgregarMediosEnTransito(MedioDeTransporte medio){
 		empresa.AgregarMedioEnTransito(medio);

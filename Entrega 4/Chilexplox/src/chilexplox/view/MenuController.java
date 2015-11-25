@@ -172,12 +172,7 @@ public class MenuController {
 	
 	@FXML
 	public void handleDetalleCamion() {
-		String patente = ViewHelper.PromptText("Ingrese la patente del camion que desea ver");
-		if (patente != null) {
-			if (!patente.isEmpty()) {
-				this.mainApp.mostrarDetalleCamion(patente);
-			}
-		}
+		this.mainApp.mostrarDetalleCamion();
 	}
 
 	@FXML

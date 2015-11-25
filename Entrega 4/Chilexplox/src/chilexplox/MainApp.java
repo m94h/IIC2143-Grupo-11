@@ -243,7 +243,7 @@ public class MainApp extends Application {
         }
 	}
 
-    public void mostrarDetalleCamion(String patente) {
+    public void mostrarDetalleCamion() {
     	try {
             // Load menu
             FXMLLoader loader = new FXMLLoader();
@@ -255,33 +255,14 @@ public class MainApp extends Application {
             
             // Dar acceso al controlador
             CamionDetalleController controllerView = loader.getController();
-            controllerView.setMainApp(this, patente);
+            controllerView.setMainApp(this);
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 	}
-    
-    public void mostrarDetalleViaje(String patente) {
-    	try {
-            // Load menu
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/Viaje.fxml"));
-            AnchorPane detalle = (AnchorPane) loader.load();
-            
-            // Poner la vista en el centro de la ventana principal
-            ventanaPrincipal.setCenter(detalle);
-            
-            // Dar acceso al controlador
-            ViajeController controllerView = loader.getController();
-            controllerView.setMainApp(this, patente);
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
     
     public void mostrarReporteGanancias() {
     	try {
