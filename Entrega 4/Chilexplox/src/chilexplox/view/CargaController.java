@@ -230,6 +230,19 @@ public class CargaController {
 		
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 
+		if (medio.EsFragil()) 
+			circleFragil.setFill(Color.GREEN);
+		else
+			circleFragil.setFill(Color.RED);
+		if (medio.EsRadioactivo()) 
+			circleRadioactivo.setFill(Color.GREEN);
+		else
+			circleRadioactivo.setFill(Color.RED);
+		if (medio.EsRefrigerado()) 
+			circlerefrigerado.setFill(Color.GREEN);
+		else
+			circlerefrigerado.setFill(Color.RED);	
+		
 		HashMap<Integer, List<Integer>> opt = Optimizador.Optimizar(medio);
 		
 		int sucursal_opt = opt.keySet().iterator().next();
