@@ -316,7 +316,7 @@ public String[] GetDetalleViaje(String patente) {
 	String[] detalles = new String[5];
 	detalles[0] = medio.GetOrigen().GetDireccion();
 	detalles[1] = medio.GetDestino().GetDireccion();
-	detalles[2] = "Guardar el conductor"; //medio.GetConductor().GetNombre();
+	detalles[2] = medio.GetConductor().GetNombre();
 	detalles[3] = patente;
 	detalles[4] = Integer.toString(medio.GetCapacidadActual());
 	
@@ -692,6 +692,7 @@ public String[] GetDetalleViaje(String patente) {
 					 */
 					if (estado.equals(Estado.EnTransito))
 						this.empresa.AgregarMedioEnTransito(camion);
+						camion.setConductor(this.empresa.GetEmpleado(parametros[9]));
 										
 					/*
 					 * Si esta en Sucursal origen es pq esta disponible para salir
@@ -1054,10 +1055,14 @@ public String[] GetDetalleViaje(String patente) {
 				{
 					Camion camion = (Camion)entry.getValue();
 
+					String creador = "0";
+					if (camion.GetEstado() == Estado.EnTransito) {
+						creador = camion.GetConductor().GetRut();
+					}
 					if (camion.GetDestino() != null)
-						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades());
+						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + Integer.toString(camion.GetDestino().GetId()) + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades() + ";" + creador);
 					else
-						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades());
+						writer_camiones.println(camion.GetPatente() + ";" + camion.GetMarca() + ";" + camion.GetModelo() + ";" + Integer.toString(camion.GetOrigen().GetId()) + ";" + "0" + ";" + Integer.toString(camion.GetCapacidadMax()) + ";" + Integer.toString(camion.GetKm()) + ";" + Integer.toString(Estado.valueOf(camion.estado.toString()).ordinal()) + ";" + camion.GetCualidades() + ";" + creador);
 				}
 				writer_camiones.close();
 			} catch (FileNotFoundException | UnsupportedEncodingException e2) {
