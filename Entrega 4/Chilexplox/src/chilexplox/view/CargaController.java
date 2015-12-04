@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class CargaController {
 
@@ -39,6 +41,15 @@ public class CargaController {
 
 	@FXML
 	private ChoiceBox patente_carga;
+	
+	@FXML
+	private Circle circleFragil;
+	
+	@FXML
+	private Circle circleRadioactivo;
+	
+	@FXML
+	private Circle circlerefrigerado;
 
 	@FXML
 	private ChoiceBox sucursal_destino;
@@ -54,6 +65,12 @@ public class CargaController {
     private TableColumn<CargaTableModel, String> prioridadColumn;
     @FXML
     private TableColumn<CargaTableModel, String> volumenColumn;
+    @FXML
+    private TableColumn<CargaTableModel, String> fragilColumn;
+    @FXML
+    private TableColumn<CargaTableModel, String> radioactivoColumn;
+    @FXML
+    private TableColumn<CargaTableModel, String> refrigeradoColumn;
 
     private ObservableList<CargaTableModel> pedidosCargadosData;
     
@@ -68,6 +85,12 @@ public class CargaController {
     private TableColumn<CargaTableModel, String> prioridadColumn2;
     @FXML
     private TableColumn<CargaTableModel, String> volumenColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> fragilColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> radioactivoColumn2;
+    @FXML
+    private TableColumn<CargaTableModel, String> refrigeradoColumn2;
 
     private ObservableList<CargaTableModel> pedidosPosiblesData;
 
@@ -81,12 +104,18 @@ public class CargaController {
         this.destinoColumn.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.prioridadColumn.setCellValueFactory(cellData -> cellData.getValue().prioridadProperty());
         this.volumenColumn.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
+        this.fragilColumn.setCellValueFactory(cellData -> cellData.getValue().fragilProperty());
+        this.radioactivoColumn.setCellValueFactory(cellData -> cellData.getValue().radioactivoProperty());
+        this.refrigeradoColumn.setCellValueFactory(cellData -> cellData.getValue().refrigeradoProperty());
         this.id_pedidoColumn2.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         this.destinoColumn2.setCellValueFactory(cellData -> cellData.getValue().destinoProperty());
         this.prioridadColumn2.setCellValueFactory(cellData -> cellData.getValue().prioridadProperty());
         this.volumenColumn2.setCellValueFactory(cellData -> cellData.getValue().volumenProperty());
-
-		//medios disponibles para cargar
+        this.fragilColumn2.setCellValueFactory(cellData -> cellData.getValue().fragilProperty());
+        this.radioactivoColumn2.setCellValueFactory(cellData -> cellData.getValue().radioactivoProperty());
+        this.refrigeradoColumn2.setCellValueFactory(cellData -> cellData.getValue().refrigeradoProperty());
+		
+        //medios disponibles para cargar
 		ArrayList<MedioDeTransporte> medioPorCargar = Sistema.GetInstance().GetSucursalLoged().GetMediosDisponibles();
 		for (int i = 0; i < medioPorCargar.size(); i++) {
 			MedioDeTransporte medio = medioPorCargar.get(i);
@@ -122,6 +151,19 @@ public class CargaController {
 		
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		
+		if (medio.EsFragil()) 
+			circleFragil.setFill(Color.GREEN);
+		else
+			circleFragil.setFill(Color.RED);
+		if (medio.EsRadioactivo()) 
+			circleRadioactivo.setFill(Color.GREEN);
+		else
+			circleRadioactivo.setFill(Color.RED);
+		if (medio.EsRefrigerado()) 
+			circlerefrigerado.setFill(Color.GREEN);
+		else
+			circlerefrigerado.setFill(Color.RED);
+		
 		Map<Integer, Pedido> pedidos = Sistema.GetInstance().GetPedidos();
 		
 		//Get pedidos posibles
@@ -129,9 +171,18 @@ public class CargaController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
-				// Muestra solo los pedidos que salen de esa sucursal y que van a la sucursal seleccionada
+				String fragil = "No";
+				String radioactivo = "No";
+				String refrigerado = "No";
+			// Muestra solo los pedidos que salen de esa sucursal y que van a la sucursal seleccionada
 				if(pedido.GetOrigen().GetDireccion().equals(Sistema.GetInstance().GetSucursalLoged().GetDireccion()) && pedido.GetDestino().GetDireccion().equals(this.sucursal_destino.getSelectionModel().getSelectedItem().toString()) && pedido.GetCargadoEn() == null){ 
-					this.pedidosPosiblesData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+					if (pedido.EsFragil())
+						fragil = "Si";
+					if (pedido.EsRadioactivo())
+						radioactivo = "Si";
+					if (pedido.EsRefrigerado())
+						refrigerado = "Si";
+					this.pedidosPosiblesData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen()), fragil, radioactivo, refrigerado));
 				}
 			}
 		}
@@ -142,9 +193,18 @@ public class CargaController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
+				String fragil = "No";
+				String radioactivo = "No";
+				String refrigerado = "No";
 				// Muestra solo los pedidos que salen de esa sucursal y que van a la sucursal seleccionada
 				if(pedido.GetCargadoEn() == medio){ 
-					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+					if (pedido.EsFragil())
+						fragil = "Si";
+					if (pedido.EsRadioactivo())
+						radioactivo = "Si";
+					if (pedido.EsRefrigerado())
+						refrigerado = "Si";
+					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen()), fragil, radioactivo, refrigerado));
 				}
 			}
 		}
@@ -191,8 +251,17 @@ public class CargaController {
 		if (pedidos != null) { //Si hay pedidos
 			for (Map.Entry<Integer, Pedido> entry : pedidos.entrySet()) {
 				Pedido pedido = entry.getValue();
+				String fragil = "No";
+				String radioactivo = "No";
+				String refrigerado = "No";
 				if (pedidos_opt.contains(pedido.GetId())) {
-					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+					if (pedido.EsFragil())
+						fragil = "Si";
+					if (pedido.EsRadioactivo())
+						radioactivo = "Si";
+					if (pedido.EsRefrigerado())
+						refrigerado = "Si";
+					this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen()), fragil, radioactivo, refrigerado));
 					carga_actual += pedido.GetVolumen();
 				}
 			}
@@ -225,14 +294,28 @@ public class CargaController {
 		
 		MedioDeTransporte medio = Sistema.GetInstance().GetMedio(this.patente_carga.getSelectionModel().getSelectedItem().toString());
 		Pedido pedido = Sistema.GetInstance().GetPedido(Integer.parseInt(this.tablaPedidosPosibles.getSelectionModel().getSelectedItem().getId()));
-		
 		//ver si se puede meter
 		if (carga_actual + pedido.GetVolumen() > medio.GetCapacidadMax() - carga_actual) {
 			ViewHelper.ShowMessage("No hay suficiente espacio para cargar este pedido en el camion.", AlertType.WARNING);
 			return;
 		}
 		
-		this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen())));
+		if (pedido.EsFragil() && !medio.EsFragil() || pedido.EsRadioactivo() && !medio.EsRadioactivo() || pedido.EsRefrigerado() && !medio.EsRefrigerado()) {
+			ViewHelper.ShowMessage("Este pedido no puede ser cargado en este camion.", AlertType.WARNING);
+			return;
+		}
+		
+		String fragil = "No";
+		String radioactivo = "No";
+		String refrigerado = "No";
+		if (pedido.EsFragil())
+			fragil = "Si";
+		if (pedido.EsRadioactivo())
+			radioactivo = "Si";
+		if (pedido.EsRefrigerado())
+			refrigerado = "Si";
+		
+		this.pedidosCargadosData.add(new CargaTableModel(Integer.toString(pedido.GetId()), pedido.GetDestino().GetDireccion(), Integer.toString(pedido.GetUrgencia()), Integer.toString(pedido.GetVolumen()), fragil, radioactivo, refrigerado));
 		this.tablaPedidosCargados.setItems(this.pedidosCargadosData);
 		
 		//sacar de la tabla de posibles
